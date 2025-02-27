@@ -11,6 +11,7 @@
     "start": "refine start",
     "lint": "next lint",
     "refine": "refine",
+    "db:init": "npx sequelize-cli init",
     "create:migration": "npx sequelize-cli migration:generate --name",
     "db:migrate": "npx sequelize-cli db:migrate",
     "create:seed": "npx sequelize-cli seed:generate --name",
