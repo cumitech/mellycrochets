@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* menu items */
+.nav-link {
+    @apply decoration-0 font-medium text-gray-900 hover:text-red-900 transition;
+}
+
+.active {
+    @apply px-3 py-1 bg-red-900 text-white rounded-2xl hover:text-white;
+}
+
+.view-details-link {
+    @apply inline-flex items-center px-6 py-3 bg-white text-gray-900 font-semibold rounded-2xl mt-3 shadow-md hover:bg-orange-600 hover:text-white transition duration-300;
+}
+
+.view-help-link {
+    @apply inline-flex items-center px-4 py-2 bg-white text-gray-900 border font-semibold rounded-2xl mt-3 hover:bg-orange-600 hover:text-white transition duration-300;
+}
+
+.view-country-link {
+    @apply inline-flex items-center px-4 py-2 bg-red-500 text-white font-semibold rounded-2xl mt-3 shadow-md hover:bg-red-600 hover:text-white transition duration-300;
+}
+
+.contact-link {
+    @apply inline-flex items-center px-6 py-3 text-green-500 font-semibold rounded-md shadow-md hover:bg-green-700 hover:text-white transition;
+}
+
+
+.footer-link {
+    @apply text-lg text-white hover:text-gray-300 transition;
+}
+
+.custom__tabs {
+    margin-bottom: 0 !important;
+}
