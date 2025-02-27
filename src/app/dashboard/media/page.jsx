@@ -18,18 +18,6 @@ export default function MediaList() {
     syncWithLocation: true,
   });
 
-  const carIds = tableProps?.dataSource?.map((item) => item.carId) || [];
-  const { data: carsData, isLoading: isCarsLoading } = useMany({
-    resource: "cars",
-    ids: carIds,
-  });
-
-  // Map car make IDs to names
-  const carMap = carsData?.data?.reduce((acc, car) => {
-    acc[car.id] = car.carNum;
-    return acc;
-  }, {});
-
   return (
     <>
       <PageBreadCrumbs items={["Media", "Lists"]} />
@@ -42,15 +30,8 @@ export default function MediaList() {
               format.twoChar((index + 1).toString())
             }
           />
-          {/* <Table.Column dataIndex="slug" title={"Slug"} /> */}
           <Table.Column dataIndex="title" title={"Title"} />
-          <Table.Column
-            dataIndex="carId"
-            title="Car ID"
-            render={(carId) =>
-              isCarsLoading ? "Loading..." : carMap?.[carId] ?? "Unknown"
-            }
-          />
+
           <Table.Column
             dataIndex="imageUrl"
             title={"Image"}
