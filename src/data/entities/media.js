@@ -1,5 +1,3 @@
-const { Car } = require(".");
-
 // models/Media.ts
 module.exports = (sequelize, DataTypes) => {
   const Media = sequelize.define(
@@ -21,15 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       imageUrl: {
         type: DataTypes.STRING(255),
-      },
-      carId: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        references: {
-          model: Car,
-          key: "id",
-        },
-        onDelete: "CASCADE",
       },
     },
     {
