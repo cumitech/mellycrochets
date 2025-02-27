@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 import { RefineContext } from "../contexts/refine-context";
-import { initializeDB } from "../utils/initialize-db";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata = {
   title: "Refine",
@@ -16,12 +17,17 @@ export default async function RootLayout({ children }) {
   const theme = cookieStore.get("theme");
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body>
         <Suspense>
-          <RefineContext defaultMode={defaultMode}>{children}</RefineContext>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <RefineContext defaultMode={defaultMode}>{children}</RefineContext>
+          </NextIntlClientProvider>
         </Suspense>
       </body>
     </html>
