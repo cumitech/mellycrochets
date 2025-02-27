@@ -5,39 +5,32 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const logQuery = (query, options) => {
-  return options;
-};
+if (
+  !process.env.POSTGRES_DATABASE ||
+  !process.env.POSTGRES_USER ||
+  !process.env.POSTGRES_PASSWORD
+) {
+  throw new Error("Missing database environment variables.");
+}
 
-const makeConfig = () => {
-  const isDev = process.env.NODE_ENV !== "production";
+const sequelize = new Sequelize({
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
+  dialect: "postgres",
+  dialectModule: pg,
+  benchmark: true,
+  port: parseInt(process.env.POSTGRES_PORT),
+});
 
-  const config = {
-    host: `${process.env.POSTGRES_HOST}`,
-    port: parseInt(process.env.POSTGRES_PORT),
-    dialect: "postgres",
-    dialectModule: pg,
-    logging: isDev ? logQuery : false,
-    ssl: true,
-  };
-
-  if (!isDev) {
-    config.dialectOptions = {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    };
-  }
-
-  return config;
-};
-
-const sequelize = new Sequelize(
-  `${process.env.POSTGRES_DATABASE}`, 
-  `${process.env.POSTGRES_USER}`,
-  `${process.env.POSTGRES_PASSWORD}`,
-  makeConfig()
-);
+// (async () => {
+//   try {
+//     await sequelize.authenticate();
+//     console.log("Database connected successfully.");
+//     await sequelize.sync();
+//   } catch (error) {
+//     console.error("Database connection failed", error);
+//   }
+// })();
 
 module.exports = sequelize;

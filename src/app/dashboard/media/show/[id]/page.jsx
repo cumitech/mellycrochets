@@ -22,7 +22,6 @@ export default function MediaShow() {
         <TextField value={record?.id ?? ""} />
         <Title level={5}>{"Title"}</Title>
         <TextField value={record?.title} />
-        <Descriptions.Item label="Car">{record?.carId}</Descriptions.Item>
         <Title level={5}>{"Image"}</Title>
         <ImageField
           imageTitle={record?.title}
