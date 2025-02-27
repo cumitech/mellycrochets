@@ -1,16 +1,16 @@
 "use client";
 import { useTranslation } from "@refinedev/core";
 import { Image } from "antd";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
+import AppLanguage from "./shared/language.component";
 
 const AppNavigation = () => {
   const [isOpen, setOpen] = useState(false);
-  const pathname = usePathname();
 
+  const pathname = usePathname();
   // const t = useTranslations('HomePage');
   const { translate: t } = useTranslation();
 
@@ -52,6 +52,8 @@ const AppNavigation = () => {
           >
             {t("components.navigation.contact")}
           </Link>
+
+          <AppLanguage />
         </div>
 
         {/* mobile menu */}
