@@ -11,6 +11,7 @@ export const metadata = {
   },
 };
 
+// initializeDB()
 export default async function RootLayout({ children }) {
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
