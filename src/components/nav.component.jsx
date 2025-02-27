@@ -1,5 +1,7 @@
 "use client";
+import { useTranslation } from "@refinedev/core";
 import { Image } from "antd";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -8,6 +10,10 @@ import { BiMenu } from "react-icons/bi";
 const AppNavigation = () => {
   const [isOpen, setOpen] = useState(false);
   const pathname = usePathname();
+
+  // const t = useTranslations('HomePage');
+  const { translate: t } = useTranslation();
+
   return (
     <nav className="bg-white py-1 px-10 md:px-30 lg:px-50 shadow-md">
       <div className="flex justify-between items-center">
@@ -30,21 +36,21 @@ const AppNavigation = () => {
             href="/"
             className={`nav-link  ${pathname === "/" ? "active" : ""}`}
           >
-            Home
+            {t("components.navigation.home")}
           </Link>
 
           <Link
             href="/about"
             className={`nav-link  ${pathname === "/about" ? "active" : ""}`}
           >
-            About
+            {t("components.navigation.about")}
           </Link>
 
           <Link
             href="/contact"
             className={`nav-link  ${pathname === "/contact" ? "active" : ""}`}
           >
-            Contact
+            {t("components.navigation.contact")}
           </Link>
         </div>
 
@@ -65,23 +71,14 @@ const AppNavigation = () => {
                 href="/"
                 className={`nav-link  ${pathname === "/" ? "active" : ""}`}
               >
-                Home
-              </Link>
-
-              <Link
-                href="/services"
-                className={`nav-link  ${
-                  pathname === "/services" ? "active" : ""
-                }`}
-              >
-                Our Services
+                {t("components.navigation.home")}
               </Link>
 
               <Link
                 href="/about"
                 className={`nav-link  ${pathname === "/about" ? "active" : ""}`}
               >
-                About
+                {t("components.navigation.about")}
               </Link>
 
               <Link
@@ -90,7 +87,7 @@ const AppNavigation = () => {
                   pathname === "/contact" ? "active" : ""
                 }`}
               >
-                Contact
+                {t("components.navigation.contact")}
               </Link>
             </div>
           </div>
