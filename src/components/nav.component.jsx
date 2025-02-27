@@ -34,13 +34,6 @@ const AppNavigation = () => {
           </Link>
 
           <Link
-            href="/services"
-            className={`nav-link  ${pathname === "/services" ? "active" : ""}`}
-          >
-            Our Services
-          </Link>
-
-          <Link
             href="/about"
             className={`nav-link  ${pathname === "/about" ? "active" : ""}`}
           >

@@ -1,7 +1,6 @@
 import ContactSection from "../../components/contact/contact.component";
 import Footer from "../../components/footer/footer.component";
 import AppNavigation from "../../components/nav.component";
-import WhyChooseUs from "../../components/why-chose-us/why-chose-us.component";
 import Image from "next/image";
 import "../../assets/css/globals.css";
 
@@ -55,8 +54,7 @@ export default function About() {
           </div>
         </div>
       </div>
-      {/* Why Choose EMS */}
-      <WhyChooseUs />
+ 
       {/* ContactSection  */}
       <ContactSection />
 
