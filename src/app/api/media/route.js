@@ -1,4 +1,3 @@
-import { MediaMapper } from "../../../data/presentation/mappers/mapper";
 import { MediaRepository } from "../../../data/repositories/media.repository";
 import { MediaUseCase } from "../../../data/usecases/media.usecase";
 // import { File } from "buffer";
@@ -10,7 +9,6 @@ import MediaRequestDto from "../../../data/presentation/dtos/media-request.dto";
 
 const mediaRepository = new MediaRepository();
 const mediaUseCase = new MediaUseCase(mediaRepository);
-const mediaMapper = new MediaMapper();
 
 export async function GET(requestd) {
   try {
@@ -57,7 +55,7 @@ export async function POST(request) {
 
     return NextResponse.json(
       {
-        data: mediaMapper.toDTO(mediaResponse),
+        data: mediaResponse,
         message: "media created Successfully!",
         validationErrors: [],
         success: true,
