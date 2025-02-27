@@ -1,0 +1,10 @@
+{
+  "components": {
+    "navigation": {
+      "home": "Welcome",
+      "about": "About",
+      "contact": "Contact",
+      "aftercare": "After Care"
+    }
+  }
+}

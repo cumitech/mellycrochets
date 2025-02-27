@@ -19,10 +19,13 @@ import { menus } from "../utils/menus";
 import { Spin } from "antd";
 import { accessControlProvider } from "../providers/access-control-provider";
 import ClientProvider from "../contexts/redux/provider";
+import { useLocale, useTranslations } from "next-intl";
+import { setUserLocale } from "../i18n/index";
 
 export const App = (props) => {
   const { data, status } = useSession();
   const to = usePathname();
+  const t = useTranslations();
 
   if (status === "loading") {
     return (
@@ -37,6 +40,12 @@ export const App = (props) => {
       />
     );
   }
+
+  const i18nProvider = {
+    translate: (key, options) => t(key, options),
+    getLocale: useLocale,
+    changeLocale: setUserLocale,
+  };
 
   const authProvider = {
     login: async () => {
@@ -135,6 +144,7 @@ export const App = (props) => {
                 }}
                 notificationProvider={useNotificationProvider}
                 authProvider={authProvider}
+                i18nProvider={i18nProvider}
                 resources={filteredMenus}
                 options={{
                   syncWithLocation: true,
