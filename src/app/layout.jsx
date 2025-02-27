@@ -11,19 +11,11 @@ export const metadata = {
   },
 };
 
-initializeDB()
 export default async function RootLayout({ children }) {
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
-  const data = await getData();
-
-  if (!data.response) {
-    return (
-      <p className="font-xl text-amber-950 ">Database connection failed!</p>
-    );
-  }
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,11 +26,4 @@ export default async function RootLayout({ children }) {
       </body>
     </html>
   );
-}
-
-async function getData() {
-  const response = await initializeDB();
-  return {
-    response,
-  };
 }
