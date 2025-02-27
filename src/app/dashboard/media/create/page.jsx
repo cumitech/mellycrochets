@@ -8,12 +8,6 @@ import { Form, Input, Select, Upload } from "antd";
 
 export default function MediaCreate() {
   const { formProps, saveButtonProps } = useForm({});
-  const { options } = useSelect({
-    resource: "cars",
-    optionLabel: "carNum",
-    optionValue: "id",
-    debounce: 200,
-  });
 
   return (
     <>
@@ -47,25 +41,6 @@ export default function MediaCreate() {
             >
               <p className="ant-upload-text">Drag & drop a file in this area</p>
             </Upload.Dragger>
-          </Form.Item>
-
-          {/* car (Foreign Key) */}
-          <Form.Item
-            label="Car"
-            name="carId"
-            rules={[{ required: true, message: "Please select a car" }]}
-          >
-            <Select
-              options={options.map((opt) => {
-                return {
-                  label: opt.label,
-                  value: opt.value,
-                };
-              })}
-              showSearch
-              allowClear
-              placeholder="Select car"
-            />
           </Form.Item>
         </Form>
       </Create>
