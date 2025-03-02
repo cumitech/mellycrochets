@@ -20,7 +20,7 @@ const AppNavigation = () => {
         <div className="aspect-w-16 aspect-h-9 text-2xl font-bold text-gray-900">
           <Link href="/">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               preview={false}
               width={130}
               height={75}
@@ -40,10 +40,24 @@ const AppNavigation = () => {
           </Link>
 
           <Link
+            href="/aftercare"
+            className={`nav-link  ${pathname === "/aftercare" ? "active" : ""}`}
+          >
+            After Care
+          </Link>
+
+          <Link
             href="/about"
             className={`nav-link  ${pathname === "/about" ? "active" : ""}`}
           >
             {t("components.navigation.about")}
+          </Link>
+
+          <Link
+            href="/article"
+            className={`nav-link  ${pathname === "/aftercare" ? "active" : ""}`}
+          >
+            Article
           </Link>
 
           <Link
