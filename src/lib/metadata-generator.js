@@ -1,16 +1,10 @@
-import { Metadata } from "next";
 
 export const generatePageMetadata = ({
   title,
   description,
   slug,
   image = "/default-image.jpg", // Provide a default image
-}: {
-  title: string;
-  description: string;
-  slug: string;
-  image?: string;
-}): Metadata => ({
+}) => ({
   title,
   description,
   openGraph: {
