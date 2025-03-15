@@ -38,7 +38,7 @@ const buttonStyles = {
 
 const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white py-12 px-6">
+    <footer className="relative bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white pt-12 pb-3 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {/* Social Media */}
         <div>
@@ -140,12 +140,12 @@ const Footer = () => {
       </div>
 
       {/* Bottom Footer */}
-      {/* <div className="mt-12 text-center border-t border-white/20 pt-6">
+      <div className="text-center pt-6">
         <p className="text-gray-400">
-          &copy; {new Date().getFullYear()} Etienne Motors & Services. All
-          Rights Reserved.
+          &copy; {new Date().getFullYear()} MellyCrochets & Services. All Rights
+          Reserved.
         </p>
-      </div> */}
+      </div>
     </footer>
   );
 };
