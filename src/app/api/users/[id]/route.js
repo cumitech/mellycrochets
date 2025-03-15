@@ -1,17 +1,13 @@
-import UserRequestDto from "../../../../data/presentation/dtos/user-request.dto";
-// import { UserMapper } from "../../../../data/presentation/mappers/mapper";
+import UserRequestDto from "../../../../data/dtos/user-request.dto";
 import { UserRepository } from "../../../../data/repositories/user.repository";
-import { UserUseCase } from "../../../../data/usecases/user.usecase";
 import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../../lib/options";
-import { emptyUser } from "../../../../data/models/user";
+import { emptyUser } from "../../../../data/models";
 
 const userRepository = new UserRepository();
-const userUseCase = new UserUseCase(userRepository);
-// const userMapper = new UserMapper();
 
 export async function PATCH(req, { params }) {
   const session = await getServerSession(authOptions); //get session info
@@ -65,7 +61,7 @@ export async function PATCH(req, { params }) {
       id: id,
       userId,
     };
-    const updatedUser = await userUseCase.updateUser(obj);
+    const updatedUser = await userRepository.updateUser(obj);
 
     return NextResponse.json(
       {
@@ -100,7 +96,7 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const user = await userUseCase.getUserById(id);
+    const user = await userRepository.getUserById(id);
     // const userDTO = userMapper.toDTO(user);
     return NextResponse.json(user);
   } catch (error) {
@@ -134,7 +130,7 @@ export async function DELETE(req, { params }) {
   try {
     const id = params.id;
 
-    await userUseCase.deleteUser(id);
+    await userRepository.deleteUser(id);
 
     return NextResponse.json({
       message: `Operation successfully completed!`,

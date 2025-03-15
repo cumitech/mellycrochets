@@ -1,3 +1,19 @@
+body {
+    background-color: #fff;
+    font-family: 'Raleway', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b {
+    font-family: 'Playfair Display', serif !important;
+}
+
 @import "tailwindcss";
 
 /* menu items */
@@ -32,4 +48,13 @@
 
 .custom__tabs {
     margin-bottom: 0 !important;
+}
+
+.font-playfair {
+    font-family: 'Playfair Display', serif !important;
+}
+
+.custom-image-group .ant-image-mask {
+    border-top-left-radius: 5;
+    border-top-right-radius: 5;
 }
