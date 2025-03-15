@@ -1,29 +1,28 @@
 // sequelize.ts
 const { Sequelize } = require("sequelize");
-const pg = require("pg");
+const mysql2 = require("mysql2");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-if (
-  !process.env.POSTGRES_HOST ||
-  !process.env.POSTGRES_DATABASE ||
-  !process.env.POSTGRES_USER ||
-  !process.env.POSTGRES_PASSWORD
-) {
-  throw new Error("Missing database environment variables.");
-}
+console.log("DB Config:", {
+  host: process.env.MYSQL_HOST,
+  database: process.env.MYSQL_DATABASE,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  port: process.env.MYSQL_PORT,
+});
 
 const sequelize = new Sequelize(
-  process.env.POSTGRES_DATABASE,
-  process.env.POSTGRES_USER,
-  process.env.POSTGRES_PASSWORD,
+  process.env.MYSQL_DATABASE,
+  process.env.MYSQL_USER,
+  process.env.MYSQL_PASSWORD,
   {
-    host: process.env.POSTGRES_HOST,
-    dialect: "postgres",
-    dialectModule: pg,
+    host: process.env.MYSQL_HOST,
+    dialect: "mysql",
+    dialectModule: mysql2,
     benchmark: true,
-    port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
+    port: parseInt(process.env.MYSQL_PORT, 10) || 3306,
   }
 );
 

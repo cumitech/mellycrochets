@@ -1,18 +1,13 @@
 import { MediaRepository } from "../../../data/repositories/media.repository";
-import { MediaUseCase } from "../../../data/usecases/media.usecase";
-// import { File } from "buffer";
 import { validate } from "class-validator";
-// import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
-// import path from "path";
-import MediaRequestDto from "../../../data/presentation/dtos/media-request.dto";
+import MediaRequestDto from "../../../data/dtos/media-request.dto";
 
 const mediaRepository = new MediaRepository();
-const mediaUseCase = new MediaUseCase(mediaRepository);
 
 export async function GET(requestd) {
   try {
-    const medias = await mediaUseCase.getAll();
+    const medias = await mediaRepository.getAll();
 
     return NextResponse.json(medias);
   } catch (error) {
@@ -51,7 +46,7 @@ export async function POST(request) {
   }
 
   try {
-    const mediaResponse = await mediaUseCase.createMedia(dto.toData());
+    const mediaResponse = await mediaRepository.createMedia(dto.toData());
 
     return NextResponse.json(
       {

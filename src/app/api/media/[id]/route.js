@@ -1,14 +1,10 @@
-import MediaRequestDto from "../../../../data/presentation/dtos/media-request.dto";
-import { MediaMapper } from "../../../../data/presentation/mappers/mapper";
+import MediaRequestDto from "../../../../data/dtos/media-request.dto";
 import { MediaRepository } from "../../../../data/repositories/media.repository";
-import { MediaUseCase } from "../../../../data/usecases/media.usecase";
 import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
 import { NextResponse } from "next/server";
 
 const mediaRepository = new MediaRepository();
-const mediaUseCase = new MediaUseCase(mediaRepository);
-const mediaMapper = new MediaMapper();
 
 export async function PATCH(req, { params }) {
   const data = await req.json();
@@ -36,12 +32,11 @@ export async function PATCH(req, { params }) {
         ...dto.toData(),
         id: id,
       };
-      const updatedMedia = await mediaUseCase.updateMedia(obj);
-      const mediaDto = mediaMapper.toDTO(updatedMedia);
+      const updatedMedia = await mediaRepository.updateMedia(obj);
 
       return NextResponse.json(
         {
-          data: mediaDto,
+          data: updatedMedia,
           message: "Media Updated Successfully!",
           validationErrors: [],
           success: true,
@@ -66,12 +61,12 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const media = await mediaUseCase.getMediaById(id);
+    const media = await mediaRepository.getMediaById(id);
     if (!media) {
       throw new NotFoundException("Media", id);
     }
-    const mediaDTO = mediaMapper.toDTO(media);
-    return NextResponse.json(mediaDTO);
+
+    return NextResponse.json(media);
   } catch (error) {
     return NextResponse.json(
       {
@@ -89,7 +84,7 @@ export async function DELETE(req, { params }) {
   try {
     const id = params.id;
 
-    await mediaUseCase.deleteMedia(id);
+    await mediaRepository.deleteMedia(id);
 
     return NextResponse.json({
       message: `Operation successfully completed!`,

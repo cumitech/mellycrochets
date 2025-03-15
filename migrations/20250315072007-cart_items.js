@@ -1,0 +1,70 @@
+"use strict";
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('cartItems', { id: Sequelize.INTEGER });
+     */
+    await queryInterface.createTable("cart_items_tbl", {
+      id: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+        primaryKey: true,
+      },
+      crochetId: {
+        type: Sequelize.STRING(128),
+        allowNull: false,
+        references: {
+          model: "crochets",
+          key: "id",
+        },
+      },
+      userId: {
+        type: Sequelize.STRING(128),
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      total: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      discountPercentage: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      discountedPrice: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      }, 
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+    });
+  },
+
+  async down(queryInterface, Sequelize) {
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('cartItems');
+     */
+    await queryInterface.dropTable("cart_items_tbl");
+  },
+};
