@@ -5,6 +5,7 @@ import { crochetAPI } from "./api/crochet_api";
 import { crochetTypeAPI } from "./api/crochet_type_api";
 import { postAPI } from "./api/post_api";
 import { categoryAPI } from "./api/category_api";
+import { afterCareAPI } from "./api/after_care_api";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [crochetTypeAPI.reducerPath]: crochetTypeAPI.reducer,
     [categoryAPI.reducerPath]: categoryAPI.reducer,
     [postAPI.reducerPath]: postAPI.reducer,
+    [afterCareAPI.reducerPath]: afterCareAPI.reducer,
     crochets: crochetReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -22,6 +24,7 @@ export const store = configureStore({
       crochetTypeAPI.middleware,
       crochetAPI.middleware,
       postAPI.middleware,
+      afterCareAPI.middleware,
     ]),
 });
 

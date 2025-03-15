@@ -101,6 +101,13 @@ const emptyReview = {
   toggle: false,
 };
 
+const emptyAfterCare = {
+  id: "",
+  title: "",
+  videoUrl: "",
+  description: "",
+};
+
 module.exports = {
   emptyCartItem,
   emptyCrochetType,
@@ -113,4 +120,5 @@ module.exports = {
   emptyRole,
   emptyReview,
   emptySubscriber,
+  emptyAfterCare,
 };
