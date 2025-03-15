@@ -14,7 +14,7 @@ const Review = require("./review")(sequelize, DataTypes);
 const CartItem = require("./cart-item")(sequelize, DataTypes);
 const Subscriber = require("./subscriber")(sequelize, DataTypes);
 const Post = require("./post")(sequelize, DataTypes);
-
+const AfterCare = require("./after-care")(sequelize, DataTypes);
 // User <=> post Associations
 User.hasMany(Post, {
   foreignKey: "authorId",
@@ -108,4 +108,5 @@ module.exports = {
   Subscriber,
   Category,
   Post,
+  AfterCare,
 };

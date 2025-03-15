@@ -96,7 +96,7 @@ const FilterCrochets = () => {
   }
 
   return (
-    <div className="text-black px-8  md:px-10 lg:px-20 mt-10 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1)]">
+    <div className="text-black px-8  md:px-10 lg:px-20 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1)]">
       <div className="bg-white max-w-auto mx-auto p-5 rounded-md relative animate-fade-up">
         <div className="flex justify-center items-center">
           <form

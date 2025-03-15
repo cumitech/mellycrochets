@@ -23,11 +23,11 @@ export default async function IndexPage() {
       </div>
 
       {/* listings */}
-      <div className="w-full px-10 py-10" data-aos="fade-up">
+      <div className="w-full px-10 pt-10" data-aos="fade-up">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-3/4">
-            <h2 className="text-2xl font-bold">Crochets Listings</h2>
-            <p className="text-gray-600">
+            <h2 className="text-2xl text-gray-950 font-extrabold">Crochets Listings</h2>
+            <p className="text-gray-800">
               Browse our latest crochet collections
             </p>
           </div>
