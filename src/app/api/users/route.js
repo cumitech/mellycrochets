@@ -1,18 +1,15 @@
 import { validate } from "class-validator";
 import { NextResponse } from "next/server";
 import { UserRepository } from "../../../data/repositories/user.repository";
-import { UserUseCase } from "../../../data/usecases/user.usecase";
-import UserRequestDto from "../../../data/presentation/dtos/user-request.dto";
+import UserRequestDto from "../../../data/dtos/user-request.dto";
 import { displayValidationErrors } from "../../../lib/displayValidationErrors";
-// import authOptions from "../../../lib/options";
-// import { getServerSession } from "next-auth";
+;
 
 const userRepository = new UserRepository();
-const userUseCase = new UserUseCase(userRepository);
 
 export async function GET(request) {
   try {
-    const users = await userUseCase.getAll();
+    const users = await userRepository.getAll();
 
     return NextResponse.json(users);
   } catch (error) {
@@ -47,7 +44,7 @@ export async function POST(request) {
       );
     }
 
-    const userResponse = await userUseCase.createUser({
+    const userResponse = await userRepository.createUser({
       ...dto.toData(),
       // userId,
     });

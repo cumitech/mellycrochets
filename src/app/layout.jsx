@@ -3,6 +3,12 @@ import React, { Suspense } from "react";
 import { RefineContext } from "../contexts/refine-context";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import "../assets/css/globals.css";
+import "../assets/css/main.css";
+import { Affix, Spin } from "antd";
+import AppNavigation from "../components/nav.component";
+import Footer from "../components/footer/footer.component";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export const metadata = {
   title: "Refine",
@@ -24,9 +30,37 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body>
-        <Suspense>
+        <Suspense
+          fallback={
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 48,
+                  }}
+                  spin
+                />
+              }
+              style={{
+                minHeight: "65vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              fullscreen
+            />
+          }
+        >
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <RefineContext defaultMode={defaultMode}>{children}</RefineContext>
+            <RefineContext defaultMode={defaultMode}>
+              <Affix offsetTop={0}>
+                <AppNavigation />
+              </Affix>
+              {children}
+              {/* Footer */}
+              <Footer />
+            </RefineContext>
           </NextIntlClientProvider>
         </Suspense>
       </body>

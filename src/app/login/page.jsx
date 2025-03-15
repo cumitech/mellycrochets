@@ -8,7 +8,6 @@ import { Button, Space, Form, Input, Typography, Divider } from "antd";
 import { SiAuth0, SiFacebook } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import AppNavigation from "../../components/nav.component";
 
 import "../../assets/css/globals.css";
 import Footer from "../../components/footer/footer.component";
@@ -38,8 +37,6 @@ export default function Login() {
   return (
     <Suspense>
       <div className="flex flex-col min-h-screen bg-gray-100">
-        <AppNavigation />
-
         <div className="flex flex-1 justify-center items-center py-10 md:py-30">
           <Space direction="vertical" align="center" className="bg-white p-8">
             {/* App Title */}
@@ -131,7 +128,7 @@ export default function Login() {
 
             {/* Signup Link */}
             <Typography.Text>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/register" style={{ color: "#1890ff" }}>
                 Sign up
               </Link>

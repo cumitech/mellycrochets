@@ -1,12 +1,9 @@
 import ContactSection from "../../components/contact/contact.component";
-import Footer from "../../components/footer/footer.component";
-import AppNavigation from "../../components/nav.component";
 import "../../assets/css/globals.css";
 
 export default function Contact() {
   return (
     <div>
-      <AppNavigation />
       {/* Hero Section */}
       <section className="bg-gray-950 text-white py-16 text-center">
         <div className="container mx-auto px-6">
@@ -20,8 +17,6 @@ export default function Contact() {
       {/* Contact Details */}
       <ContactSection />
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

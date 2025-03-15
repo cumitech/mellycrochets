@@ -3,12 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { UserRepository } from "../data/repositories/user.repository";
-import { UserUseCase } from "../data/usecases/user.usecase";
-import { emptyUser } from "../data/models/user";
+import { emptyUser } from "../data/models/index";
 import { nanoid } from "nanoid";
 
 const userRepository = new UserRepository();
-const userUseCase = new UserUseCase(userRepository);
 
 const authOptions = {
   providers: [
@@ -66,7 +64,7 @@ const authOptions = {
     async jwt({ token, user, account, profile }) {
       // If user signs in, add their info to the token
       if (user) {
-        const userItem = await userUseCase.findByEmail(user.email);
+        const userItem = await userRepository.findByEmail(user.email);
         token.role = userItem.role;
       }
       return token;
@@ -90,10 +88,10 @@ const authOptions = {
       if (account?.provider !== "credentials") {
         try {
           // find user by email
-          const existingUser = await userUseCase.findByEmail(user.email);
+          const existingUser = await userRepository.findByEmail(user.email);
           if (!existingUser) {
             console.log("Creating new user...");
-            await userUseCase.createUser({
+            await userRepository.createUser({
               ...emptyUser,
               id: nanoid(20),
               username: user.name,
