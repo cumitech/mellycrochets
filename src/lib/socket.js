@@ -1,5 +1,5 @@
-import { BASE_URL } from "../constants/api-url";
-import { Server as SocketIOServer } from "socket.io";
+const { BASE_URL } = require("../constants/api-url");
+const { Server: SocketIOServer } = require("socket.io");
 
 let io = null;
 
@@ -28,8 +28,4 @@ function initializeSocket(server) {
   return io;
 }
 
-function getSocketInstance() {
-  return io;
-}
-
-export { initializeSocket, getSocketInstance };
+module.exports = { initializeSocket };

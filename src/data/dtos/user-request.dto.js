@@ -23,20 +23,37 @@ class UserRequestDto {
       throw new Error("Username must not be more than 50 characters.");
     }
 
-    if (!data.image || typeof data.image !== "string") {
-      throw new Error("Image must be a string.");
+    if (!data.provider || typeof data.provider !== "string") {
+      throw new Error("Provider must be a string.");
     }
 
+    if (!data.password || typeof data.password !== "string") {
+      throw new Error("Password must be a string.");
+    }
+
+    if (!data.confirmPassword || typeof data.confirmPassword !== "string") {
+      throw new Error("Confirm Password must be a string.");
+    }
+
+    if (data.password !== data.confirmPassword) {
+      throw new Error("Your passwords donot match.");
+    }
     this.email = data.email;
     this.username = data.username;
     this.image = data.image;
-    this.password = data.password;
-    this.role = "user";
+    this.role = data.role;
     this.provider = data.provider;
     this.phone = data.phone;
+    this.verified = data.verified;
+    this.password = data.password;
+    this.confirmPassword = data.confirmPassword;
   }
 
-  toData() {
+  async toData() {
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
+    this.confirmPassword = undefined;
+
     return {
       ...emptyUser,
       id: nanoid(10),

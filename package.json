@@ -1,5 +1,5 @@
 {
-  "name": "app-template",
+  "name": "mellycrochets",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -74,5 +74,8 @@
   },
   "refine": {
     "projectId": "TRWe16-m1upN0-IRynOR"
+  },
+  "browser": {
+    "crypto": "crypto-browserify"
   }
 }

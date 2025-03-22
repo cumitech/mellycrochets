@@ -4,7 +4,7 @@ import { CartItemRequestDto } from "../../../data/dtos/cart-item-request.dto";
 import { displayValidationErrors } from "../../../lib/displayValidationErrors";
 import authOptions from "../../../lib/options";
 import { getServerSession } from "next-auth";
-import { initializeSocket, getSocketInstance } from "../../../lib/socket";
+import { initializeSocket } from "../../../lib/socket";
 import { CrochetSize } from "../../../data/entities";
 import { addToCart, getCartItems } from "../../../data/usecases/cart.usecase";
 
@@ -45,7 +45,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   const session = await getServerSession(authOptions); //get session info
-  const io = getSocketInstance();
+  const io = initializeSocket(request);
 
   if (!io) {
     console.log("❌ Socket.io is not initialized yet!");

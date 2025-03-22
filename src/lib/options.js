@@ -51,7 +51,6 @@ const authOptions = {
         }
 
         const { password, ...userWithoutPassword } = currentUser.toJSON();
-        console.log("userWithoutPassword: ", userWithoutPassword);
         return userWithoutPassword; // User must contain { id, name, email, image }.
       },
     }),
@@ -69,6 +68,22 @@ const authOptions = {
         token.role = userItem.role || "user";
       }
       return token;
+    },
+
+    async redirect({ url, baseUrl }) {
+      try {
+        const isRelative = url.startsWith("/");
+        const isInternal = url.startsWith(baseUrl);
+
+        if (isRelative || isInternal) {
+          return url;
+        }
+
+        return baseUrl; // Prevent open redirects
+      } catch (error) {
+        console.error("Redirect error:", error);
+        return baseUrl;
+      }
     },
 
     async session({ session, token }) {

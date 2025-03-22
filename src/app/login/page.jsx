@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ThemedTitleV2 } from "@refinedev/antd";
 import { Button, Space, Form, Input, Typography, Divider } from "antd";
 import { SiAuth0 } from "react-icons/si";
@@ -12,6 +12,10 @@ import { FaLock } from "react-icons/fa";
 import { useNotification } from "@refinedev/core";
 
 export default function Login() {
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
+
+  console.log("redirect: ", redirect)
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { open } = useNotification();
@@ -27,7 +31,7 @@ export default function Login() {
 
     setLoading(false);
     if (response?.ok) {
-      router.push("/"); // Redirect after successful login
+      router.push(redirect); // Redirect after successful login
       open?.({
         type: "success",
         message: "Login Successful!",
@@ -116,7 +120,7 @@ export default function Login() {
             <Button
               icon={<SiAuth0 color="#d8452e" />}
               className="w-xs sm:w-sm md:w-md lg:w-lg xl:w-xl"
-              onClick={() => signIn("auth0")}
+              onClick={() => signIn("auth0", { callbackUrl: redirect })}
               size="large"
             >
               Auth0

@@ -18,15 +18,6 @@ const nextConfig = withNextIntl({
     ],
   },
   crossOrigin: "anonymous",
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: "babel-loader",
-        exclude: /node_modules\/(?!sequelize)/,
-      },
-    ],
-  },
   ignoreWarnings: [
     {
       message:
@@ -37,17 +28,15 @@ const nextConfig = withNextIntl({
     optimizeCss: true, // Enable CSS optimization
   },
   webpack(config) {
+    // config.module.rules.push({
+    //   test: /\.js$/,
+    //   use: "babel-loader",
+    //   exclude: /node_modules\/(?!sequelize)/,
+    // });
     config.optimization.splitChunks = {
       chunks: "all", // Improve code splitting
     };
     return config;
-  },
-  env: {
-    MYSQL_HOST: process.env.MYSQL_HOST,
-    MYSQL_PORT: process.env.MYSQL_PORT,
-    MYSQL_USER: process.env.MYSQL_USER,
-    MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
-    MYSQL_DATABASE: process.env.MYSQL_DATABASE,
   },
 });
 

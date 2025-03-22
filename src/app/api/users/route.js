@@ -26,10 +26,17 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
+    body.role = "user";
+    body.verified = true;
+    body.phone = "";
+    body.provider = "credentials";
+
     const dto = new UserRequestDto(body);
     const validationErrors = await validate(dto);
 
-    console.log("validationErrors: ", validationErrors, dto.toData());
+    const userObj = await dto.toData();
+
+    console.log("validationErrors: ", validationErrors, userObj);
     if (validationErrors.length > 0) {
       return NextResponse.json(
         {
@@ -43,7 +50,7 @@ export async function POST(request) {
     }
 
     const userResponse = await userRepository.createUser({
-      ...dto.toData(),
+      ...userObj,
       // userId,
     });
     return NextResponse.json(
