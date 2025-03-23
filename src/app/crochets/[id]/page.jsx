@@ -115,6 +115,10 @@ export default function IndexPage({ params }) {
     setTimeout(() => setLoadingAddToCart(false), 1500);
   };
 
+  const text = encodeURIComponent(
+    `Hello, I found this beautiful ${crochet.name} on your mellycrochets.org and I'm interested. I would like to ask a few questions about it.`
+  );
+
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg my-8">
       <Card bordered={false} className="rounded-lg">
@@ -190,7 +194,7 @@ export default function IndexPage({ params }) {
             <p className="text-gray-600 text-lg">{crochet.description}</p>
 
             <div className="mt-4 flex flex-col gap-4">
-              <Space style={{ columnGap: 0}}>
+              <Space style={{ columnGap: 0 }}>
                 <Button
                   onClick={() => setCartQty((prev) => Math.max(0, prev - 1))}
                   style={{
@@ -231,6 +235,8 @@ export default function IndexPage({ params }) {
                   danger
                   icon={<ContactsOutlined />}
                   style={{ borderRadius: 50 }}
+                  href={`https://wa.me/237681077051?text=${text}`}
+                  target="_blank"
                 >
                   Contact Seller
                 </Button>

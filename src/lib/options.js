@@ -51,7 +51,7 @@ const authOptions = {
         }
 
         const { password, ...userWithoutPassword } = currentUser.toJSON();
-        return userWithoutPassword; // User must contain { id, name, email, image }.
+        return userWithoutPassword;
       },
     }),
   ],
@@ -100,7 +100,6 @@ const authOptions = {
     },
 
     async signIn({ user, account, profile }) {
-      console.log("callback: ", account, profile);
       if (account?.provider !== "credentials") {
         try {
           // find user by email
@@ -108,7 +107,6 @@ const authOptions = {
             where: { email: user.email },
           });
           if (!existingUser) {
-            console.log("Creating new user...");
             await User.create({
               ...emptyUser,
               id: nanoid(20),
@@ -121,7 +119,6 @@ const authOptions = {
             });
           }
         } catch (error) {
-          console.log("Error: ", error.message);
           return false;
         }
       }

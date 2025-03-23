@@ -2,7 +2,7 @@
 
 import { App as AntdApp, ConfigProvider, theme } from "antd";
 import Cookies from "js-cookie";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { themeConfig } from "../../utils/theme";
 
 export const ColorModeContext = createContext({});
@@ -53,3 +53,7 @@ export const ColorModeContextProvider = ({ children, defaultMode }) => {
     </ColorModeContext.Provider>
   );
 };
+
+export function useColorMode() {
+  return useContext(ColorModeContext);
+}

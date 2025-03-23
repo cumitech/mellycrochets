@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from "@constants/constant";
+import { TOKEN_KEY } from "../constants/constant";
 
 export const useToken = () => {
   let token = "";

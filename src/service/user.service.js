@@ -1,10 +1,10 @@
 import { requestType } from ".";
 
 export const userService = {
-  list: () => requestType.get("/api/users"),
-  details: (code) => requestType.get(`/api/users/${code}`),
-  getUserByEmail: (email) => requestType.get(`/api/users?email=${email}`),
-  create: (user) => requestType.post(`/api/users`, user),
-  update: (user) => requestType.put(`/api/users`, user),
-  delete: (user) => requestType.del(`/api/users`, user),
+  list: () => requestType.get("/users"),
+  details: (code) => requestType.get(`/users/${code}`),
+  getUserByEmail: (email) => requestType.get(`/users?email=${email}`),
+  create: (user) => requestType.post(`/users`, user),
+  update: (user) => requestType.put(`/users`, user),
+  delete: (user) => requestType.del(`/users`, user),
 };

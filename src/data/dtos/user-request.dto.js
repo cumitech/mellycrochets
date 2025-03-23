@@ -1,5 +1,6 @@
 import { emptyUser } from "../models";
 import { nanoid } from "nanoid";
+import bcrypt from "bcryptjs";
 
 class UserRequestDto {
   constructor(data) {
@@ -23,10 +24,6 @@ class UserRequestDto {
       throw new Error("Username must not be more than 50 characters.");
     }
 
-    if (!data.provider || typeof data.provider !== "string") {
-      throw new Error("Provider must be a string.");
-    }
-
     if (!data.password || typeof data.password !== "string") {
       throw new Error("Password must be a string.");
     }
@@ -40,11 +37,11 @@ class UserRequestDto {
     }
     this.email = data.email;
     this.username = data.username;
-    this.image = data.image;
-    this.role = data.role;
-    this.provider = data.provider;
-    this.phone = data.phone;
-    this.verified = data.verified;
+    this.image = "";
+    this.role = "user";
+    this.provider = "credentials";
+    this.phone = "";
+    this.verified = true;
     this.password = data.password;
     this.confirmPassword = data.confirmPassword;
   }
@@ -54,6 +51,7 @@ class UserRequestDto {
     this.password = hashedPassword;
     this.confirmPassword = undefined;
 
+    console.log("hash: ", hashedPassword);
     return {
       ...emptyUser,
       id: nanoid(10),

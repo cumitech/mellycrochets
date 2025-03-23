@@ -9,9 +9,9 @@ import CrochetList from "../components/crochet/crochet-list.component";
 import FilterCrochets from "../components/filter-crochet.component";
 import { Button, Space } from "antd";
 import CrochetCareTips from "../components/after-care/after-care.component";
+import SignupPrompt from "../components/signup/signup.component";
 
 export default async function IndexPage() {
-  // const { response } = await gelocation();
 
   return (
     <>
@@ -117,6 +117,8 @@ export default async function IndexPage() {
       </section>
 
       <CrochetCareTips />
+
+      <SignupPrompt />
     </>
   );
 }

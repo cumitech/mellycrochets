@@ -5,7 +5,6 @@ import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 import routerProvider from "@refinedev/nextjs-router";
 

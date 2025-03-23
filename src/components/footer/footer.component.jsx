@@ -100,13 +100,18 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/aftercare" className="footer-link">
+              <Link href="/after_cares" className="footer-link">
                 Aftercare
               </Link>
             </li>
             <li>
               <Link href="/crochets" className="footer-link">
                 Crochet Listings
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="footer-link">
+                Privacy Policy
               </Link>
             </li>
           </ul>

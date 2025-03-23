@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilters } from "../store/slice/crochet.slice";
+
 export const useFilter = () => {
   const dispatch = useDispatch();
 

@@ -9,8 +9,8 @@ import {
   theme,
   Typography,
 } from "antd";
-import React, { useContext } from "react";
-import { ColorModeContext } from "../../contexts/color-mode";
+import React from "react";
+import { useColorMode } from "../../contexts/color-mode";
 
 const { Text } = Typography;
 const { useToken } = theme;
@@ -18,7 +18,7 @@ const { useToken } = theme;
 export const Header = ({ sticky = true }) => {
   const { token } = useToken();
   const { data: user } = useGetIdentity({});
-  const { mode, setMode } = useContext(ColorModeContext);
+  const { mode, setMode } = useColorMode();
 
   const headerStyles = {
     backgroundColor: token.colorBgElevated,

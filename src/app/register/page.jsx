@@ -10,8 +10,8 @@ import Link from "next/link";
 
 import "../../assets/css/globals.css";
 import { FaLock } from "react-icons/fa";
-import { authService } from "../../service/auth.service";
 import { useNotification } from "@refinedev/core";
+import { userService } from "../../service/user.service";
 
 export default function Register() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function Register() {
 
   const onFinish = async (values) => {
     setLoading(true);
-    const response = await authService.register({
+    const response = await userService.create({
       email: values.email,
       username: values.username,
       password: values.password,
@@ -28,10 +28,10 @@ export default function Register() {
     });
 
     if (response?.success) {
-      router.push("/"); // Redirect after successful login
+      router.push("/login"); 
       open?.({
         type: "success",
-        message: "Login Successful!",
+        message: "Registration Successful!",
         key: "notification-key-open",
         placement: "bottomRight",
       });
@@ -39,7 +39,7 @@ export default function Register() {
     } else {
       open?.({
         type: "error",
-        message: "Login Failed!",
+        message: "Registration Failed!",
         key: "notification-key-open",
         placement: "bottomRight",
       });
