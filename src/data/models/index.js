@@ -6,11 +6,13 @@ const emptyCartItem = {
   quantity: 0,
   total: 0,
   price: 0,
+  colors: [],
 };
 
 const emptyCrochetType = {
   id: "",
   name: "",
+  slug: "",
   description: "",
 };
 
@@ -48,21 +50,24 @@ const emptyPayment = {
 };
 
 const emptyCrochet = {
-  id: "",
-  crochetTypeId: "",
+  id: "", // Empty string for ID
   name: "",
-  brand: "",
-  species: "",
-  price: 0.0,
-  shortDescription: "",
+  slug: "",
   description: "",
-  stockQuantity: 0,
-  crochetImages: [],
-  tags: [],
-  isAvailable: true,
-  expirationDate: null,
-  rating: 0.0,
-  discountPercentage: 0.0,
+  crochetTypeId: "",
+  imageUrls: [], // Empty array for images
+  price: 0.0, // Default price
+  createdAt: new Date().toISOString(), // Current timestamp
+  updatedAt: new Date().toISOString(),
+};
+
+const emptyCrochetSize = {
+  id: "", // Empty string for ID
+  crochetId: "",
+  sizeId: null, // Nullable
+  colors: [], // Empty array for colors
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 const emptyMedia = {
   id: "",
@@ -103,6 +108,7 @@ const emptyReview = {
 
 const emptyAfterCare = {
   id: "",
+  slug: "",
   title: "",
   videoUrl: "",
   description: "",
@@ -127,6 +133,7 @@ const emptyPost = {
 };
 
 export {
+  emptyCrochetSize,
   emptyCartItem,
   emptyCrochetType,
   emptyOrderItem,
