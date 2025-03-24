@@ -114,7 +114,7 @@ const AppNavigation = () => {
               pathname === "/after_cares" ? "active" : ""
             }`}
           >
-            After Care
+            {t("aftercare")}
           </Link>
 
           <Link
@@ -123,7 +123,7 @@ const AppNavigation = () => {
               pathname === "/crochets" ? "active" : ""
             }`}
           >
-            Crochets
+            {t("crochets")}
           </Link>
 
           <Link
@@ -141,7 +141,7 @@ const AppNavigation = () => {
               pathname === "/blog_posts" ? "active" : ""
             }`}
           >
-            Article
+            {t("article")}
           </Link>
 
           <Link
