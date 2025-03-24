@@ -7,7 +7,19 @@
     "posts": "Posts",
     "faqs": "FAQ",
     "contact": "Contact",
-    "aftercare": "Aftercare"
+    "aftercare": "Aftercare",
+    "crochets": "Crochets",
+    "article": "Articles"
+  },
+  "social": {
+    "connect": "Let's connect Via",
+    "listing":"Crochets Listings",
+    "message":"Browse our latest crochet collections"
+  },
+  "filtercrochet":{
+    "crochetDesigns":"Crochet Designs",
+    "color":"Color",
+    "size": "Size"
   },
   "menus": {
     "dashboard": "Dashboard",

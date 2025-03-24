@@ -13,10 +13,12 @@ import SizeSelect from "./filter-product/size.component";
 // import PriceSelect from "./filter-product/price.component";
 import { crochetTypeAPI } from "../store/api/crochet_type_api";
 import { sizeAPI } from "../store/api/size_api";
+import { useTranslations } from "next-intl";
 
 const FilterCrochets = () => {
   const { open } = useNotification();
   const { setFilteredCrochets, resetFilter } = useFilter();
+  const t = useTranslations("filtercrochet")
   const [fetchFilteredCrochets] = crochetAPI.useLazyFetchFilteredCrochetsQuery();
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
@@ -109,7 +111,7 @@ const FilterCrochets = () => {
             <div className="grid md:grid-cols-4 lg:grid-cols-4 gap-4">
               <div>
                 <label className="text-left font-semibold">
-                  Crochet Designs
+                {t("crochetDesigns")}
                 </label>
                 <CrochetTypeSelect
                   setCrochetTypeId={setCrochetTypeId}
@@ -121,7 +123,7 @@ const FilterCrochets = () => {
               </div>
 
               <div>
-                <label className="text-left font-semibold">Color</label>
+                <label className="text-left font-semibold">{t("color")}</label>
                 <ColorSelect
                   setColor={setColor}
                   color={color}
@@ -132,7 +134,7 @@ const FilterCrochets = () => {
               </div>
 
               <div>
-                <label className="text-left font-semibold">Size</label>
+                <label className="text-left font-semibold">{t("size")}</label>
                 <SizeSelect
                   setSize={setSize}
                   size={size}

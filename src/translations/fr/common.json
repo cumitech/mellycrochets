@@ -1,10 +1,24 @@
 {
-  "components": {
-    "navigation": {
-      "home": "Bienvenue",
-      "about": "À propos",
-      "contact": "Contact",
-      "aftercare": "Après soins"
-    }
+  "navigation": {
+    "home": "Bienvenue",
+    "about": "À propos",
+    "services": "Services",
+    "trainings": "Formations",
+    "posts": "Articles",
+    "faqs": "FAQ",
+    "contact": "Contact",
+    "aftercare": "Suivi",
+    "crochets": "Crochets",
+    "article": "Article"
+  },
+  "social": {
+    "connect": "Connectons-nous via",
+    "listing": "Liste des crochets",
+    "message": "Parcourez nos dernières collections de crochets"
+  },
+  "filtercrochet": {
+    "crochetDesigns": "Modèles de crochet",
+    "color": "Couleur",
+    "size": "Taille"
   }
 }

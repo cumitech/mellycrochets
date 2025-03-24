@@ -1,13 +1,14 @@
 import React from "react";
 import { FaWhatsapp, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { FaFacebook, FaTiktok } from "react-icons/fa";
-import { BiLogoGmail } from "react-icons/bi";
+import { useTranslations } from "next-intl";
 
 const SocialIcons = () => {
+  const t = useTranslations("social");
   return (
     <div className="social-links pt-15 pb-20 md:pb-30">
       <h1 className="heading1 font-playfair text-black">
-        Let&apos;s Connect Via
+      {t("connect")}
       </h1>
       <div className="icons">
         <a
