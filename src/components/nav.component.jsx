@@ -1,9 +1,9 @@
 "use client";
 
-import { Image } from "antd";
+import { Image, Space } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import AppLanguage from "./shared/language.component";
 import ShoppingCart from "./shopping-cart/shopping-cart";
@@ -25,9 +25,9 @@ export const emptyCartItem = {
 const AppNavigation = () => {
   const [isOpen, setOpen] = useState(false);
   const { data: user } = useGetIdentity({});
-  const [visible, setVisible] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+  const menuRef = useRef(null);
 
   const pathname = usePathname();
   const t = useTranslations("navigation");
@@ -35,6 +35,24 @@ const AppNavigation = () => {
   const role = user?.role;
 
   const socket = useSocket();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (!socket) return;
@@ -64,7 +82,7 @@ const AppNavigation = () => {
   }, []);
 
   return (
-    <nav className="bg-[#fdf3f3] py-1 px-10 md:px-30 lg:px-50 shadow-md">
+    <nav className="bg-[#fdf3f3] py-1 px-10 md:px-30 lg:px-50 shadow-md z-10">
       <div className="flex justify-between items-center">
         <div className="aspect-w-16 aspect-h-9 text-2xl font-bold text-gray-900">
           <Link href="/">
@@ -105,7 +123,7 @@ const AppNavigation = () => {
               pathname === "/crochets" ? "active" : ""
             }`}
           >
-            Crochet Listings
+            Crochets
           </Link>
 
           <Link
@@ -163,6 +181,16 @@ const AppNavigation = () => {
           )}
         </div>
 
+        <div className="md:hidden lg:hidden xl:hidden absolute right-25 mb-0">
+          <Space align="center">
+            <AppLanguage />
+
+            <div className="shoppingCart" style={{ marginLeft: 0 }}>
+              <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
+            </div>
+          </Space>
+        </div>
+
         {/* mobile menu */}
         <div className="md:hidden">
           <button
@@ -174,7 +202,7 @@ const AppNavigation = () => {
         </div>
 
         {isOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-white shadow-md py-5 px-10 md:px-30 lg:px-50 z-10">
+          <div ref={menuRef} className="md:hidden absolute top-20 left-0 right-0 bg-[#fdf3f3] mt-3 py-5 px-10 md:px-30 lg:px-50 z-[1]">
             <div className="flex flex-col space-y-6">
               <Link
                 href="/"
@@ -200,7 +228,7 @@ const AppNavigation = () => {
                   pathname === "/crochets" ? "active" : ""
                 }`}
               >
-                Crochet Listings
+                Crochet
               </Link>
 
               <Link
@@ -229,12 +257,6 @@ const AppNavigation = () => {
               >
                 {t("contact")}
               </Link>
-
-              <AppLanguage />
-
-              <div className="shoppingCart" style={{ marginTop: 10, marginLeft:0}}>
-                <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
-              </div>
             </div>
           </div>
         )}

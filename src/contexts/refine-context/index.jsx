@@ -28,7 +28,7 @@ export const RefineContext = (props) => {
         >
           <FloatButton
             icon={<WhatsAppOutlined />}
-            href="https://wa.me/237699004450"
+            href="https://wa.me/237681077051"
             target="_blank"
             tooltip="WhatsApp"
             type="primary"
@@ -36,7 +36,7 @@ export const RefineContext = (props) => {
           />
           <FloatButton
             icon={<PhoneOutlined />}
-            href="tel:+237675280634"
+            href="tel:+237681077051"
             target="_blank"
             tooltip="Call Us"
             type="primary"
