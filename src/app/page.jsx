@@ -13,7 +13,7 @@ import SignupPrompt from "../components/signup/signup.component";
 import { useTranslations } from "next-intl";
 
 export default async function IndexPage() {
-const t = useTranslations("social")
+  const t = useTranslations("social");
   return (
     <>
       <AppHero />
@@ -27,10 +27,10 @@ const t = useTranslations("social")
       <div className="w-full px-10 md:pt-10" data-aos="fade-up">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-3/4">
-            <h2 className="text-2xl text-gray-950 font-extrabold">{t("listing")}</h2>
-            <p className="text-gray-800">
-            {t("message")}
-            </p>
+            <h2 className="text-2xl text-gray-950 font-extrabold">
+              {t("listing")}
+            </h2>
+            <p className="text-gray-800">{t("message")}</p>
           </div>
           <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
             <Link
@@ -57,13 +57,13 @@ const t = useTranslations("social")
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="grid grid-cols-2 gap-2">
             <img
-              src="/mellycrochets/dd/ten.png"
+              src="/photos/image8.jpg"
               alt="Crochet 1"
               className="rounded-lg border-4 border-pink-200 w-full h-auto object-cover"
               style={{ width: 245, height: 220 }}
             />
             <img
-              src="/mellycrochets/dd/product-jpeg-1.png"
+              src="/photos/image7.jpg"
               alt="Crochet 2"
               className="rounded-lg border-2 border-black w-full h-auto object-cover"
               style={{ width: 245, height: 220 }}
@@ -75,7 +75,7 @@ const t = useTranslations("social")
               style={{ width: 245, height: 220 }}
             />
             <img
-              src="/mellycrochets/dd/product-jpeg-3.png"
+              src="/photos/image9.jpg"
               alt="Crochet 4"
               className="rounded-lg border-4 border-pink-200 w-full h-auto object-cover"
               style={{ width: 245, height: 220 }}
@@ -87,17 +87,11 @@ const t = useTranslations("social")
               className="text-2xl font-semibold text-gray-800"
               style={{ marginBottom: 30 }}
             >
-              Crochets Aftercare
+              {t("crochetaftercare")}
             </h2>
-            <p className="text-gray-700 mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              eget eleifend lectus. Sed quis nisi lectus. Quisque vel leo diam.
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Inventore libero dicta vel dolorum doloremque saepe distinctio
-              corporis vero.
-            </p>
+            <p className="text-gray-700 mb-3">{t("summary")}</p>
             <p className="text-sm text-gray-600" style={{ marginBottom: 30 }}>
-              Stay inspired with exclusive crochet fashion tips & updates!
+              {t("subSummary")}
             </p>
 
             <Button
@@ -111,7 +105,7 @@ const t = useTranslations("social")
                 fontWeight: 500,
               }}
             >
-              Join Our Community <FiArrowRight />
+              {t("btn")} <FiArrowRight />
             </Button>
           </div>
         </div>
