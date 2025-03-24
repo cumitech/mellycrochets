@@ -15,14 +15,11 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      // crochetTypeId: {
-      //   type: Sequelize.STRING(20),
-      //   allowNull: false,
-      //   references: {
-      //     model: "crochet_types",
-      //     key: "id",
-      //   },
-      // },
+      slug: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        unique: true,
+      },
       title: {
         type: Sequelize.STRING(255),
         allowNull: false,

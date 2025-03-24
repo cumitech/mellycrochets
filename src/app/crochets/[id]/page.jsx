@@ -3,7 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button, Card, Descriptions, Image, Input, Space } from "antd";
+import {
+  Button,
+  Card,
+  Descriptions,
+  Image,
+  Input,
+  Space,
+  Tag,
+  Tooltip,
+} from "antd";
 import {
   ContactsOutlined,
   MinusOutlined,
@@ -16,6 +25,7 @@ import { crochetAPI } from "../../../store/api/crochet_api";
 import SpinnerList from "../../../components/spinner-list";
 import CustomImage from "../../../components/shared/custom-image.component";
 import { useCart } from "../../../hooks/cart.hook";
+import { allColors, allSizes } from "../../../constants/constant";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -29,6 +39,7 @@ export default function IndexPage({ params }) {
   const [cartQty, setCartQty] = useState(1);
   const [loadingAddToCart, setLoadingAddToCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
 
   const { open } = useNotification();
   const { data: session } = useSession();
@@ -51,7 +62,10 @@ export default function IndexPage({ params }) {
   }
 
   const availableSizes = crochet.sizes.map((size) => size.label);
-  const allSizes = ["S", "M", "L", "XL", "XXL"];
+  const availableColors = crochet.sizes.flatMap((size) => size.colors);
+
+  // const allSizes = ["S", "M", "L", "XL", "XXL"];
+
   const selectedSizeObj = crochet.sizes.find(
     (size) => size.label === selectedSize
   );
@@ -121,7 +135,7 @@ export default function IndexPage({ params }) {
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg my-8">
-      <Card bordered={false} className="rounded-lg">
+      <Card variant={"borderless"} className="rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative py-3">
             <Image.PreviewGroup
@@ -150,42 +164,99 @@ export default function IndexPage({ params }) {
             </h1>
             <p className="text-md font-semibold text-gray-700">
               <span className="text-red-500">
-                {selectedSizeObj?.price || crochet.sizes[0].price} XAF
+                {crochet.price} XAF
               </span>
             </p>
 
             <div className="mt-8">
               <p className="text-md text-gray-700">
-                <span className="font-semibold">Quantity</span> <br />
-                <span>{crochet.sizes[0].stock} Pieces</span>
+                <span className="font-semibold">Available Sizes</span> <br />
+                {availableSizes.map((size) => (
+                  <Tag key={size} color="cyan">
+                    {size}
+                  </Tag>
+                ))}
               </p>
             </div>
 
             <div className="mb-8">
-              <p className="text-md font-semibold text-gray-700">Sizes</p>
+              <p className="text-md font-semibold text-gray-700">
+                Select Your Size
+              </p>
               <Space>
                 {allSizes.map((size) => {
-                  const isAvailable = availableSizes.includes(size);
-                  const isActive = selectedSize === size;
+                  // const isAvailable = availableSizes.includes(size.key);
+                  const isActive = selectedSize === size.key;
                   return (
-                    <Button
-                      key={size}
-                      style={{
-                        borderRadius: 50,
-                        padding: "0 15px",
-                        background: isActive
-                          ? "#cb384e"
-                          : isAvailable
-                          ? "#fdf3f3"
-                          : "#e0e0e0",
-                        border: isAvailable ? "2px solid #cb384e" : "none",
-                        color: isActive ? "white" : "black",
-                      }}
-                      disabled={!isAvailable}
-                      onClick={() => isAvailable && setSelectedSize(size)}
-                    >
-                      {size}
-                    </Button>
+                    <Tooltip title={size.description} key={size.key}>
+                      <Button
+                        key={size.key}
+                        style={{
+                          borderRadius: 50,
+                          padding: "0 15px",
+                          background: isActive ? "#cb384e" : "#fdf3f3",
+                          // background: isActive
+                          //   ? "#cb384e"
+                          //   : isAvailable
+                          //   ? "#fdf3f3"
+                          //   : "#e0e0e0",
+                          border: isAvailable ? "2px solid #cb384e" : "none",
+                          color: isActive ? "white" : "black",
+                        }}
+                        // disabled={!isAvailable}
+                        // onClick={() => isAvailable && setSelectedSize(size.key)}
+                        onClick={() => setSelectedSize(size.key)}
+                      >
+                        {size.key}
+                      </Button>
+                    </Tooltip>
+                  );
+                })}
+              </Space>
+            </div>
+
+            <div className="mt-8">
+              <p className="text-md text-gray-700">
+                <span className="font-semibold">Available Colors</span> <br />
+                {availableColors.map((size) => (
+                  <Tag key={size} color="cyan">
+                    {size}
+                  </Tag>
+                ))}
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <p className="text-md font-semibold text-gray-700">
+                Select your Colors
+              </p>
+              <Space>
+                {allColors.map((color) => {
+                  // const isAvailable = availableColors.includes(color);
+                  const isActive = selectedColor === color;
+                  return (
+                    <Tooltip title={color} key={color}>
+                      <Button
+                        key={color}
+                        style={{
+                          borderRadius: 50,
+                          padding: "0 15px",
+                          background: isActive ? "#cb384e" : "#fdf3f3",
+                          // background: isActive
+                          //   ? "#cb384e"
+                          //   : isAvailable
+                          //   ? "#fdf3f3"
+                          //   : "#e0e0e0",
+                          border: isAvailable ? "2px solid #cb384e" : "none",
+                          color: isActive ? "white" : "black",
+                        }}
+                        // disabled={!isAvailable}
+                        // onClick={() => isAvailable && setSelectedColor(color)}
+                        onClick={() => setSelectedColor(color)}
+                      >
+                        {color}
+                      </Button>
+                    </Tooltip>
                   );
                 })}
               </Space>
@@ -228,7 +299,7 @@ export default function IndexPage({ params }) {
                   icon={<PlusOutlined />}
                   style={{ borderRadius: 50 }}
                 >
-                  Add To Cart
+                  Place Order
                 </Button>
                 <Button
                   type="dashed"
@@ -246,7 +317,7 @@ export default function IndexPage({ params }) {
         </div>
       </Card>
 
-      <Card className="mt-6" bordered={false}>
+      <Card className="mt-6" variant={"borderless"}>
         <Descriptions
           title="Crochet Details"
           bordered
@@ -264,7 +335,7 @@ export default function IndexPage({ params }) {
             {crochet.description}
           </Descriptions.Item>
           <Descriptions.Item label="Price">
-            {selectedSizeObj?.price || crochet.sizes[0].price} XAF
+            {crochet.price} XAF
           </Descriptions.Item>
           <Descriptions.Item label="Quantity">
             {crochet.stock}

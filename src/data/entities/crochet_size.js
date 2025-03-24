@@ -18,19 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       sizeId: {
         type: DataTypes.STRING(20),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "sizes",
           key: "id",
         },
       },
-      stock: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-      },
-      price: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+      colors: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        defaultValue: [],
       },
     },
     {
