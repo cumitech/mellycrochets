@@ -56,28 +56,35 @@ const AppHero = () => {
           >
             <SwiperSlide className="flex justify-center">
               <img
-                src="/photos/product-jpeg-1000x1000-1-removebg-preview.png"
+                src="/photos/image5.png"
                 alt="Crochet Cardigan"
                 className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
               />
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
               <img
-                src="/photos/68254a16642a7d7bcfe341fb778f29ed-removebg-preview.png"
+                src="/photos/image2.png"
                 alt="Crochet Cardigan"
                 className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
               />
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
               <img
-                src="/photos/c6f4bf8fe8d844642a5382dc33b8ae27-removebg-preview.png"
+                src="/photos/image3.png"
                 alt="Crochet Cardigan"
                 className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
               />
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
               <img
-                src="/photos/carkli-motifli-bayan-bol-yesil-hirka_-_Nazarca_com-removebg-preview.png"
+                src="/photos/image4.png"
+                alt="Crochet Cardigan"
+                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+              />
+            </SwiperSlide>
+            <SwiperSlide className="flex justify-center">
+              <img
+                src="/photos/image1.png"
                 alt="Crochet Cardigan"
                 className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
               />
