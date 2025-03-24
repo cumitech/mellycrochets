@@ -24,6 +24,7 @@ class CrochetTypeRequestDto {
     }
 
     this.name = data.name;
+    this.slug = data.slug;
     this.description = data.description;
   }
 

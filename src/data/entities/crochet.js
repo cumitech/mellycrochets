@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(128),
         allowNull: false,
       },
+      slug: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        unique: true,
+      },
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -27,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       imageUrls: {
         type: DataTypes.JSON, // Stores multiple image URLs
       },
-      color: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
+      price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
       },
     },
     {

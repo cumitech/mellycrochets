@@ -27,21 +27,18 @@ module.exports = {
       },
       sizeId: {
         type: Sequelize.STRING(20),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "sizes",
           key: "id",
         },
         onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
       },
-      stock: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
-      price: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
+      colors: {
+        type: Sequelize.JSON,
+        allowNull: true,
+        defaultValue: [],
       },
       createdAt: {
         allowNull: false,
@@ -63,6 +60,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('crochet_sizes');
+    await queryInterface.dropTable("crochet_sizes");
   },
 };
