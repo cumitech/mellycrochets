@@ -56,7 +56,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
           )}
         />
 
-        <Space style={{ justifyContent: "flex-end"}}>
+        <Space style={{ justifyContent: "flex-end" }}>
           <Button
             type="primary"
             onClick={() => handleCheckoutSubmit()}
@@ -66,7 +66,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
               borderRadius: 50,
             }}
           >
-            Checkout
+            Confirm your order
           </Button>
         </Space>
       </div>
