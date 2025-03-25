@@ -47,10 +47,7 @@ const AppNavigation = () => {
   useEffect(() => {
     if (!socket) return;
 
-    console.log("Attempting to connect to Socket.IO...");
-
     const handleCartEvent = (data) => {
-      console.log("✅ Cart Event Received:", data);
       setCartItems(data);
       setCartCount(data.length);
     };
@@ -194,7 +191,7 @@ const AppNavigation = () => {
         {isOpen && (
           <div
             ref={menuRef}
-            className="md:hidden absolute top-20 left-0 right-0 bg-[#fdf3f3] mt-3 py-5 px-10 md:px-30 lg:px-50 z-[1]"
+            className="md:hidden absolute top-20 left-0 right-0 bg-[#fdf3f3] mt-3 py-5 px-10 md:px-30 lg:px-50 z-50"
           >
             <div className="flex flex-col space-y-6">
               <Link

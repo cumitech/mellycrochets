@@ -32,6 +32,7 @@ export default function IndexPage() {
           <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
             <Button
               href="/crochets"
+              size="large"
               className="bg-red-900 text-white rounded-2xl hover:text-white text-sm font-semibold transition-all duration-300"
               style={{
                 borderRadius: 50,
@@ -107,6 +108,7 @@ export default function IndexPage() {
                 color: "#fff",
                 fontWeight: 500,
               }}
+              size="large"
               icon={<FiArrowRight />}
               iconPosition="end"
             >

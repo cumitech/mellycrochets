@@ -16,8 +16,9 @@ import { useTranslations } from "next-intl";
 const FilterCrochets = () => {
   const { open } = useNotification();
   const { setFilteredCrochets, resetFilter } = useFilter();
-  const t = useTranslations("filtercrochet")
-  const [fetchFilteredCrochets] = crochetAPI.useLazyFetchFilteredCrochetsQuery();
+  const t = useTranslations("filtercrochet");
+  const [fetchFilteredCrochets] =
+    crochetAPI.useLazyFetchFilteredCrochetsQuery();
   const [size, setSize] = useState("");
   const [crochetTypeId, setCrochetTypeId] = useState("");
 
@@ -29,7 +30,6 @@ const FilterCrochets = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // Reset all form values
   const handleFilterReset = () => {
     setSize("");
     setCrochetTypeId("");
@@ -47,25 +47,15 @@ const FilterCrochets = () => {
       if (crochetTypeId) filters.crochetTypeId = crochetTypeId;
 
       const { data } = await fetchFilteredCrochets(filters);
-      if (data && data.length > 0) {
-        setFilteredCrochets(data);
-        open({
-          type: "success",
-          message: `${data.length} Crochets returned!`,
-          key: "notification-key-open",
-          placement: "bottomRight",
-        });
-      } else {
-        open({
-          type: "Success",
-          message: `${data.length} crochets found!`,
-          key: "notification-key-error",
-          placement: "bottomRight",
-        });
-        // message.info("No filtered data received.");
-      }
+      setFilteredCrochets(data);
+      open({
+        type: "success",
+        message: `${data.length} Crochets returned!`,
+        key: "notification-key-open",
+        placement: "bottomRight",
+      });
     } catch (error) {
-      console.error("Error fetching crochets:", error);
+      setLoading(false);
     } finally {
       setLoading(false); // Hide loader
     }
@@ -100,7 +90,7 @@ const FilterCrochets = () => {
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <label className="text-left font-semibold">
-                {t("crochetDesigns")}
+                  {t("crochetDesigns")}
                 </label>
                 <CrochetTypeSelect
                   setCrochetTypeId={setCrochetTypeId}

@@ -48,41 +48,42 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
   }, 0);
 
   const onConfirmOrder = async (data) => {
-    const obj = {
-      ...emptyOrder,
-      orderNo: generateOrderNumber(),
-      crochets: cartItems.map((mp) => {
-        return {
-          crochetId: mp.crochetId,
-          qtty: mp.quantity,
-          price: mp.price,
-        };
-      }),
-      status: "ORDERED",
-      totalAmount: total,
-      totalQtty: totalQtty,
-      address: data.address,
-      cellPhone: data.telephone,
-      email: data.email,
-      username: data.username,
-    };
-    try {
-      const response = await OrderService.create(obj);
+    console.log(data);
+    // const obj = {
+    //   ...emptyOrder,
+    //   orderNo: generateOrderNumber(),
+    //   crochets: cartItems.map((mp) => {
+    //     return {
+    //       crochetId: mp.crochetId,
+    //       qtty: mp.quantity,
+    //       price: mp.price,
+    //     };
+    //   }),
+    //   status: "ORDERED",
+    //   totalAmount: total,
+    //   totalQtty: totalQtty,
+    //   address: data.address,
+    //   cellPhone: data.telephone,
+    //   email: data.email,
+    //   username: data.username,
+    // };
+    // try {
+    //   const response = await OrderService.create(obj);
 
-      if (response.success) {
-        setCheckoutDrawerOpen(false);
-        onFinish();
-        message.success("Placing your order!");
-        const query = { orderId: response.data.id, method };
-        navigator.push(
-          `/process-payment?${new URLSearchParams(query).toString()}`
-        );
-      }
-      return response;
-    } catch (error) {
-      message.error("An error occured!");
-      return error;
-    }
+    //   if (response.success) {
+    //     setCheckoutDrawerOpen(false);
+    //     onFinish();
+    //     message.success("Placing your order!");
+    //     const query = { orderId: response.data.id, method };
+    //     navigator.push(
+    //       `/process-payment?${new URLSearchParams(query).toString()}`
+    //     );
+    //   }
+    //   return response;
+    // } catch (error) {
+    //   message.error("An error occured!");
+    //   return error;
+    // }
   };
 
   return (
@@ -118,7 +119,7 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             rules={[{ required: true, message: "Please enter your full name" }]}
             style={{ marginBottom: 10 }}
           >
-            <Input placeholder="Enter your full name..." />
+            <Input size={"large"} placeholder="Enter your full name..." />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -126,14 +127,14 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             rules={[{ required: true, message: "Please enter your email" }]}
             style={{ marginBottom: 10 }}
           >
-            <Input placeholder="Enter your email..." />
+            <Input size={"large"} placeholder="Enter your email..." />
           </Form.Item>
           <Form.Item
             label="Address"
             name="address"
             rules={[{ required: true, message: "Please enter your address" }]}
           >
-            <Input placeholder="Enter your address..." />
+            <Input size={"large"} placeholder="Enter your address..." />
           </Form.Item>
 
           <Form.Item
@@ -141,7 +142,7 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             name="telephone"
             rules={[{ required: true, message: "Please enter your telephone" }]}
           >
-            <Input placeholder="Enter your telephone..." />
+            <Input size={"large"} placeholder="Enter your telephone..." />
           </Form.Item>
 
           <Space align="end" style={{ marginTop: 20 }}>
@@ -222,6 +223,7 @@ export default function CartPage() {
             </h2>
             <div className="checkoutForm">
               <Table
+                size="large"
                 dataSource={cartItems}
                 pagination={false}
                 rowKey={(data) => data.id}
@@ -297,6 +299,8 @@ export default function CartPage() {
                     ),
                   },
                 ]}
+                scroll={{ x: "max-content" }} // Enables horizontal scrolling on smaller screens
+                style={{ overflowX: "auto" }} // Ensures proper scrolling behavior
               />
               <Typography.Paragraph>
                 {getCartSummary(cartItems)}

@@ -1,3 +1,4 @@
+import { format } from "../../lib/format";
 import { Typography } from "antd";
 
 export const getCartSummary = (cartItems) => {
@@ -16,7 +17,7 @@ export const getCartSummary = (cartItems) => {
         Total amount :
         <Typography.Text style={{ fontWeight: 600 }} type="danger">
           {" "}
-          {parseFloat(total.toString()).toFixed(0)} XAF
+          {format.number(total)} XAF
         </Typography.Text>
       </div>
     </div>

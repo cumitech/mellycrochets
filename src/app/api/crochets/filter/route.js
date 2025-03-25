@@ -9,7 +9,6 @@ export async function GET(request) {
   const crochetTypeId = searchParams.get("crochetTypeId");
   const sizeId = searchParams.get("sizeId");
 
-  console.log("searchParams: ", searchParams);
   try {
     const crochets = await crochetRepository.filter({
       crochetTypeId,

@@ -121,15 +121,20 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
   return (
     <>
       <Popover
-        placement="bottomRight"
+        placement="bottom"
         title={"Your Cart"}
         content={<CartHolder />}
         trigger="click"
         open={popovervisible}
         onOpenChange={handlePopoverChange}
+        styles={{
+          body: {
+            marginRight: 30,
+          },
+        }}
       >
         <Badge count={cartCount} style={{ color: "#ddd" }}>
-          <ShoppingCartOutlined className="shoppingCardIcon" />
+          <ShoppingCartOutlined className="shoppingCardIcon" style={{ fontSize: 30}} />
         </Badge>
       </Popover>
     </>

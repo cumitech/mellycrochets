@@ -68,7 +68,7 @@ const CrochetCareTips = () => {
             size="large"
             accordion
             items={items}
-            expandIconPosition={"right"}
+            expandIconPosition={"end"}
             defaultActiveKey={items && items.length > 0 ? items[0].key : null}
           />
         </div>

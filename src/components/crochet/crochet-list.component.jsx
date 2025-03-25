@@ -1,3 +1,4 @@
+"use client";
 import { Col, Empty, Row } from "antd";
 import React from "react";
 import CrochetCard from "./crochet-card.component";
@@ -18,6 +19,7 @@ const CrochetList = () => {
     filteredCrochets && filteredCrochets.length > 0
       ? filteredCrochets
       : crochets;
+
 
   return (
     <>
