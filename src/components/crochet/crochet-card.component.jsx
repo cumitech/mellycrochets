@@ -40,7 +40,7 @@ const CrochetCard = ({ crochet }) => {
             title={
               <div className="flex justify-between align-middle">
                 <Link
-                  href={`/crochets/${crochet.id}`}
+                  href={`/crochets/${crochet.slug}`}
                   className="nav-link text-gray-800 hover:text-red-500"
                 >
                   {crochet.name}

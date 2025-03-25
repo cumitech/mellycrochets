@@ -15,7 +15,7 @@ export default function Login() {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
 
-  console.log("redirect: ", redirect)
+  console.log("redirect: ", redirect);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { open } = useNotification();
@@ -32,14 +32,14 @@ export default function Login() {
     setLoading(false);
     if (response?.ok) {
       router.push(redirect); // Redirect after successful login
-      open?.({
+      open({
         type: "success",
         message: "Login Successful!",
         key: "notification-key-open",
         placement: "bottomRight",
       });
     } else {
-      open?.({
+      open({
         type: "error",
         message: "Login Failed!",
         key: "notification-key-open",

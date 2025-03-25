@@ -13,14 +13,14 @@ const ContactSection = () => {
           </p>
           <div>
             <p className="text-lg font-semibold text-red-950">Location:</p>
-            <div className="flex items-center justify-start">
+            <div className="flex items-center justify-center md:justify-start">
               <FaMapMarkerAlt className="text-xl text-gray-700 mr-2 mb-3" />
               <p className="text-gray-700">Bamenda, Cameroon</p>
             </div>
           </div>
           <div>
             <p className="text-lg font-semibold text-red-950">Phone:</p>
-            <div className="flex items-center justify-start">
+            <div className="flex items-center justify-center md:justify-start">
               <FaPhoneAlt className="text-xl text-gray-700 mr-2 mb-3" />
               <p className="text-gray-700 font-semibold">
                 237681077051 / 237640922135

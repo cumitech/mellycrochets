@@ -47,8 +47,9 @@ export default function IndexPage({ params }) {
   const { data: session } = useSession();
   const { addToCart } = useCart();
   const router = useRouter();
-  const { id } = params;
+  const { slug } = params;
 
+  console.log("params: ", params);
   const {
     data: sizes,
     isLoading: isLoadingSize,
@@ -58,7 +59,7 @@ export default function IndexPage({ params }) {
     data: crochet,
     isFetching,
     isLoading,
-  } = crochetAPI.useGetSingleCrochetQuery(id);
+  } = crochetAPI.useGetSingleCrochetBySlugQuery(slug);
 
   if (isLoading || isFetching || isLoadingSize || isFetchingSize) {
     return (
@@ -77,7 +78,7 @@ export default function IndexPage({ params }) {
 
   const handleAddToCart = async () => {
     if (!selectedSize) {
-      return open?.({
+      return open({
         type: "error",
         message: "Please select a size and color before adding to cart.",
         key: "notification-key-open",
@@ -95,7 +96,7 @@ export default function IndexPage({ params }) {
       );
 
       if (updatedCartItem?.length > 0) {
-        open?.({
+        open({
           type: "success",
           message: `${crochet.name} has been added to cart 👌`,
           key: "notification-key-open",
@@ -103,7 +104,7 @@ export default function IndexPage({ params }) {
         });
         window.location.reload();
       } else {
-        open?.({
+        open({
           type: "error",
           message: "Crochet not added to cart",
           key: "notification-key-open",
@@ -112,7 +113,7 @@ export default function IndexPage({ params }) {
         setLoadingAddToCart(true);
       }
     } else {
-      open?.({
+      open({
         type: "info",
         message: "Please sign in to continue",
         description: (

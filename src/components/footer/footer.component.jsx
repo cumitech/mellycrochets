@@ -48,9 +48,9 @@ const Footer = () => {
     <footer className="relative bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white pt-12 pb-3 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8  sm:justify-items-center">
         {/* Social Media */}
-        <div>
-          <h4 className="text-xl font-semibold mb-3">{t("socialMedia")}</h4>
-          <div className="flex gap-4">
+        <div className="text-center md:text-left">
+          <h4 className="text-2xl font-semibold mb-3">{t("socialMedia")}</h4>
+          <div className="flex justify-center md:justify-start gap-4">
             <Button
                href="https://wa.me/+237681077051"
               shape="circle"
@@ -101,8 +101,8 @@ const Footer = () => {
         </div>
 
         {/* Links */}
-        <div>
-          <h4 className="text-xl font-semibold mb-3">Links</h4>
+        <div className="text-center md:text-left">
+          <h4 className="text-2xl font-semibold mb-3">Links</h4>
           <ul className="space-y-2">
             <li>
               <Link href="/about" className="footer-link">
@@ -133,20 +133,20 @@ const Footer = () => {
         </div>
 
         {/* Contact Info */}
-        <div>
-          <h4 className="text-xl font-semibold mb-3">{t("contact")}</h4>
+        <div className="text-center md:text-left">
+          <h4 className="text-2xl font-semibold mb-3">{t("contact")}</h4>
           <ul className="space-y-2">
-            <li className="flex items-center gap-2">
+            <li className="flex justify-center md:justify-start items-center gap-2">
               <FiMapPin className="text-red-400" />
               <span className="text-lg">Bamenda, Cameroon</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex justify-center md:justify-start items-center gap-2">
               <FiPhone className="text-green-400" />
               <Link href="tel:+237674757243" className="footer-link">
                 +237 681 077 051 /640 922 135
               </Link>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex justify-center md:justify-start items-center gap-2">
               <FiMail className="text-blue-400" />
               <Link
                 href="mailto:mellycrochets25@gmail.com"

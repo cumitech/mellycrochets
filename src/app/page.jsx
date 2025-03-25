@@ -4,23 +4,20 @@
 import AppHero from "../components/app-hero/app-hero.component";
 import SocialIcons from "../components/shared/social-icons.component";
 import { FiArrowRight } from "react-icons/fi";
-import Link from "next/link";
 import CrochetList from "../components/crochet/crochet-list.component";
 import FilterCrochets from "../components/filter-crochet.component";
-import { Button, Space } from "antd";
+import { Button } from "antd";
 import CrochetCareTips from "../components/after-care/after-care.component";
 import SignupPrompt from "../components/signup/signup.component";
 import { useTranslations } from "next-intl";
 
-export default async function IndexPage() {
+export default function IndexPage() {
   const t = useTranslations("social");
   return (
     <>
       <AppHero />
-      <div className="container">
-        <div className="social">
-          <SocialIcons />
-        </div>
+      <div className="social w-full">
+        <SocialIcons />
       </div>
 
       {/* listings */}
@@ -33,22 +30,28 @@ export default async function IndexPage() {
             <p className="text-gray-800">{t("message")}</p>
           </div>
           <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
-            <Link
+            <Button
               href="/crochets"
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+              className="bg-red-900 text-white rounded-2xl hover:text-white text-sm font-semibold transition-all duration-300"
+              style={{
+                borderRadius: 50,
+                padding: "20px 25px",
+                background: "#82181a",
+                color: "#fff",
+                fontWeight: 500,
+              }}
+              icon={<FiArrowRight />}
+              iconPosition="end"
             >
-              <Space>
-                <span>View more </span>
-                <FiArrowRight />
-              </Space>
-            </Link>
+              {t("view-more")}
+            </Button>
           </div>
         </div>
       </div>
 
       {/* filter content */}
       <FilterCrochets />
-      <div className="w-full px-10 pb-10" data-aos="fade-up">
+      <div className="w-full px-10 pb-20" data-aos="fade-up">
         {/* listings */}
         <CrochetList />
       </div>
@@ -69,7 +72,7 @@ export default async function IndexPage() {
               style={{ width: 245, height: 220 }}
             />
             <img
-              src="/mellycrochets/dd/product-jpeg-2.png"
+              src="/mellycrochets/dd/crochet-bags-main.jpg"
               alt="Crochet 3"
               className="rounded-lg border-2 border-black w-full h-auto object-cover"
               style={{ width: 245, height: 220 }}
@@ -95,7 +98,7 @@ export default async function IndexPage() {
             </p>
 
             <Button
-              href="#"
+              href="https://www.instagram.com/mellycrochets_?igsh=cTkwZTc1eDcyaThw&utm_source=qr"
               className="bg-red-900 text-white rounded-2xl hover:text-white text-sm font-semibold transition-all duration-300"
               style={{
                 borderRadius: 50,
@@ -104,8 +107,10 @@ export default async function IndexPage() {
                 color: "#fff",
                 fontWeight: 500,
               }}
+              icon={<FiArrowRight />}
+              iconPosition="end"
             >
-              {t("btn")} <FiArrowRight />
+              {t("btn")}
             </Button>
           </div>
         </div>

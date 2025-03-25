@@ -11,6 +11,14 @@ export const crochetAPI = createApi({
     getSingleCrochet: build.query({
       query: (crochetId) => `/crochets/${crochetId}`,
     }),
+    getSingleCrochetBySlug: build.query({
+      query: (slug) => `/crochets/slugs/${slug}`,
+      transformResponse: (response) => ({
+        ...response,
+        createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
+        updatedAt: new Date(response.updatedAt).toISOString(),
+      }),
+    }),
     fetchAllCrochets: build.query({
       query: (page = 1) => `/crochets?page=${page}`,
       providesTags: ["Crochet"],

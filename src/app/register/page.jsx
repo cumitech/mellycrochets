@@ -28,8 +28,8 @@ export default function Register() {
     });
 
     if (response?.success) {
-      router.push("/login"); 
-      open?.({
+      router.push("/login");
+      open({
         type: "success",
         message: "Registration Successful!",
         key: "notification-key-open",
@@ -37,7 +37,7 @@ export default function Register() {
       });
       setLoading(false);
     } else {
-      open?.({
+      open({
         type: "error",
         message: "Registration Failed!",
         key: "notification-key-open",

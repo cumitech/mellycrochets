@@ -27,6 +27,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
+    console.log("body: ", body);
     const dto = new SubscriberRequestDto(body);
     const validationErrors = await validate(dto);
 
@@ -42,13 +43,25 @@ export async function POST(request) {
       );
     }
 
+    const existingEmail = await subscriberRepository.findByEmail(body.email);
+    if (existingEmail) {
+      return NextResponse.json(
+        {
+          message: "Emailed already subscribed!",
+          success: false,
+          data: null,
+        },
+        { status: 400 }
+      );
+    }
+
     const subscriberResponse = await subscriberRepository.create({
       ...dto.toData(),
     });
     return NextResponse.json(
       {
         data: subscriberResponse,
-        message: "subscriber created Successfully!",
+        message: "Email subscribed Successfully!",
         validationErrors: [],
         success: true,
       },

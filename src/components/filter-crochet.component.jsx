@@ -8,9 +8,7 @@ import { crochetAPI } from "../store/api/crochet_api";
 import { useFilter } from "../hooks/filter.hook";
 import { useNotification } from "@refinedev/core";
 import CrochetTypeSelect from "./filter-product/crochet-type-select.component";
-import ColorSelect from "./filter-product/color.component";
 import SizeSelect from "./filter-product/size.component";
-// import PriceSelect from "./filter-product/price.component";
 import { crochetTypeAPI } from "../store/api/crochet_type_api";
 import { sizeAPI } from "../store/api/size_api";
 import { useTranslations } from "next-intl";
@@ -20,13 +18,8 @@ const FilterCrochets = () => {
   const { setFilteredCrochets, resetFilter } = useFilter();
   const t = useTranslations("filtercrochet")
   const [fetchFilteredCrochets] = crochetAPI.useLazyFetchFilteredCrochetsQuery();
-  const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [crochetTypeId, setCrochetTypeId] = useState("");
-  // const [price, setPrice] = useState("");
-
-  const { data: crochets, isLoading: isLoadingCrochet } =
-    crochetAPI.useFetchAllCrochetsQuery(1);
 
   const { data: crochetTypes, isLoading: isLoadingCrochetType } =
     crochetTypeAPI.useFetchAllCrochetTypesQuery(1);
@@ -38,10 +31,8 @@ const FilterCrochets = () => {
 
   // Reset all form values
   const handleFilterReset = () => {
-    setColor("");
     setSize("");
     setCrochetTypeId("");
-    // setPrice("");
     resetFilter();
   };
 
@@ -52,24 +43,22 @@ const FilterCrochets = () => {
     try {
       const filters = {};
 
-      if (color) filters.color = color;
       if (size) filters.size = size;
       if (crochetTypeId) filters.crochetTypeId = crochetTypeId;
-      // if (price) filters.price = price;
 
       const { data } = await fetchFilteredCrochets(filters);
       if (data && data.length > 0) {
         setFilteredCrochets(data);
-        open?.({
+        open({
           type: "success",
-          message: "Crochets returned!",
+          message: `${data.length} Crochets returned!`,
           key: "notification-key-open",
           placement: "bottomRight",
         });
       } else {
-        open?.({
-          type: "error",
-          message: "No crochets returned!",
+        open({
+          type: "Success",
+          message: `${data.length} crochets found!`,
           key: "notification-key-error",
           placement: "bottomRight",
         });
@@ -108,7 +97,7 @@ const FilterCrochets = () => {
             className="w-full max-w-6xl mx-auto"
           >
             {/* <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4"> */}
-            <div className="grid md:grid-cols-4 lg:grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <label className="text-left font-semibold">
                 {t("crochetDesigns")}
@@ -123,17 +112,6 @@ const FilterCrochets = () => {
               </div>
 
               <div>
-                <label className="text-left font-semibold">{t("color")}</label>
-                <ColorSelect
-                  setColor={setColor}
-                  color={color}
-                  loading={loading}
-                  crochets={crochets}
-                  isLoading={isLoadingCrochet}
-                />
-              </div>
-
-              <div>
                 <label className="text-left font-semibold">{t("size")}</label>
                 <SizeSelect
                   setSize={setSize}
@@ -143,11 +121,6 @@ const FilterCrochets = () => {
                   isLoading={isLoadingSize}
                 />
               </div>
-
-              {/* <div>
-                <label className="text-left font-semibold">Price</label>
-                <PriceSelect min={50} max={5000} setPrice={setPrice} />
-              </div> */}
 
               <Space className="mb-0 mt-5">
                 <Button

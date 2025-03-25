@@ -190,7 +190,7 @@ export default function CartPage() {
     const feedback = await removeCrochet(item.id);
     console.log("feedback: ", feedback);
     if (feedback) {
-      open?.({
+      open({
         type: "success",
         message: `${item.crochet.name} has been removed from cart`,
         key: "notification-key-open",
@@ -198,7 +198,7 @@ export default function CartPage() {
       });
       window.location.reload();
     } else {
-      open?.({
+      open({
         type: "error",
         message: `${item.crochet.name} was not removed`,
         key: "notification-key-open",

@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Modal, Input, Button, Image, Card, message } from "antd";
+import { Modal, Input, Button, Image } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/api-url";
 import { useTranslations } from "next-intl";
+import { useNotification } from "@refinedev/core";
 
 export default function EmailSubscriptionPopup() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const t = useTranslations("signup")
+  const t = useTranslations("signup");
+  const { open: openNotification } = useNotification();
 
   useEffect(() => {
     const shown = localStorage.getItem("emailPopupShown");
@@ -24,16 +26,36 @@ export default function EmailSubscriptionPopup() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(`${BASE_URL}/subscribers`, { email });
+      // const { message } = response.data;
+      console.log("response: ", response);
       if (response.status === 201) {
         localStorage.setItem("emailPopupShown", "true");
-        message.success("Subscription successful!");
         setOpen(false);
+        openNotification({
+          type: "success",
+          message: `Email subscribed Successfully!`,
+          key: "notification-key-open",
+          placement: "bottomRight",
+        });
       } else {
-        message.error("Something went wrong. Please try again.");
+        setOpen(false);
+        localStorage.setItem("emailPopupShown", "true")
+        openNotification({
+          type: "success",
+          message: `Your Email is already subscribed!`,
+          key: "notification-key-open",
+          placement: "bottomRight",
+        });
       }
     } catch (error) {
-      message.error("Subscription failure!");
-      console.log(error.message);
+      localStorage.setItem("emailPopupShown", "true")
+      setOpen(false);
+      openNotification({
+        type: "error",
+        message: `Something went wrong. Please try again.`,
+        key: "notification-key-open",
+        placement: "bottomRight",
+      });
     }
   };
 
@@ -60,9 +82,7 @@ export default function EmailSubscriptionPopup() {
         />
       </div>
 
-      <p className="mb-3 text-gray-600">
-      {t("message")}
-      </p>
+      <p className="mb-3 text-gray-600">{t("message")}</p>
       <Input
         placeholder={t("placeHolder")}
         value={email}
@@ -73,7 +93,7 @@ export default function EmailSubscriptionPopup() {
         }}
       />
       <Button size="large" type="primary" onClick={handleSubmit} block>
-      {t("btn")}
+        {t("btn")}
       </Button>
     </Modal>
   );
