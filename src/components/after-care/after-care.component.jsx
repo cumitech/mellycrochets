@@ -62,15 +62,17 @@ const CrochetCareTips = () => {
 
   return (
     <>
-      <div className="max-w-4xl mx-auto px-4 py-15 md:py-30">
-        <Collapse
-          size="large"
-          accordion
-          items={items}
-          expandIconPosition={"right"}
-          defaultActiveKey={items && items.length > 0 ? items[0].key : null}
-        />
-      </div>
+      {items && items.length > 0 && (
+        <div className="max-w-4xl mx-auto px-4 py-15 md:py-30">
+          <Collapse
+            size="large"
+            accordion
+            items={items}
+            expandIconPosition={"right"}
+            defaultActiveKey={items && items.length > 0 ? items[0].key : null}
+          />
+        </div>
+      )}
     </>
   );
 };

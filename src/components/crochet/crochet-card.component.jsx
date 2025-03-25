@@ -49,7 +49,7 @@ const CrochetCard = ({ crochet }) => {
                   style={{ border: "2px solid #e3b1b1" }}
                   className="rounded-3xl px-3 py-1 border-[#e3b1b1] font-normal text-sm hover:bg-[#e3b1b1] hover:font-medium"
                 >
-                  {format.number(crochet.sizes[0].price) + " XAF"}
+                  {format.number(crochet.price) + " XAF"}
                 </span>
               </div>
             }

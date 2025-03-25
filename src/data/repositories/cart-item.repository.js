@@ -97,15 +97,15 @@ export class CartItemRepository {
    * @id
    * returns void
    */
-  async delete(id) {
+  async delete(id, userId) {
     try {
-      const cartItemItem = await CartItem.findByPk(id);
+      const cartItem = await CartItem.findByPk(id);
 
-      if (!cartItemItem) {
+      if (!cartItem || cartItem.userId !== userId) {
         throw new NotFoundException("CartItem", id);
       }
 
-      await cartItemItem?.destroy({
+      await cartItem?.destroy({
         force: true,
       });
     } catch (error) {

@@ -33,11 +33,18 @@ module.exports = {
       },
       sizeId: {
         type: Sequelize.STRING(20),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "sizes",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      },
+      selectedColors: {
+        type: Sequelize.JSON,
+        allowNull: true, // This will store an array like ["red", "blue"]
+        defaultValue: [],
       },
       price: {
         type: Sequelize.DECIMAL(10, 2),

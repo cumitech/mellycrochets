@@ -20,12 +20,20 @@ const useCart = () => {
     }
   };
 
-  const removeCrochet = async (crochetId, sizeId) => {
+  const removeCrochet = async (crochetId) => {
     try {
-      await CartService.remove(crochetId, sizeId);
-      console.log("Crochet Removed from Cart Successfully!");
+      const response = await CartService.remove(crochetId);
+      console.log("response: ", response);
+      const { success } = response.data;
+      if (success) {
+        console.log("Crochet Removed from Cart Successfully!");
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
-      console.error("Crochet was not removed!");
+      console.error("Crochet was not removed!", error);
+      return false;
     }
   };
 

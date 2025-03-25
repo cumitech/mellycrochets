@@ -22,10 +22,12 @@ import { useNotification } from "@refinedev/core";
 
 import { API_URL_UPLOADS_CROCHETS } from "../../../constants/api-url";
 import { crochetAPI } from "../../../store/api/crochet_api";
-import SpinnerList from "../../../components/spinner-list";
 import CustomImage from "../../../components/shared/custom-image.component";
 import { useCart } from "../../../hooks/cart.hook";
 import { allColors, allSizes } from "../../../constants/constant";
+import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
+import { format } from "../../../lib/format";
+import { sizeAPI } from "../../../store/api/size_api";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -48,33 +50,36 @@ export default function IndexPage({ params }) {
   const { id } = params;
 
   const {
+    data: sizes,
+    isLoading: isLoadingSize,
+    isFetching: isFetchingSize,
+  } = sizeAPI.useFetchAllSizesQuery(1);
+  const {
     data: crochet,
     isFetching,
     isLoading,
   } = crochetAPI.useGetSingleCrochetQuery(id);
 
-  if (isLoading || isFetching) {
+  if (isLoading || isFetching || isLoadingSize || isFetchingSize) {
     return (
       <div className="flex items-center justify-center min-h-[65vh]">
-        <SpinnerList />
+        <CrochetDetailSkeleton />
       </div>
     );
   }
 
   const availableSizes = crochet.sizes.map((size) => size.label);
-  const availableColors = crochet.sizes.flatMap((size) => size.colors);
-
-  // const allSizes = ["S", "M", "L", "XL", "XXL"];
-
-  const selectedSizeObj = crochet.sizes.find(
-    (size) => size.label === selectedSize
+  const availableColors = crochet.sizes.flatMap((size) =>
+    (size.colors || []).filter((color) => color != null)
   );
+
+  const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
 
   const handleAddToCart = async () => {
     if (!selectedSize) {
       return open?.({
         type: "error",
-        message: "Please select a size before adding to cart.",
+        message: "Please select a size and color before adding to cart.",
         key: "notification-key-open",
         placement: "bottomRight",
       });
@@ -104,6 +109,7 @@ export default function IndexPage({ params }) {
           key: "notification-key-open",
           placement: "bottomRight",
         });
+        setLoadingAddToCart(true);
       }
     } else {
       open?.({
@@ -164,11 +170,11 @@ export default function IndexPage({ params }) {
             </h1>
             <p className="text-md font-semibold text-gray-700">
               <span className="text-red-500">
-                {crochet.price} XAF
+                {format.number(crochet.price)} XAF
               </span>
             </p>
 
-            <div className="mt-8">
+            <div className="mt-3">
               <p className="text-md text-gray-700">
                 <span className="font-semibold">Available Sizes</span> <br />
                 {availableSizes.map((size) => (
@@ -178,14 +184,24 @@ export default function IndexPage({ params }) {
                 ))}
               </p>
             </div>
-
+            {availableColors.length > 0 && (
+              <div className="mt-3">
+                <p className="text-md text-gray-700">
+                  <span className="font-semibold">Available Colors</span> <br />
+                  {availableColors.map((size) => (
+                    <Tag key={size} color="gold">
+                      {size}
+                    </Tag>
+                  ))}
+                </p>
+              </div>
+            )}
             <div className="mb-8">
               <p className="text-md font-semibold text-gray-700">
-                Select Your Size
+                Chose Your Size
               </p>
-              <Space>
+              <Space wrap>
                 {allSizes.map((size) => {
-                  // const isAvailable = availableSizes.includes(size.key);
                   const isActive = selectedSize === size.key;
                   return (
                     <Tooltip title={size.description} key={size.key}>
@@ -195,16 +211,9 @@ export default function IndexPage({ params }) {
                           borderRadius: 50,
                           padding: "0 15px",
                           background: isActive ? "#cb384e" : "#fdf3f3",
-                          // background: isActive
-                          //   ? "#cb384e"
-                          //   : isAvailable
-                          //   ? "#fdf3f3"
-                          //   : "#e0e0e0",
-                          border: isAvailable ? "2px solid #cb384e" : "none",
+                          border: "2px solid #cb384e",
                           color: isActive ? "white" : "black",
                         }}
-                        // disabled={!isAvailable}
-                        // onClick={() => isAvailable && setSelectedSize(size.key)}
                         onClick={() => setSelectedSize(size.key)}
                       >
                         {size.key}
@@ -214,23 +223,11 @@ export default function IndexPage({ params }) {
                 })}
               </Space>
             </div>
-
-            <div className="mt-8">
-              <p className="text-md text-gray-700">
-                <span className="font-semibold">Available Colors</span> <br />
-                {availableColors.map((size) => (
-                  <Tag key={size} color="cyan">
-                    {size}
-                  </Tag>
-                ))}
-              </p>
-            </div>
-
             <div className="mb-8">
               <p className="text-md font-semibold text-gray-700">
-                Select your Colors
+                Chose your Colors
               </p>
-              <Space>
+              <Space wrap>
                 {allColors.map((color) => {
                   // const isAvailable = availableColors.includes(color);
                   const isActive = selectedColor === color;
@@ -242,16 +239,10 @@ export default function IndexPage({ params }) {
                           borderRadius: 50,
                           padding: "0 15px",
                           background: isActive ? "#cb384e" : "#fdf3f3",
-                          // background: isActive
-                          //   ? "#cb384e"
-                          //   : isAvailable
-                          //   ? "#fdf3f3"
-                          //   : "#e0e0e0",
-                          border: isAvailable ? "2px solid #cb384e" : "none",
+                          border: "2px solid #cb384e",
                           color: isActive ? "white" : "black",
                         }}
-                        // disabled={!isAvailable}
-                        // onClick={() => isAvailable && setSelectedColor(color)}
+                        // size="small"
                         onClick={() => setSelectedColor(color)}
                       >
                         {color}
@@ -262,7 +253,7 @@ export default function IndexPage({ params }) {
               </Space>
             </div>
 
-            <p className="text-gray-600 text-lg">{crochet.description}</p>
+            {/* <p className="text-gray-600 text-lg">{crochet.description}</p> */}
 
             <div className="mt-4 flex flex-col gap-4">
               <Space style={{ columnGap: 0 }}>
@@ -322,24 +313,24 @@ export default function IndexPage({ params }) {
           title="Crochet Details"
           bordered
           layout="vertical"
-          column={{ xs: 1, sm: 1, md: 2, lg: 3 }}
+          column={{ xs: 1, sm: 1, md: 2, lg: 4 }}
+          size="small"
         >
           <Descriptions.Item label="Crochet Name">
             {crochet.name}
           </Descriptions.Item>
-          <Descriptions.Item label="Crochet Type">
+          <Descriptions.Item label="Crochet Design">
             {crochet?.crochetType?.name}
           </Descriptions.Item>
-          <Descriptions.Item label="Color">{crochet.color}</Descriptions.Item>
           <Descriptions.Item label="Description">
             {crochet.description}
           </Descriptions.Item>
           <Descriptions.Item label="Price">
-            {crochet.price} XAF
+            {format.number(crochet.price)} XAF
           </Descriptions.Item>
-          <Descriptions.Item label="Quantity">
-            {crochet.stock}
-          </Descriptions.Item>
+          {crochet.color && (
+            <Descriptions.Item label="Color">{crochet.color}</Descriptions.Item>
+          )}
         </Descriptions>
       </Card>
     </div>
