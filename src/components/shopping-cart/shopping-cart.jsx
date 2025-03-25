@@ -1,7 +1,6 @@
 import { Avatar, Badge, Button, List, Popover, Space, Typography } from "antd";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
 import { useRouter } from "next/navigation";
 import { format } from "../../lib/format";
