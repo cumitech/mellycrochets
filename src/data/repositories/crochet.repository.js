@@ -63,13 +63,13 @@ export class CrochetRepository {
 
   /**
    * Receives a String as parameter
-   * @title
+   * @slug
    * returns Crochet
    */
-  async findByTitle(title) {
+  async findBySlug(slug) {
     try {
       const crochetItem = await Crochet.findOne({
-        where: { title },
+        where: { slug },
         include: [
           {
             model: CrochetType,
@@ -141,12 +141,10 @@ export class CrochetRepository {
    * Returns an array of Car
    */
   async filter(params) {
-    const { color, crochetTypeId, sizeId } = params;
+    const { crochetTypeId, sizeId } = params;
     const whereCondition = {};
 
-    if (color) whereCondition.color = color;
     if (crochetTypeId) whereCondition.crochetTypeId = crochetTypeId;
-    // if (sizeId) whereCondition.sizeId = sizeId;
 
     try {
       const crochets = await Crochet.findAll({
@@ -162,7 +160,8 @@ export class CrochetRepository {
             through: {
               attributes: ["colors"],
             },
-            ...(sizeId ? { where: { id: sizeId } } : {}),
+            // ...(sizeId ? { where: { id: sizeId } } : {}),
+            where: sizeId ? { id: sizeId } : {},
           },
         ],
       });

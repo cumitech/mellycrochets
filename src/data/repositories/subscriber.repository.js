@@ -37,12 +37,12 @@ export class SubscriberRepository {
 
   /**
    * Receives a String as parameter
-   * @title
+   * @email
    * returns Subscriber
    */
-  async findByTitle(title) {
+  async findByEmail(email) {
     try {
-      const subscriberItem = await Subscriber.findOne({ where: { title } });
+      const subscriberItem = await Subscriber.findOne({ where: { email } });
       return subscriberItem;
     } catch (error) {
       throw error;

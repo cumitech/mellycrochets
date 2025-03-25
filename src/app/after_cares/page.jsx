@@ -31,7 +31,7 @@ export default function MellyCrochetsLanding() {
     );
   }
   return (
-    <div className="bg-gradient-to-br from-pink-100 to-yellow-100 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-yellow-100 text-gray-800">
       {/* Hero Section */}
       <div className="flex flex-col items-center text-center px-6 py-12 max-w-3xl mx-auto">
         <div className="text-2xl md:text-3xl lg:text-6xl font-extrabold tracking-wide text-red-900 mb-4">

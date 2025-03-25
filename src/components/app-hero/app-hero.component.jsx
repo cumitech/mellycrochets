@@ -18,22 +18,22 @@ const AppHero = () => {
           <img
             src="/photos/icon3.jpg"
             alt="Decoration"
-            className="absolute top-[10%] left-[20%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg"
+            className="absolute top-[10%] left-[20%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg z-[2]"
           />
           <img
             src="/photos/icon2.png"
             alt="Decoration"
-            className="absolute top-[3%] right-[10%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg"
+            className="absolute top-[3%] right-[10%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg z-[2]"
           />
           <img
             src="/photos/icon1.png"
             alt="Decoration"
-            className="absolute bottom-[40%] left-[-10%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg"
+            className="absolute bottom-[40%] left-[-10%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg z-[2]"
           />
           <img
             src="/photos/icon4.jpg"
             alt="Decoration"
-            className="absolute bottom-[5%] right-[70%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg"
+            className="absolute bottom-[5%] right-[70%] w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg z-[2]"
           />
         </div>
 
@@ -55,39 +55,49 @@ const AppHero = () => {
             className="w-full h-[50vh] lg:h-[80vh] rounded-lg"
           >
             <SwiperSlide className="flex justify-center">
-              <img
-                src="/photos/image5.png"
-                alt="Crochet Cardigan"
-                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
-              />
+              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+                <img
+                  src="/photos/image5.png"
+                  alt="Crochet Cardigan"
+                  className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <img
-                src="/photos/image2.png"
-                alt="Crochet Cardigan"
-                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
-              />
+              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+                <img
+                  src="/photos/image2.png"
+                  alt="Crochet Cardigan"
+                  className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <img
-                src="/photos/image3.png"
-                alt="Crochet Cardigan"
-                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
-              />
+              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+                <img
+                  src="/photos/image3.png"
+                  alt="Crochet Cardigan"
+                  className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <img
-                src="/photos/image4.png"
-                alt="Crochet Cardigan"
-                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
-              />
+              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+                <img
+                  src="/photos/image4.png"
+                  alt="Crochet Cardigan"
+                  className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+                />
+              </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <img
-                src="/photos/image1.png"
-                alt="Crochet Cardigan"
-                className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
-              />
+              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+                <img
+                  src="/photos/image1.png"
+                  alt="Crochet Cardigan"
+                  className="w-[300px] lg:w-[600px] h-[400px] lg:h-full object-contain lg:object-contain rounded-lg"
+                />
+              </div>
             </SwiperSlide>
           </Swiper>
         </div>

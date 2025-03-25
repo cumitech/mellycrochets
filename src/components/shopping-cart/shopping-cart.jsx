@@ -22,7 +22,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
     const feedback = await removeCrochet(item.id);
     console.log("feedback: ", feedback);
     if (feedback) {
-      open?.({
+      open({
         type: "success",
         message: `${item.crochet.name} has been removed from cart`,
         key: "notification-key-open",
@@ -30,7 +30,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
       });
       window.location.reload();
     } else {
-      open?.({
+      open({
         type: "error",
         message: `${item.crochet.name} was not removed`,
         key: "notification-key-open",
@@ -56,8 +56,10 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
             <List.Item
               onClick={(e) => e.stopPropagation()}
               rowKey={item.id + index}
+              key={item.id + index}
               actions={[
                 <Button
+                  key={"button-1"}
                   className="removeCartItem"
                   icon={
                     <DeleteOutlined style={{ color: "red", fontSize: 16 }} />
@@ -92,20 +94,22 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
           )}
         />
 
-        <Space style={{ justifyContent: "flex-end" }}>
-          <Button
-            type="primary"
-            onClick={() => handleCheckoutSubmit()}
-            className="checkOutBtn"
-            // block
-            style={{
-              borderRadius: 50,
-            }}
-            htmlType="button"
-          >
-            Confirm your order
-          </Button>
-        </Space>
+        {cartItems && cartItems.length > 0 && (
+          <Space style={{ justifyContent: "flex-end" }}>
+            <Button
+              type="primary"
+              onClick={() => handleCheckoutSubmit()}
+              className="checkOutBtn"
+              // block
+              style={{
+                borderRadius: 50,
+              }}
+              htmlType="button"
+            >
+              Confirm your order
+            </Button>
+          </Space>
+        )}
       </div>
     );
   };

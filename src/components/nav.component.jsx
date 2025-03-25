@@ -12,16 +12,6 @@ import { useGetIdentity } from "@refinedev/core";
 import { useSocket } from "../providers/socket";
 import { CartService } from "../service/cart.service";
 
-export const emptyCartItem = {
-  id: "",
-  name: "",
-  quantity: 0,
-  imageUrl: "",
-  total: 0,
-  price: 0,
-  size: "",
-};
-
 const AppNavigation = () => {
   const [isOpen, setOpen] = useState(false);
   const { data: user } = useGetIdentity({});
@@ -202,7 +192,10 @@ const AppNavigation = () => {
         </div>
 
         {isOpen && (
-          <div ref={menuRef} className="md:hidden absolute top-20 left-0 right-0 bg-[#fdf3f3] mt-3 py-5 px-10 md:px-30 lg:px-50 z-[1]">
+          <div
+            ref={menuRef}
+            className="md:hidden absolute top-20 left-0 right-0 bg-[#fdf3f3] mt-3 py-5 px-10 md:px-30 lg:px-50 z-[1]"
+          >
             <div className="flex flex-col space-y-6">
               <Link
                 href="/"
@@ -219,7 +212,7 @@ const AppNavigation = () => {
                   pathname === "/after_cares" ? "active" : ""
                 }`}
               >
-                After Care
+                {t("aftercare")}
               </Link>
 
               <Link
@@ -228,7 +221,7 @@ const AppNavigation = () => {
                   pathname === "/crochets" ? "active" : ""
                 }`}
               >
-                Crochet
+                {t("crochets")}
               </Link>
 
               <Link
@@ -246,7 +239,7 @@ const AppNavigation = () => {
                   pathname === "/blog_posts" ? "active" : ""
                 }`}
               >
-                Blog Posts
+                {t("article")}
               </Link>
 
               <Link
@@ -257,6 +250,28 @@ const AppNavigation = () => {
               >
                 {t("contact")}
               </Link>
+
+              {!user && (
+                <Link
+                  href="/login"
+                  className={`nav-link font-playfair  ${
+                    pathname === "/login" ? "active" : ""
+                  }`}
+                >
+                  Signin
+                </Link>
+              )}
+
+              {role === "admin" && (
+                <Link
+                  href="/dashboard"
+                  className={`nav-link font-playfair  ${
+                    pathname === "/dashboard" ? "active" : ""
+                  }`}
+                >
+                  Admin
+                </Link>
+              )}
             </div>
           </div>
         )}

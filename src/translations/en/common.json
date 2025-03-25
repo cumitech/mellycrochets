@@ -9,7 +9,7 @@
     "contact": "Contact",
     "aftercare": "Aftercare",
     "crochets": "Crochets",
-    "article": "Articles"
+    "article": "Blog Posts"
   },
   "social": {
     "connect": "Let's connect Via",
@@ -18,7 +18,8 @@
     "crochetaftercare": "Crochets Aftercare",
     "summary": "MELLYCROCHETS ETS is a sustainable fashion brand dedicated to crafting high-quality, eco-friendly products using biodegradable materials like wool and cotton. With a commitment to durability and recyclability, our designs cater to all age groups, promoting a greener future without compromising on style and comfort",
     "subSummary":"Stay inspired with exclusive crochet fashion tips & updates!",
-    "btn":"Join Our Community"
+    "btn":"Join Our Community",
+    "view-more": "View More"
   },
   "filtercrochet": {
     "crochetDesigns": "Crochet Designs",
