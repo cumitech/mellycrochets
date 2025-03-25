@@ -53,7 +53,7 @@ const CustomImage = ({ imageList }) => {
             },
           }
         ) => (
-          <Space size={12} className="toolbar-wrapper">
+          <Space size={12} className="toolbar-wrapper" wrap>
             <LeftOutlined onClick={() => onActive?.(-1)} />
             <RightOutlined onClick={() => onActive?.(1)} />
             <DownloadOutlined onClick={onDownload} />
@@ -71,7 +71,7 @@ const CustomImage = ({ imageList }) => {
         },
       }}
     >
-      <Space size={"large"}>
+      <Space size={"large"} wrap>
         {imageList.map((item) => (
           <Image
             key={item}

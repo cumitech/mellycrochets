@@ -34,7 +34,7 @@ export class CrochetRepository {
             model: Size,
             as: "sizes",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],
@@ -79,7 +79,7 @@ export class CrochetRepository {
             model: Size,
             as: "sizes",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],
@@ -115,7 +115,7 @@ export class CrochetRepository {
             model: Size,
             as: "sizes",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],
@@ -160,7 +160,7 @@ export class CrochetRepository {
             model: Size,
             as: "sizes",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
             ...(sizeId ? { where: { id: sizeId } } : {}),
           },

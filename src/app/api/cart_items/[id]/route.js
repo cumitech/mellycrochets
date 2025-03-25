@@ -131,8 +131,9 @@ export async function DELETE(req, { params }) {
 
   try {
     const id = params.id;
+    const userId = session.user.id;
 
-    await cartItemRepository.delete(id);
+    await cartItemRepository.delete(id, userId);
     io.emit("cart-cleared");
     return NextResponse.json({
       message: `Operation successfully completed!`,

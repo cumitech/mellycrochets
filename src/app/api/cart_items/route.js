@@ -5,7 +5,7 @@ import { displayValidationErrors } from "../../../lib/displayValidationErrors";
 import authOptions from "../../../lib/options";
 import { getServerSession } from "next-auth";
 import { initializeSocket } from "../../../lib/socket";
-import { CrochetSize } from "../../../data/entities";
+import { Crochet } from "../../../data/entities";
 import { addToCart, getCartItems } from "../../../data/usecases/cart.usecase";
 
 export async function GET(request) {
@@ -71,12 +71,9 @@ export async function POST(request) {
     const body = await request.json();
     body.userId = session.user.id;
 
-    let crochet = await CrochetSize.findOne({
-      where: { crochetId: body.crochetId, sizeId: body.sizeId },
-    });
+    let crochet = await Crochet.findByPk(body.crochetId);
 
     if (!crochet) {
-      console.log("Crochet not found:", { crochetId, sizeId });
       return NextResponse.json(
         {
           validationErrors: [],

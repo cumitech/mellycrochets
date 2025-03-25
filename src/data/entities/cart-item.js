@@ -31,6 +31,13 @@ module.exports = (sequelize, DataTypes) => {
           model: "sizes",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      },
+      selectedColors: {
+        type: DataTypes.JSON,
+        allowNull: true, // This will store an array like ["red", "blue"]
+        defaultValue: [],
       },
       price: {
         type: DataTypes.DECIMAL(10, 2),
@@ -43,11 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       total: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      colors: {
-        type: DataTypes.JSON,
-        allowNull: true,
-        defaultValue: [],
       },
     },
     {

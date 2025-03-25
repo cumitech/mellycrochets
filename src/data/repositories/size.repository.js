@@ -30,7 +30,7 @@ export class SizeRepository {
             model: Crochet,
             as: "crochets",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],
@@ -69,7 +69,7 @@ export class SizeRepository {
             model: Crochet,
             as: "crochets",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],
@@ -102,7 +102,7 @@ export class SizeRepository {
             model: Crochet,
             as: "crochets",
             through: {
-              attributes: ["price", "stock"],
+              attributes: ["colors"],
             },
           },
         ],

@@ -25,6 +25,7 @@ import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
 import { OrderService } from "../../service/order.service";
 import { cartItemAPI } from "../../store/api/cart_item_api";
 import { getCartSummary } from "../../components/shared/cart-summary-table.component";
+import { useNotification } from "@refinedev/core";
 
 const CheckoutCartBtn = ({ onFinish, cartItems }) => {
   const [checkoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
@@ -156,10 +157,9 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
 
 export default function CartPage() {
   const navigator = useRouter();
-  //   const [cartItems, setCartItems] = useState([]);
-  const [isDeleting, setDeleting] = useState(false);
+  const { removeCrochet } = useCart();
+  const { open } = useNotification();
 
-  const { addToCard, removeItem, loadCartItems } = useCart();
   const {
     data: cartItems,
     isLoading,
@@ -185,19 +185,26 @@ export default function CartPage() {
     message.success("Your order has been placed successfully.");
     navigator.push("/thank-you");
   };
-  const handleCartEvent = (data) => {
-    console.log("Cart Event Received:", data);
-    // setCartItems(data); // Update the cartItems state with the received data
-  };
 
   const handleRemoveCartItem = async (item) => {
-    setDeleting(true);
-    try {
-      await removeItem(item.id);
-      const cartItems = await loadCartItems();
-      //   setCartItems(cartItems);
-    } catch (error) {}
-    setDeleting(false);
+    const feedback = await removeCrochet(item.id);
+    console.log("feedback: ", feedback);
+    if (feedback) {
+      open?.({
+        type: "success",
+        message: `${item.crochet.name} has been removed from cart`,
+        key: "notification-key-open",
+        placement: "bottomRight",
+      });
+      window.location.reload();
+    } else {
+      open?.({
+        type: "error",
+        message: `${item.crochet.name} was not removed`,
+        key: "notification-key-open",
+        placement: "bottomRight",
+      });
+    }
   };
 
   return (
@@ -254,31 +261,6 @@ export default function CartPage() {
                     title: "Quantity",
                     dataIndex: "quantity",
                     width: 120,
-                    render: (value, record) => {
-                      return (
-                        <InputNumber
-                          defaultValue={value}
-                          min={0}
-                          style={{ width: "65px" }}
-                          onChange={(value) => {
-                            const item = cartItems.find((item) => {
-                              return item.id === record.id
-                                ? {
-                                    ...item,
-                                    quantity: value,
-                                    total: item.price * value,
-                                    price: item.price,
-                                  }
-                                : item;
-                            });
-                            addToCard(
-                              `${item?.crochetId}`,
-                              Number(item?.quantity)
-                            );
-                          }}
-                        />
-                      );
-                    },
                   },
                   {
                     title: "Price",
@@ -306,9 +288,12 @@ export default function CartPage() {
                         type="link"
                         onClick={() => handleRemoveCartItem(record)}
                         style={{ borderRadius: 50 }}
-                      >
-                        <DeleteOutlined style={{ color: "red" }} />
-                      </Button>
+                        icon={
+                          <DeleteOutlined
+                            style={{ color: "red", fontSize: 18 }}
+                          />
+                        }
+                      />
                     ),
                   },
                 ]}
