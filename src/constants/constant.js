@@ -22,3 +22,20 @@ export const allColors = [
   "Yellow",
   "Navy Blue",
 ];
+
+export const keywords = [
+  "Crochet Fashion",
+  "Handmade Crochet",
+  "Crochet Crop Top",
+  "Crochet Bikini",
+  "Crochet Dress",
+  "Crochet Bags",
+  "Crochet Pullover",
+  "Crochet Beachwear",
+  "Stylish Crochet Outfits",
+  "Eco-Friendly Crochet",
+  "Custom Crochet Wear",
+  "Crochet Accessories",
+  "Crochet Jackets",
+  "Crochet Two-Piece Sets",
+];

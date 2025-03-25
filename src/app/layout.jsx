@@ -13,8 +13,37 @@ import PrivacyConsent from "../components/privacy-policy/privacy-policy.componen
 import EmailSubscriptionPopup from "../components/signup/signup.component";
 
 export const metadata = {
-  title: "MellyCrochets",
-  description: "Crochet sales",
+  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
+  keywords: [
+    "Crochet Fashion",
+    "Handmade Crochet",
+    "Crochet Crop Top",
+    "Crochet Bikini",
+    "Crochet Dress",
+    "Crochet Bags",
+    "Crochet Pullover",
+    "Crochet Beachwear",
+    "Stylish Crochet Outfits",
+    "Eco-Friendly Crochet",
+    "Custom Crochet Wear",
+    "Crochet Accessories",
+    "Crochet Jackets",
+    "Crochet Two-Piece Sets",
+  ],
+  title: {
+    default:
+      "Premium Crochet Creations - Handcrafted with Love | MellyCrochets",
+    template: "%s | MellyCrochets",
+  },
+  openGraph: {
+    description:
+      "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+    images: [
+      `${process.env.NEXTAUTH_URL}/uploads/crochets/crochet-dress-main.jpg`,
+    ],
+    url: process.env.NEXTAUTH_URL,
+    type: "website",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
