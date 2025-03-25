@@ -49,7 +49,6 @@ export default function IndexPage({ params }) {
   const router = useRouter();
   const { slug } = params;
 
-  console.log("params: ", params);
   const {
     data: sizes,
     isLoading: isLoadingSize,
