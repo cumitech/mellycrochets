@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { Modal, Input, Button, Image, Card, message } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/api-url";
+import { useTranslations } from "next-intl";
 
 export default function EmailSubscriptionPopup() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const t = useTranslations("signup")
 
   useEffect(() => {
     const shown = localStorage.getItem("emailPopupShown");
@@ -40,7 +42,7 @@ export default function EmailSubscriptionPopup() {
       open={open}
       onCancel={() => setOpen(false)}
       footer={null}
-      title="Subscribe for Crochet Updates!"
+      title={t("title")}
       width={350}
       height={200}
     >
@@ -59,10 +61,10 @@ export default function EmailSubscriptionPopup() {
       </div>
 
       <p className="mb-3 text-gray-600">
-        Get the latest styles and offers via email.
+      {t("message")}
       </p>
       <Input
-        placeholder="Enter your email"
+        placeholder={t("placeHolder")}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         size="large"
@@ -71,7 +73,7 @@ export default function EmailSubscriptionPopup() {
         }}
       />
       <Button size="large" type="primary" onClick={handleSubmit} block>
-        Subscribe
+      {t("btn")}
       </Button>
     </Modal>
   );

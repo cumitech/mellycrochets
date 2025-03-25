@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import {
   FaFacebookF,
@@ -42,12 +43,13 @@ const buttonStyles = {
 };
 
 const Footer = () => {
+  const t = useTranslations("footer")
   return (
     <footer className="relative bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white pt-12 pb-3 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8  sm:justify-items-center">
         {/* Social Media */}
         <div>
-          <h4 className="text-xl font-semibold mb-3">Social Media Pages</h4>
+          <h4 className="text-xl font-semibold mb-3">{t("socialMedia")}</h4>
           <div className="flex gap-4">
             <Button
                href="https://wa.me/+237681077051"
@@ -104,27 +106,27 @@ const Footer = () => {
           <ul className="space-y-2">
             <li>
               <Link href="/about" className="footer-link">
-                About Us
+              {t("aboutUs")}
               </Link>
             </li>
             <li>
               <Link href="/contact" className="footer-link">
-                Contact Us
+              {t("contact")}
               </Link>
             </li>
             <li>
               <Link href="/after_cares" className="footer-link">
-                Aftercare
+              {t("aftercare")}
               </Link>
             </li>
             <li>
               <Link href="/crochets" className="footer-link">
-                Crochet Listings
+              {t("crochetListing")}
               </Link>
             </li>
             <li>
               <Link href="/privacy" className="footer-link">
-                Privacy Policy
+              {t("privacyPolicy")}
               </Link>
             </li>
           </ul>
@@ -132,7 +134,7 @@ const Footer = () => {
 
         {/* Contact Info */}
         <div>
-          <h4 className="text-xl font-semibold mb-3">Contact Us</h4>
+          <h4 className="text-xl font-semibold mb-3">{t("contact")}</h4>
           <ul className="space-y-2">
             <li className="flex items-center gap-2">
               <FiMapPin className="text-red-400" />

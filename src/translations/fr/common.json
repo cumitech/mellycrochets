@@ -14,11 +14,32 @@
   "social": {
     "connect": "Connectons-nous via",
     "listing": "Liste des crochets",
-    "message": "Parcourez nos dernières collections de crochets"
+    "message": "Parcourez nos dernières collections de crochets",
+    "crochetaftercare": "Entretien des crochets",
+    "summary": "MELLYCROCHETS ETS est une marque de mode durable dédiée à la création de produits écologiques et de haute qualité, utilisant des matériaux biodégradables comme la laine et le coton. Engagés en faveur de la durabilité et de la recyclabilité, nos modèles s’adressent à tous les âges, promouvant un avenir plus vert sans compromis sur le style et le confort.",
+    "subSummary": "Restez inspiré avec des conseils exclusifs sur la mode au crochet et des mises à jour !",
+    "btn": "Rejoignez notre communauté"
+
   },
   "filtercrochet": {
     "crochetDesigns": "Modèles de crochet",
     "color": "Couleur",
     "size": "Taille"
-  }
+  },
+  "footer": {
+    "socialMedia": "Pages des réseaux sociaux",
+    "Links": "Liens",
+    "aboutUs": "À propos de nous",
+    "contact": "Contactez-nous",
+    "aftercare": "Entretien",
+    "crochetListing": "Liste des crochets",
+    "privacyPolicy": "Politique de confidentialité"
+},
+"signup": {
+    "title": "Abonnez-vous pour des mises à jour sur le crochet !",
+    "message": "Recevez les derniers styles et offres par email.",
+    "btn": "S'abonner",
+    "placeHolder": "Entrez votre email"
+}
+
 }
