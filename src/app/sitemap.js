@@ -6,10 +6,12 @@ export default async function sitemap() {
   //   const { data: crochets } = crochetAPI.useFetchAllCrochetsQuery(1);
   const response = await axios.get(`${baseUrl}/api/crochets`);
   const crochets = response.data;
+
   const crochetsData = crochets?.map((crochet) => {
     return {
-      url: `${baseUrl}/crochets/${crochet?.id}`,
+      url: `${baseUrl}/crochets/${crochet?.slug}`,
       lastModified: crochet?.createdAt,
+      images: crochet?.imageUrls,
     };
   });
   return [
