@@ -28,6 +28,7 @@ import { allColors, allSizes } from "../../../constants/constant";
 import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
 import { format } from "../../../lib/format";
 import { sizeAPI } from "../../../store/api/size_api";
+import { useCurrency } from "../../../hooks/currency.hook";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -48,6 +49,7 @@ export default function IndexPage({ params }) {
   const { addToCart } = useCart();
   const router = useRouter();
   const { slug } = params;
+  const { currency } = useCurrency();
 
   const {
     data: sizes,
@@ -68,10 +70,13 @@ export default function IndexPage({ params }) {
     );
   }
 
-  const availableSizes = crochet.sizes.map((size) => size.label);
-  const availableColors = crochet.sizes.flatMap((size) =>
-    (size.colors || []).filter((color) => color != null)
-  );
+  const convertedPrice =
+    currency === "CFA" ? format.number(crochet.price) + " XAF" : "$" + 8.0;
+
+  // const availableSizes = crochet.sizes.map((size) => size.label);
+  // const availableColors = crochet.sizes.flatMap((size) =>
+  //   (size.colors || []).filter((color) => color != null)
+  // );
 
   const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
 
@@ -169,12 +174,10 @@ export default function IndexPage({ params }) {
               {crochet.name}
             </h1>
             <p className="text-md font-semibold text-gray-700">
-              <span className="text-red-500">
-                {format.number(crochet.price)} XAF
-              </span>
+              <span className="text-red-500">{convertedPrice}</span>
             </p>
 
-            <div className="mt-3">
+            {/* <div className="mt-3">
               <p className="text-md text-gray-700">
                 <span className="font-semibold">Available Sizes</span> <br />
                 {availableSizes.map((size) => (
@@ -195,7 +198,7 @@ export default function IndexPage({ params }) {
                   ))}
                 </p>
               </div>
-            )}
+            )} */}
             <div className="mb-8">
               <p className="text-md font-semibold text-gray-700">
                 Chose Your Size
@@ -325,9 +328,7 @@ export default function IndexPage({ params }) {
           <Descriptions.Item label="Description">
             {crochet.description}
           </Descriptions.Item>
-          <Descriptions.Item label="Price">
-            {format.number(crochet.price)} XAF
-          </Descriptions.Item>
+          <Descriptions.Item label="Price">{convertedPrice}</Descriptions.Item>
           {crochet.color && (
             <Descriptions.Item label="Color">{crochet.color}</Descriptions.Item>
           )}

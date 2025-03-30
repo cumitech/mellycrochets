@@ -11,6 +11,8 @@ import { useTranslations } from "next-intl";
 import { useGetIdentity } from "@refinedev/core";
 import { useSocket } from "../providers/socket";
 import { CartService } from "../service/cart.service";
+import { useCurrency } from "../hooks/currency.hook";
+import AppCurrency from "./shared/currency.component";
 
 const AppNavigation = () => {
   const [isOpen, setOpen] = useState(false);
@@ -18,6 +20,7 @@ const AppNavigation = () => {
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const menuRef = useRef(null);
+  const { currency } = useCurrency();
 
   const pathname = usePathname();
   const t = useTranslations("navigation");
@@ -140,7 +143,10 @@ const AppNavigation = () => {
             {t("contact")}
           </Link>
 
-          <AppLanguage />
+          <Space>
+            <AppLanguage />
+            <AppCurrency />
+          </Space>
 
           <div className="shoppingCart">
             <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
@@ -171,6 +177,8 @@ const AppNavigation = () => {
         <div className="md:hidden lg:hidden xl:hidden absolute right-25 mb-0">
           <Space align="center">
             <AppLanguage />
+
+            <AppCurrency />
 
             <div className="shoppingCart" style={{ marginLeft: 0 }}>
               <ShoppingCart cartCount={cartCount} cartItems={cartItems} />

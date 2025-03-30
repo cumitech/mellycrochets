@@ -3,9 +3,14 @@ import { Card, Col, Image, Tag } from "antd";
 import Link from "next/link";
 import React from "react";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
+import { useCurrency } from "../../hooks/currency.hook";
 
 const { Meta } = Card;
 const CrochetCard = ({ crochet }) => {
+  const { currency } = useCurrency();
+
+  const convertedPrice =
+    currency === "CFA" ? format.number(crochet.price) + " XAF" : "$" + 8.0;
   return (
     <>
       <Col xs={24} md={12} lg={8} key={crochet.id}>
@@ -49,7 +54,7 @@ const CrochetCard = ({ crochet }) => {
                   style={{ border: "2px solid #e3b1b1" }}
                   className="rounded-3xl px-3 py-1 border-[#e3b1b1] font-normal text-sm hover:bg-[#e3b1b1] hover:font-medium"
                 >
-                  {format.number(crochet.price) + " XAF"}
+                  {convertedPrice}
                 </span>
               </div>
             }

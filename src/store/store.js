@@ -9,6 +9,7 @@ import { afterCareAPI } from "./api/after_care_api";
 import { sizeAPI } from "./api/size_api";
 import { paymentMethodReducer } from "./slice/payment.slice";
 import { cartItemAPI } from "./api/cart_item_api";
+import { currencyReducer } from "./slice/currency.slice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     [cartItemAPI.reducerPath]: cartItemAPI.reducer,
     crochets: crochetReducer,
     paymentMethod: paymentMethodReducer,
+    currency: currencyReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
