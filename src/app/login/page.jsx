@@ -123,7 +123,7 @@ export default function Login() {
               onClick={() => signIn("auth0", { callbackUrl: redirect })}
               size="large"
             >
-              Auth0
+              Sign in with Google
             </Button>
           </Space>
 

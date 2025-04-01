@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 .image-container {
   display: flex;
@@ -23,9 +23,7 @@
 
 .small-image {
   width: 50px;
-  /* Adjust width as needed */
   height: auto;
-  /* Maintains aspect ratio */
 }
 
 .image-col {
@@ -79,5 +77,4 @@
 
 .tiktok {
   color: #000;
-  /* TikTok is mainly black, but you can add a gradient effect if needed */
 }

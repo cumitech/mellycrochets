@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "home": "Welcome",
+    "home": "Home",
     "about": "About",
     "services": "Services",
     "trainings": "Trainings",
@@ -8,8 +8,8 @@
     "faqs": "FAQ",
     "contact": "Contact",
     "aftercare": "Aftercare",
-    "crochets": "Crochets",
-    "article": "Blog Posts"
+    "shop": "Shop",
+    "article": "Posts"
   },
   "social": {
     "connect": "Let's connect Via",
@@ -31,8 +31,7 @@
     "Links":"Links",
     "aboutUs":"About Us",
     "contact":"Contact Us",
-    "aftercare":"Aftercare",
-    "crochetListing":"Crochet Listing",
+    "shop":"Shop",
     "privacyPolicy":"Privacy Policy"
   },
   "signup":{

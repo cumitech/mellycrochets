@@ -22,10 +22,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { format } from "../../lib/format";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
-import { OrderService } from "../../service/order.service";
 import { cartItemAPI } from "../../store/api/cart_item_api";
 import { getCartSummary } from "../../components/shared/cart-summary-table.component";
 import { useNotification } from "@refinedev/core";
+import { CURRENCY } from "../../constants/constant";
 
 const CheckoutCartBtn = ({ onFinish, cartItems }) => {
   const [checkoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
@@ -231,6 +231,7 @@ export default function CartPage() {
                   {
                     title: "No",
                     dataIndex: "no",
+                    width: "3rem",
                     render(value, record, index) {
                       return (
                         <span key={record.id}>
@@ -243,6 +244,7 @@ export default function CartPage() {
                   {
                     title: "Image",
                     dataIndex: "image",
+                    width: "5rem",
                     render: (value, record, index) => {
                       return (
                         <Avatar
@@ -256,19 +258,20 @@ export default function CartPage() {
                   {
                     title: "Name",
                     dataIndex: "name",
-                    width: "8rem",
+                    width: "15rem",
                     render: (value, record, index) => record.crochet?.name,
                   },
                   {
                     title: "Quantity",
                     dataIndex: "quantity",
                     width: 120,
+                    align: "right"
                   },
                   {
                     title: "Price",
                     dataIndex: "price",
                     render: (value, record) => {
-                      return `${format.number(value)} XAF`;
+                      return `${record.currency === CURRENCY.usd && "$"}${format.number(value)}`;
                     },
                     align: "right",
                   },
@@ -276,7 +279,7 @@ export default function CartPage() {
                     title: "Total",
                     dataIndex: "total",
                     render: (value, record) => {
-                      return `${format.number(value)} XAF`;
+                      return `${record.currency === CURRENCY.usd && "$"}${format.number(value)}`;
                     },
                     align: "right",
                   },

@@ -16,7 +16,9 @@ const Post = require("./post")(sequelize, DataTypes);
 const AfterCare = require("./after-care")(sequelize, DataTypes);
 const Size = require("./size")(sequelize, DataTypes);
 const CrochetSize = require("./crochet_size")(sequelize, DataTypes);
-
+const Tag = require("./tag")(sequelize, DataTypes);
+const Category = require("./category")(sequelize, DataTypes);
+const PostTag = require("./post-tag")(sequelize, DataTypes);
 // User <=> post Associations
 User.hasMany(Post, {
   foreignKey: "authorId",
@@ -27,6 +29,31 @@ Post.belongsTo(User, {
   foreignKey: "authorId",
   onDelete: "CASCADE",
   as: "user",
+});
+
+// category <=> post Associations
+Category.hasMany(Post, {
+  foreignKey: "categoryId",
+  onDelete: "CASCADE",
+  as: "posts",
+});
+Post.belongsTo(Category, {
+  foreignKey: "categoryId",
+  onDelete: "CASCADE",
+  as: "category",
+});
+
+// tags <=> post
+Post.belongsToMany(Tag, {
+  through: PostTag,
+  foreignKey: "postId",
+  as: "tags",
+});
+
+Tag.belongsToMany(Post, {
+  through: PostTag,
+  foreignKey: "tagId",
+  as: "posts",
 });
 
 // category <=> post Associations

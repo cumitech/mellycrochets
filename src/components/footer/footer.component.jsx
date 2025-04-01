@@ -115,13 +115,8 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/after_cares" className="footer-link">
-              {t("aftercare")}
-              </Link>
-            </li>
-            <li>
-              <Link href="/crochets" className="footer-link">
-              {t("crochetListing")}
+              <Link href="/shop" className="footer-link">
+              {t("shop")}
               </Link>
             </li>
             <li>

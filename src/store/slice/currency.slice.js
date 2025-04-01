@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// import { CURRENCY } from "../../constants/constant";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currency: "USD", // Default currency
+  currency: "", // Default currency
 };
 
 const currencySlice = createSlice({

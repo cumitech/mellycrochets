@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default async function sitemap() {
   const baseUrl = process.env.NEXTAUTH_URL || 'https://mellycrochets.org';
-  
   const response = await axios.get(`${baseUrl}/api/crochets`);
   const crochets = response.data;
 

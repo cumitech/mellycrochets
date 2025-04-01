@@ -90,11 +90,10 @@ export default async function RootLayout({ children }) {
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             <RefineContext defaultMode={defaultMode}>
-              <Affix offsetTop={0}>
+              <Affix offsetTop={0} className="sticky top-0 left-0 w-full z-100">
                 <AppNavigation />
               </Affix>
               {children}
-              {/* Footer */}
               <Footer />
               <EmailSubscriptionPopup />
               <PrivacyConsent />

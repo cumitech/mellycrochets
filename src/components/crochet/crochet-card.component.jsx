@@ -1,4 +1,3 @@
-import { format } from "../../lib/format";
 import { Card, Col, Image, Tag } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -7,10 +6,10 @@ import { useCurrency } from "../../hooks/currency.hook";
 
 const { Meta } = Card;
 const CrochetCard = ({ crochet }) => {
-  const { currency } = useCurrency();
+  const { getConvertedPrice } = useCurrency();
 
-  const convertedPrice =
-    currency === "CFA" ? format.number(crochet.price) + " XAF" : "$" + 8.0;
+  const convertedPrice = getConvertedPrice(crochet.priceInCfa, crochet.priceInUsd);
+
   return (
     <>
       <Col xs={24} md={12} lg={8} key={crochet.id}>

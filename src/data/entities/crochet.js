@@ -32,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       imageUrls: {
         type: DataTypes.JSON, // Stores multiple image URLs
       },
-      price: {
+      priceInCfa: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      priceInUsd: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },

@@ -1,12 +1,11 @@
 import axios from "axios";
 import { generatePageMetadata } from "../../../lib/metadata-generator";
-import { BASE_URL } from "../../../constants/api-url";
 import { keywords } from "../../../constants/constant";
 
 const fetchCrochetDetails = async (slug) => {
   const response = await axios.get(
     `${process.env.NEXTAUTH_URL}/api/crochets/slugs/${slug}`
-  );
+  ); 
   if (response.status !== 200) {
     throw new Error("Failed to fetch crochet details");
   } else {

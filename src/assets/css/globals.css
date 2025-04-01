@@ -1,6 +1,18 @@
+html {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 body {
     background-color: #fff;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Lora', sans-serif !important;
+    overflow-x: hidden !important;
+    width: 100vw !important;
+}
+
+html,
+body {
+    min-height: 100vh;
 }
 
 h1,
@@ -11,7 +23,7 @@ h5,
 h6,
 strong,
 b {
-    font-family: 'Playfair Display', serif !important;
+    font-family: "Cinzel Decorative", serif !important;
 }
 
 @import "tailwindcss";
@@ -51,7 +63,9 @@ b {
 }
 
 .font-playfair {
-    font-family: 'Playfair Display', serif !important;
+    font-family: "Cinzel Decorative", serif !important;
+    font-weight: 600 !important;
+    font-style: normal;
 }
 
 .custom-image-group .ant-image-mask {

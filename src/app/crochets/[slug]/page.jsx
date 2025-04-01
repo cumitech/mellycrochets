@@ -10,7 +10,6 @@ import {
   Image,
   Input,
   Space,
-  Tag,
   Tooltip,
 } from "antd";
 import {
@@ -26,16 +25,15 @@ import CustomImage from "../../../components/shared/custom-image.component";
 import { useCart } from "../../../hooks/cart.hook";
 import { allColors, allSizes } from "../../../constants/constant";
 import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
-import { format } from "../../../lib/format";
 import { sizeAPI } from "../../../store/api/size_api";
 import { useCurrency } from "../../../hooks/currency.hook";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
   width: 70,
-  height: 32,
+  height: 40,
   textAlign: "center",
-  borderRadius: 2,
+  borderRadius: 0,
 };
 
 export default function IndexPage({ params }) {
@@ -49,7 +47,7 @@ export default function IndexPage({ params }) {
   const { addToCart } = useCart();
   const router = useRouter();
   const { slug } = params;
-  const { currency } = useCurrency();
+  const { currency, getConvertedPrice } = useCurrency();
 
   const {
     data: sizes,
@@ -70,13 +68,10 @@ export default function IndexPage({ params }) {
     );
   }
 
-  const convertedPrice =
-    currency === "CFA" ? format.number(crochet.price) + " XAF" : "$" + 8.0;
-
-  // const availableSizes = crochet.sizes.map((size) => size.label);
-  // const availableColors = crochet.sizes.flatMap((size) =>
-  //   (size.colors || []).filter((color) => color != null)
-  // );
+  const convertedPrice = getConvertedPrice(
+    crochet.priceInCfa,
+    crochet.priceInUsd
+  );
 
   const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
 
@@ -96,7 +91,9 @@ export default function IndexPage({ params }) {
       const updatedCartItem = await addToCart(
         crochet.id,
         selectedSizeObj.id,
-        cartQty
+        cartQty,
+        currency,
+        selectedColor
       );
 
       if (updatedCartItem?.length > 0) {
@@ -141,12 +138,16 @@ export default function IndexPage({ params }) {
   };
 
   const text = encodeURIComponent(
-    `Hello, I found this beautiful ${crochet.name} on your mellycrochets.org and I'm interested. I would like to ask a few questions about it.`
+    `Hello, I found this beautiful ${crochet.name} on your mellycrochets.shop and I'm interested. I would like to ask a few questions about it.`
   );
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg my-8">
-      <Card variant={"borderless"} className="rounded-lg">
+    <div className="max-w-5xl mx-auto px-6 my-10 bg-white shadow-lg rounded-lg">
+      <Card
+        variant={"borderless"}
+        style={{ boxShadow: "none" }}
+        className="rounded-lg"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative py-3">
             <Image.PreviewGroup
@@ -174,31 +175,9 @@ export default function IndexPage({ params }) {
               {crochet.name}
             </h1>
             <p className="text-md font-semibold text-gray-700">
-              <span className="text-red-500">{convertedPrice}</span>
+              <span className="text-red-700 text-lg">{convertedPrice}</span>
             </p>
 
-            {/* <div className="mt-3">
-              <p className="text-md text-gray-700">
-                <span className="font-semibold">Available Sizes</span> <br />
-                {availableSizes.map((size) => (
-                  <Tag key={size} color="cyan">
-                    {size}
-                  </Tag>
-                ))}
-              </p>
-            </div>
-            {availableColors.length > 0 && (
-              <div className="mt-3">
-                <p className="text-md text-gray-700">
-                  <span className="font-semibold">Available Colors</span> <br />
-                  {availableColors.map((size) => (
-                    <Tag key={size} color="gold">
-                      {size}
-                    </Tag>
-                  ))}
-                </p>
-              </div>
-            )} */}
             <div className="mb-8">
               <p className="text-md font-semibold text-gray-700">
                 Chose Your Size
@@ -268,11 +247,18 @@ export default function IndexPage({ params }) {
                     borderBottomLeftRadius: 15,
                     borderRight: 0,
                   }}
+                  size="large"
                 >
                   <MinusOutlined />
                 </Button>
-                <Input value={cartQty} style={inputStyles} min={0} />
+                <Input
+                  size="large"
+                  value={cartQty}
+                  style={inputStyles}
+                  min={0}
+                />
                 <Button
+                  size="large"
                   onClick={() => setCartQty((prev) => prev + 1)}
                   style={{
                     ...buttonStyles,
@@ -292,6 +278,7 @@ export default function IndexPage({ params }) {
                   loading={loadingAddToCart}
                   icon={<PlusOutlined />}
                   style={{ borderRadius: 50 }}
+                  size="large"
                 >
                   Place Order
                 </Button>
@@ -302,6 +289,7 @@ export default function IndexPage({ params }) {
                   style={{ borderRadius: 50 }}
                   href={`https://wa.me/237681077051?text=${text}`}
                   target="_blank"
+                  size="large"
                 >
                   Contact Seller
                 </Button>
@@ -311,7 +299,11 @@ export default function IndexPage({ params }) {
         </div>
       </Card>
 
-      <Card className="mt-6" variant={"borderless"}>
+      <Card
+        style={{ boxShadow: "none" }}
+        className="mt-6"
+        variant={"borderless"}
+      >
         <Descriptions
           title="Crochet Details"
           bordered

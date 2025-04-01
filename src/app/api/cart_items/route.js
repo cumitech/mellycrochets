@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { initializeSocket } from "../../../lib/socket";
 import { Crochet } from "../../../data/entities";
 import { addToCart, getCartItems } from "../../../data/usecases/cart.usecase";
+import { CURRENCY } from "../../../constants/constant";
 
 export async function GET(request) {
   const session = await getServerSession(authOptions); //get session info
@@ -87,12 +88,18 @@ export async function POST(request) {
 
     const dto = new CartItemRequestDto({
       ...body,
-      price: Number(crochet.price),
+      price:
+        body.currency === CURRENCY.cfa
+          ? Number(crochet.priceInCfa)
+          : Number(crochet.priceInUsd),
+      selectedColors: body.color,
     });
-    const validationErrors = await validate(dto);
+    console.log("dto: ", dto.toData());
 
+    const validationErrors = await validate(dto);
     //desstructure the object
-    const { crochetId, sizeId, quantity, userId, price, total } = dto.toData();
+    const { crochetId, sizeId, quantity, userId, price, currency, selectedColors } =
+      dto.toData();
 
     if (validationErrors.length > 0) {
       return NextResponse.json(
@@ -106,7 +113,15 @@ export async function POST(request) {
       );
     }
 
-    await addToCart(userId, crochetId, sizeId, quantity, price, crochet);
+    await addToCart(
+      userId,
+      crochetId,
+      sizeId,
+      quantity,
+      price,
+      currency,
+      selectedColors
+    );
     const cartItems = await getCartItems(userId);
     // const mappedCartItems = cartItems.map((item) => item.get());
     io.emit("cart-updated", cartItems); // Emit event

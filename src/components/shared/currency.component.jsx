@@ -1,31 +1,22 @@
+import { CURRENCY } from "../../constants/constant";
 import { useCurrency } from "../../hooks/currency.hook";
 import { Button, Dropdown } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const AppCurrency = () => {
-  const { setCurrencyFun, currency: currencyVal } = useCurrency();
-  const [currency, setCurrency] = useState({ label: "XAF", key: "XAF" });
+  const { setCurrencyFun, currency: currencyVal } = useCurrency(); // Get currency state from Redux
 
   const items = [
-    { label: "USD", key: "USD" },
-    { label: "XAF", key: "XAF" },
+    { label: CURRENCY.usd, key: CURRENCY.usd },
+    { label: CURRENCY.cfa, key: CURRENCY.cfa },
   ];
 
   const handleMenuClick = (e) => {
-    const selectedCurrency = items.find((item) => item.key === e.key);
-    if (selectedCurrency) {
-      setCurrency(selectedCurrency);
-      setCurrencyFun(e.key); // Persist selection
-    }
+    setCurrencyFun(e.key); // Update Redux store
   };
 
-  useEffect(() => {
-    // const savedCurrency = localStorage.getItem("selectedCurrency");
-    if (currencyVal) {
-      const selectedCurrency = items.find((item) => item.key === currencyVal);
-      if (selectedCurrency) setCurrency(selectedCurrency);
-    }
-  }, []);
+  // Find the selected currency object
+  const selectedCurrency = items.find((item) => item.key === currencyVal);
 
   return (
     <Dropdown
@@ -37,9 +28,9 @@ const AppCurrency = () => {
       className="cursor-pointer font-medium"
     >
       <Button size="middle" style={{ width: "30px" }}>
-        {currency.label}
+        {selectedCurrency ? selectedCurrency.label : CURRENCY.cfa}
       </Button>
-    </Dropdown>
+    </Dropdown> 
   );
 };
 

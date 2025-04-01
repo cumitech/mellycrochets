@@ -14,6 +14,14 @@ export const crochetTypeAPI = createApi({
         ...response,
         createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
       }),
+    }), 
+    getSingleCrochetTypeBySlug: build.query({
+      query: (slug) => `/crochet_types/slugs/${slug}`,
+      transformResponse: (response) => ({
+        ...response,
+        createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
+        updatedAt: new Date(response.updatedAt).toISOString(),
+      }),
     }),
     fetchAllCrochetTypes: build.query({
       query: (page = 1) => `/crochet_types?page=${page}`,

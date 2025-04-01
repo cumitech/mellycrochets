@@ -52,8 +52,6 @@ export const App = (props) => {
         redirect: true,
       });
 
-      console.log("res: ", res);
-
       return {
         success: true,
         redirectTo: "/",
@@ -153,7 +151,7 @@ export const App = (props) => {
                 breadcrumb: true,
               }}
             >
-              {props.children}
+              <div className="min-h-screen">{props.children}</div>
               <RefineKbar />
             </Refine>
           </ClientProvider>

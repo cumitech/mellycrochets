@@ -47,6 +47,8 @@ export const ColorModeContextProvider = ({ children, defaultMode }) => {
           ...themeConfig,
           algorithm: mode === "light" ? defaultAlgorithm : darkAlgorithm,
         }}
+        // popupMatchSelectWidth={false}
+        // popupOverflow="viewport"
       >
         <AntdApp>{children}</AntdApp>
       </ConfigProvider>

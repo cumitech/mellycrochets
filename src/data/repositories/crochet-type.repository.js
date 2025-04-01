@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { CrochetType } from "../entities";
+import { Crochet, CrochetType, Size } from "../entities";
 
 export class CrochetTypeRepository {
   constructor() {}
@@ -30,6 +30,64 @@ export class CrochetTypeRepository {
         throw new NotFoundException("CrochetType", id);
       }
       return crochetTypeItem;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Receives a String as parameter
+   * @slug
+   * returns Crochet
+   */
+  async findBySlug(slug) {
+    try {
+      const crochetTypeItem = await CrochetType.findOne({
+        where: { slug },
+        include: [
+          {
+            model: Crochet,
+            as: "crochets",
+            include: [
+              {
+                model: CrochetType,
+                as: "crochetType",
+              },
+              {
+                model: Size,
+                as: "sizes",
+                through: {
+                  attributes: ["colors"],
+                },
+              },
+            ],
+          },
+        ],
+      });
+
+      // Convert Sequelize object to plain JSON to avoid circular structure
+      const plainCrochetTypeItem = crochetTypeItem
+        ? crochetTypeItem.toJSON()
+        : null;
+
+      if (!plainCrochetTypeItem) {
+        throw new Error("CrochetType not found");
+      }
+
+      const formattedCrochetTypeItem = {
+        ...plainCrochetTypeItem,
+        crochets: plainCrochetTypeItem.crochets.map((crochet) => ({
+          ...crochet,
+          imageUrls: crochet.imageUrls ? JSON.parse(crochet.imageUrls) : [],
+          sizes: crochet.sizes.map((size) => ({
+            id: size.id,
+            label: size.label,
+            price: size.CrochetSize?.price,
+            stock: size.CrochetSize?.stock,
+          })),
+        })),
+      };
+      return formattedCrochetTypeItem;
     } catch (error) {
       throw error;
     }
