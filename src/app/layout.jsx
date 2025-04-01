@@ -10,7 +10,6 @@ import AppNavigation from "../components/nav.component";
 import Footer from "../components/footer/footer.component";
 import { LoadingOutlined } from "@ant-design/icons";
 import PrivacyConsent from "../components/privacy-policy/privacy-policy.component";
-import EmailSubscriptionPopup from "../components/signup/signup.component";
 
 export const metadata = {
   metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
@@ -90,13 +89,12 @@ export default async function RootLayout({ children }) {
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             <RefineContext defaultMode={defaultMode}>
-              <Affix offsetTop={0}>
+              <Affix offsetTop={0} className="sticky top-0 left-0 w-full z-100">
                 <AppNavigation />
               </Affix>
               {children}
-              {/* Footer */}
               <Footer />
-              <EmailSubscriptionPopup />
+              {/* <EmailSubscriptionPopup /> */}
               <PrivacyConsent />
             </RefineContext>
           </NextIntlClientProvider>

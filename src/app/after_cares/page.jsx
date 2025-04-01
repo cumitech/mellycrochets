@@ -45,6 +45,7 @@ export default function MellyCrochetsLanding() {
         <Button
           type="primary"
           size="large"
+          href="https://www.instagram.com/mellycrochets_?igsh=cTkwZTc1eDcyaThw&utm_source=qr"
           style={{
             borderRadius: 50,
             padding: "20px 15px",

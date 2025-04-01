@@ -1,14 +1,39 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import { userAPI } from "./api/user_api";
-import { crochetReducer } from "./slice/crochet.slice";
 import { crochetAPI } from "./api/crochet_api";
 import { crochetTypeAPI } from "./api/crochet_type_api";
 import { postAPI } from "./api/post_api";
 import { categoryAPI } from "./api/category_api";
 import { afterCareAPI } from "./api/after_care_api";
 import { sizeAPI } from "./api/size_api";
-import { paymentMethodReducer } from "./slice/payment.slice";
 import { cartItemAPI } from "./api/cart_item_api";
+import { currencyReducer } from "./slice/currency.slice";
+import { paymentMethodReducer } from "./slice/payment.slice";
+import { crochetReducer } from "./slice/crochet.slice";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["currency", "paymentMethod", "crochets"], // Reducers to persist
+};
+
+// Wrap Reducers with Persist
+const persistedCurrencyReducer = persistReducer(persistConfig, currencyReducer);
+const persistedPaymentMethodReducer = persistReducer(
+  persistConfig,
+  paymentMethodReducer
+);
+const persistedCrochetReducer = persistReducer(persistConfig, crochetReducer);
 
 export const store = configureStore({
   reducer: {
@@ -20,11 +45,16 @@ export const store = configureStore({
     [afterCareAPI.reducerPath]: afterCareAPI.reducer,
     [sizeAPI.reducerPath]: sizeAPI.reducer,
     [cartItemAPI.reducerPath]: cartItemAPI.reducer,
-    crochets: crochetReducer,
-    paymentMethod: paymentMethodReducer,
+    crochets: persistedCrochetReducer,
+    paymentMethod: persistedPaymentMethodReducer,
+    currency: persistedCurrencyReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], // Ignore redux-persist actions
+      },
+    }).concat([
       userAPI.middleware,
       categoryAPI.middleware,
       crochetTypeAPI.middleware,
@@ -35,6 +65,8 @@ export const store = configureStore({
       cartItemAPI.middleware,
     ]),
 });
+
+export const persistor = persistStore(store);
 
 // export type AppDispatch = typeof store.dispatch;
 // export type RootState = ReturnType<typeof store.getState>;

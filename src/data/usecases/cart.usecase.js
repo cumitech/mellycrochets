@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { CartItem, Crochet, Size } from "../entities";
+import { CartItem, Crochet } from "../entities";
 
 export function calculateTotal(price, quantity) {
   return price * quantity;
@@ -11,7 +11,8 @@ export async function addToCart(
   sizeId,
   quantity,
   price,
-  crochet
+  currency,
+  selectedColors
 ) {
   let cartItem = await CartItem.findOne({
     where: { userId, crochetId, sizeId },
@@ -21,13 +22,14 @@ export async function addToCart(
     // If exists, update quantity
     cartItem.quantity += quantity;
 
-    const total = calculateTotal(crochet.price, cartItem.quantity);
+    const total = calculateTotal(price, cartItem.quantity);
     cartItem.price = price;
     cartItem.total = total;
+    cartItem.selectedColors = selectedColors;
 
     await cartItem.save();
   } else {
-    const total = calculateTotal(crochet.price, quantity);
+    const total = calculateTotal(price, quantity);
 
     // If not exists, create new cart item
     cartItem = await CartItem.create({
@@ -38,6 +40,8 @@ export async function addToCart(
       quantity,
       price,
       total,
+      currency,
+      selectedColors,
     });
   }
   return cartItem.toJSON();

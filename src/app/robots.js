@@ -1,5 +1,5 @@
 export default function robots() {
-  const baseUrl = process.env.NEXTAUTH_URL;
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://mellycrochets.org';
   return {
     rules: {
       userAgent: "*",

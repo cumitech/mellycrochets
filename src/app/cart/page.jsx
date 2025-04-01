@@ -22,10 +22,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { format } from "../../lib/format";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
-import { OrderService } from "../../service/order.service";
 import { cartItemAPI } from "../../store/api/cart_item_api";
 import { getCartSummary } from "../../components/shared/cart-summary-table.component";
 import { useNotification } from "@refinedev/core";
+import { CURRENCY } from "../../constants/constant";
 
 const CheckoutCartBtn = ({ onFinish, cartItems }) => {
   const [checkoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
@@ -48,41 +48,42 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
   }, 0);
 
   const onConfirmOrder = async (data) => {
-    const obj = {
-      ...emptyOrder,
-      orderNo: generateOrderNumber(),
-      crochets: cartItems.map((mp) => {
-        return {
-          crochetId: mp.crochetId,
-          qtty: mp.quantity,
-          price: mp.price,
-        };
-      }),
-      status: "ORDERED",
-      totalAmount: total,
-      totalQtty: totalQtty,
-      address: data.address,
-      cellPhone: data.telephone,
-      email: data.email,
-      username: data.username,
-    };
-    try {
-      const response = await OrderService.create(obj);
+    console.log(data);
+    // const obj = {
+    //   ...emptyOrder,
+    //   orderNo: generateOrderNumber(),
+    //   crochets: cartItems.map((mp) => {
+    //     return {
+    //       crochetId: mp.crochetId,
+    //       qtty: mp.quantity,
+    //       price: mp.price,
+    //     };
+    //   }),
+    //   status: "ORDERED",
+    //   totalAmount: total,
+    //   totalQtty: totalQtty,
+    //   address: data.address,
+    //   cellPhone: data.telephone,
+    //   email: data.email,
+    //   username: data.username,
+    // };
+    // try {
+    //   const response = await OrderService.create(obj);
 
-      if (response.success) {
-        setCheckoutDrawerOpen(false);
-        onFinish();
-        message.success("Placing your order!");
-        const query = { orderId: response.data.id, method };
-        navigator.push(
-          `/process-payment?${new URLSearchParams(query).toString()}`
-        );
-      }
-      return response;
-    } catch (error) {
-      message.error("An error occured!");
-      return error;
-    }
+    //   if (response.success) {
+    //     setCheckoutDrawerOpen(false);
+    //     onFinish();
+    //     message.success("Placing your order!");
+    //     const query = { orderId: response.data.id, method };
+    //     navigator.push(
+    //       `/process-payment?${new URLSearchParams(query).toString()}`
+    //     );
+    //   }
+    //   return response;
+    // } catch (error) {
+    //   message.error("An error occured!");
+    //   return error;
+    // }
   };
 
   return (
@@ -118,7 +119,7 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             rules={[{ required: true, message: "Please enter your full name" }]}
             style={{ marginBottom: 10 }}
           >
-            <Input placeholder="Enter your full name..." />
+            <Input size={"large"} placeholder="Enter your full name..." />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -126,14 +127,14 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             rules={[{ required: true, message: "Please enter your email" }]}
             style={{ marginBottom: 10 }}
           >
-            <Input placeholder="Enter your email..." />
+            <Input size={"large"} placeholder="Enter your email..." />
           </Form.Item>
           <Form.Item
             label="Address"
             name="address"
             rules={[{ required: true, message: "Please enter your address" }]}
           >
-            <Input placeholder="Enter your address..." />
+            <Input size={"large"} placeholder="Enter your address..." />
           </Form.Item>
 
           <Form.Item
@@ -141,7 +142,7 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
             name="telephone"
             rules={[{ required: true, message: "Please enter your telephone" }]}
           >
-            <Input placeholder="Enter your telephone..." />
+            <Input size={"large"} placeholder="Enter your telephone..." />
           </Form.Item>
 
           <Space align="end" style={{ marginTop: 20 }}>
@@ -222,6 +223,7 @@ export default function CartPage() {
             </h2>
             <div className="checkoutForm">
               <Table
+                size="large"
                 dataSource={cartItems}
                 pagination={false}
                 rowKey={(data) => data.id}
@@ -229,6 +231,7 @@ export default function CartPage() {
                   {
                     title: "No",
                     dataIndex: "no",
+                    width: "3rem",
                     render(value, record, index) {
                       return (
                         <span key={record.id}>
@@ -241,6 +244,7 @@ export default function CartPage() {
                   {
                     title: "Image",
                     dataIndex: "image",
+                    width: "5rem",
                     render: (value, record, index) => {
                       return (
                         <Avatar
@@ -254,19 +258,20 @@ export default function CartPage() {
                   {
                     title: "Name",
                     dataIndex: "name",
-                    width: "8rem",
+                    width: "15rem",
                     render: (value, record, index) => record.crochet?.name,
                   },
                   {
                     title: "Quantity",
                     dataIndex: "quantity",
                     width: 120,
+                    align: "right"
                   },
                   {
                     title: "Price",
                     dataIndex: "price",
                     render: (value, record) => {
-                      return `${format.number(value)} XAF`;
+                      return `${record.currency === CURRENCY.usd && "$"}${format.number(value)}`;
                     },
                     align: "right",
                   },
@@ -274,7 +279,7 @@ export default function CartPage() {
                     title: "Total",
                     dataIndex: "total",
                     render: (value, record) => {
-                      return `${format.number(value)} XAF`;
+                      return `${record.currency === CURRENCY.usd && "$"}${format.number(value)}`;
                     },
                     align: "right",
                   },
@@ -297,6 +302,8 @@ export default function CartPage() {
                     ),
                   },
                 ]}
+                scroll={{ x: "max-content" }} // Enables horizontal scrolling on smaller screens
+                style={{ overflowX: "auto" }} // Ensures proper scrolling behavior
               />
               <Typography.Paragraph>
                 {getCartSummary(cartItems)}

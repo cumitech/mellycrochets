@@ -41,7 +41,11 @@ module.exports = {
       imageUrls: {
         type: Sequelize.JSON,
       },
-      price: {
+      priceInCfa: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      priceInUsd: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },

@@ -55,7 +55,7 @@ const AppHero = () => {
             className="w-full h-[50vh] lg:h-[80vh] rounded-lg"
           >
             <SwiperSlide className="flex justify-center">
-              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+              <div className="bg-[#fee9e9dd] rounded-full mt-10">
                 <img
                   src="/photos/image5.png"
                   alt="Crochet Cardigan"
@@ -64,7 +64,7 @@ const AppHero = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+              <div className="bg-[#fee9e9dd] rounded-full mt-10">
                 <img
                   src="/photos/image2.png"
                   alt="Crochet Cardigan"
@@ -73,7 +73,7 @@ const AppHero = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+              <div className="bg-[#fee9e9dd] rounded-full mt-10">
                 <img
                   src="/photos/image3.png"
                   alt="Crochet Cardigan"
@@ -82,7 +82,7 @@ const AppHero = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+              <div className="bg-[#fee9e9dd] rounded-full mt-10">
                 <img
                   src="/photos/image4.png"
                   alt="Crochet Cardigan"
@@ -91,7 +91,7 @@ const AppHero = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide className="flex justify-center">
-              <div className="bg-[#fdf3f3c3] rounded-full mt-10">
+              <div className="bg-[#fee9e9dd] rounded-full mt-10">
                 <img
                   src="/photos/image1.png"
                   alt="Crochet Cardigan"

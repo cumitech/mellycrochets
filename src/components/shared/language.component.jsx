@@ -69,7 +69,7 @@ const AppLanguage = () => {
         placement="bottomLeft"
         className="cursor-pointer font-medium"
       >
-        <Button size="small" style={{ width: "30px" }}>
+        <Button size="middle" style={{ width: "30px" }}>
           {menu.label}
         </Button>
       </Dropdown>

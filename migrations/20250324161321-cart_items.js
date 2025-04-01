@@ -58,6 +58,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      currency: {
+        type: Sequelize.STRING(50),
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

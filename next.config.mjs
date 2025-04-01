@@ -4,7 +4,6 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig = withNextIntl({
   transpilePackages: ["@refinedev/antd"],
-  // output: "standalone",
   productionBrowserSourceMaps: false,
   images: {
     domains: ["localhost"],
@@ -18,21 +17,10 @@ const nextConfig = withNextIntl({
     ],
   },
   crossOrigin: "anonymous",
-  ignoreWarnings: [
-    {
-      message:
-        /Critical dependency: the request of a dependency is an expression/,
-    },
-  ],
   experimental: {
     optimizeCss: true, // Enable CSS optimization
   },
   webpack(config) {
-    // config.module.rules.push({
-    //   test: /\.js$/,
-    //   use: "babel-loader",
-    //   exclude: /node_modules\/(?!sequelize)/,
-    // });
     config.optimization.splitChunks = {
       chunks: "all", // Improve code splitting
     };

@@ -10,9 +10,15 @@ const useCart = () => {
     }
   };
 
-  const addToCart = async (crochetId, sizeId, quantity) => {
+  const addToCart = async (crochetId, sizeId, quantity, currency, color) => {
     try {
-      const cartItem = await CartService.create(crochetId, sizeId, quantity);
+      const cartItem = await CartService.create(
+        crochetId,
+        sizeId,
+        quantity,
+        currency,
+        color
+      );
       console.log("Crochet Added to Cart Successfully!");
       return cartItem;
     } catch (error) {

@@ -39,3 +39,8 @@ export const keywords = [
   "Crochet Jackets",
   "Crochet Two-Piece Sets",
 ];
+
+export const CURRENCY = {
+  cfa: "CFA",
+  usd: "USD"
+}

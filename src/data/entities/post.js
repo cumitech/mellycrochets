@@ -29,13 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(128),
         allowNull: false,
       },
-      readTime: {
-        type: DataTypes.STRING(128),
-        allowNull: true,
-      },
-      publishedAt: {
-        type: DataTypes.DATE,
-      },
       authorId: {
         type: DataTypes.STRING(20),
         allowNull: false,
@@ -44,13 +37,17 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      crochetTypeId: {
+      categoryId: {
         type: DataTypes.STRING(128),
         allowNull: false,
         references: {
-          model: "crochet_types",
+          model: "categories",
           key: "id",
         },
+      },
+      status: {
+        type: DataTypes.ENUM("draft", "published", "archived"),
+        defaultValue: "draft",
       },
     },
     {

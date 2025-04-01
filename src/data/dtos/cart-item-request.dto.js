@@ -23,7 +23,7 @@ class CartItemRequestDto {
     }
 
     if (typeof price !== "number" || price < 0) {
-      throw new Error("Valid discounted price is required.");
+      throw new Error("Valid price is required.");
     }
 
     this.crochetId = data.crochetId;
@@ -31,6 +31,8 @@ class CartItemRequestDto {
     this.sizeId = data.sizeId;
     this.quantity = data.quantity;
     this.price = data.price;
+    this.currency = data.currency;
+    this.selectedColors = data.selectedColors;
   }
 
   toData() {
@@ -43,6 +45,8 @@ class CartItemRequestDto {
       quantity: this.quantity,
       price: this.price,
       total: this.price * this.quantity,
+      currency: this.currency,
+      selectedColors: JSON.stringify(this.selectedColors),
     };
   }
 

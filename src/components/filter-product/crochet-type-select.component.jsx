@@ -5,8 +5,6 @@ const customStyles = {
   control: (provided) => ({
     ...provided,
     background: "none",
-    // border: "none",
-    // boxShadow: "none",
   }),
   option: (styles, { isFocused, isSelected, isHovered }) => ({
     ...styles,

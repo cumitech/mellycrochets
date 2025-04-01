@@ -7,6 +7,7 @@ const emptyCartItem = {
   total: 0,
   price: 0,
   colors: [],
+  currency: ""
 };
 
 const emptyCrochetType = {

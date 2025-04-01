@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { format } from "../../lib/format";
 import { useCart } from "../../hooks/cart.hook";
 import { useNotification } from "@refinedev/core";
+import { CURRENCY } from "../../constants/constant";
 
 const ShoppingCart = ({ cartCount = 1, cartItems }) => {
   const [popovervisible, setPopovervisible] = useState(false);
@@ -52,52 +53,60 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
             overflowY: "auto",
           }}
           size="large"
-          renderItem={(item, index) => (
-            <List.Item
-              onClick={(e) => e.stopPropagation()}
-              rowKey={item.id + index}
-              key={item.id + index}
-              actions={[
-                <Button
-                  key={"button-1"}
-                  className="removeCartItem"
-                  icon={
-                    <DeleteOutlined style={{ color: "red", fontSize: 16 }} />
+          renderItem={(item, index) => {
+            return (
+              <List.Item
+                onClick={(e) => e.stopPropagation()}
+                rowKey={item.id + index}
+                key={item.id + index}
+                actions={[
+                  <Button
+                    key={"button-1"}
+                    className="removeCartItem"
+                    icon={
+                      <DeleteOutlined style={{ color: "red", fontSize: 16 }} />
+                    }
+                    onClick={(event) => {
+                      handleRemoveCartItem(item);
+                    }}
+                    htmlType="button"
+                  />,
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      src={`${API_URL_UPLOADS_CROCHETS}/${item.crochet.imageUrls[0]}`}
+                      size={"large"}
+                      alt={item.crochet.name}
+                    />
                   }
-                  onClick={(event) => {
-                    handleRemoveCartItem(item);
-                  }}
-                  htmlType="button"
-                />,
-              ]}
-            >
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    src={`${API_URL_UPLOADS_CROCHETS}/${item.crochet.imageUrls[0]}`}
-                    size={"large"}
-                    alt={item.crochet.name}
-                  />
-                }
-                title={
-                  <Typography.Title level={5}>
-                    {item.crochet.name}
-                  </Typography.Title>
-                }
-                description={
-                  <Typography.Text type="danger" strong>
-                    {format.number(item.quantity * item.price)} {" XAF"}
-                  </Typography.Text>
-                }
-              />
-            </List.Item>
-          )}
+                  title={
+                    <Typography.Title level={5}>
+                      {item.crochet.name}
+                    </Typography.Title>
+                  }
+                  description={
+                    <Typography.Text
+                      type="danger"
+                      strong
+                      style={{ fontSize: 20 }}
+                    >
+                      {item.currency === CURRENCY.usd && "$"}
+                      {format.number(item.total)}{" "}
+                    </Typography.Text>
+                  }
+                />
+              </List.Item>
+            );
+          }}
         />
 
         {cartItems && cartItems.length > 0 && (
           <Space style={{ justifyContent: "flex-end" }}>
             <Button
               type="primary"
+              size="large"
               onClick={() => handleCheckoutSubmit()}
               className="checkOutBtn"
               // block
@@ -121,15 +130,23 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
   return (
     <>
       <Popover
-        placement="bottomRight"
+        placement="bottom"
         title={"Your Cart"}
         content={<CartHolder />}
         trigger="click"
         open={popovervisible}
         onOpenChange={handlePopoverChange}
+        styles={{
+          body: {
+            marginRight: 30,
+          },
+        }}
       >
         <Badge count={cartCount} style={{ color: "#ddd" }}>
-          <ShoppingCartOutlined className="shoppingCardIcon" />
+          <ShoppingCartOutlined
+            className="shoppingCardIcon"
+            style={{ fontSize: 30 }}
+          />
         </Badge>
       </Popover>
     </>
