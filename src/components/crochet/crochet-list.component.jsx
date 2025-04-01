@@ -1,5 +1,5 @@
 "use client";
-import { Col, Empty, Row } from "antd";
+import { Button, Col, Empty, Row } from "antd";
 import React from "react";
 import CrochetCard from "./crochet-card.component";
 import { useFilter } from "../../hooks/filter.hook";
@@ -26,9 +26,18 @@ const CrochetList = ({ crochets }) => {
           ))}
         </Row>
       ) : (
-        <Col span={24}>
+        <Col span={24} style={{ padding: "4rem 0" }}>
           <div className="empty-wrap">
-            <Empty />
+            <Empty description="No crochets found at the moment!">
+              <Button
+                type="primary"
+                href="https://wa.me/237681077051"
+                size="large"
+                style={{ borderRadius: 50 }}
+              >
+                Contact MellyCrochets
+              </Button>
+            </Empty>
           </div>
         </Col>
       )}

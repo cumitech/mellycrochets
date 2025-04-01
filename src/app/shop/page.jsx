@@ -2,9 +2,9 @@
 
 import { crochetAPI } from "../../store/api/crochet_api";
 import CrochetList from "../../components/crochet/crochet-list.component";
-import FilterCrochets from "../../components/filter-crochet.component";
 import { motion } from "framer-motion";
 import SpinnerList from "../../components/crochet-card.skeleton";
+import ShopHero from "../../components/shared/shop-hero.component";
 
 export default function IndexPage() {
   const {
@@ -28,9 +28,8 @@ export default function IndexPage() {
 
   return (
     <>
-      <div className="py-20">
-        {/* filter content */}
-        <FilterCrochets />
+      <div className="">
+        <ShopHero />
         <div className="w-full px-10 pb-10" data-aos="fade-up">
           {/* listings */}
           <CrochetList crochets={crochets} />

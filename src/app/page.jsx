@@ -56,7 +56,7 @@ export default function IndexPage() {
           <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
             <Button
               type="primary"
-              href="/crochets"
+              href="/shop"
               size="large"
               className="text-sm font-semibold transition-all duration-300"
               style={{
