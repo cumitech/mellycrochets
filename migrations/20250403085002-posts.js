@@ -56,6 +56,16 @@ module.exports = {
         type: Sequelize.ENUM("draft", "published", "archived"),
         defaultValue: "draft",
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
+      },
     });
   },
 

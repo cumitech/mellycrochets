@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Post } from "../entities";
+import { Category, Post, Tag } from "../entities";
 
 export class PostRepository {
   constructor() {}
@@ -24,7 +24,18 @@ export class PostRepository {
    */
   async findById(id) {
     try {
-      const postItem = await Post.findByPk(id);
+      const postItem = await Post.findByPk(id, {
+        include: [
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: Tag,
+            as: "tags",
+          },
+        ],
+      });
 
       if (!postItem) {
         throw new NotFoundException("Post", id);
@@ -44,6 +55,16 @@ export class PostRepository {
     try {
       const postItem = await Post.findOne({
         where: { slug },
+        include: [
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: Tag,
+            as: "tags",
+          },
+        ],
       });
 
       if (!postItem) {
@@ -61,7 +82,19 @@ export class PostRepository {
    */
   async findByTitle(title) {
     try {
-      const postItem = await Post.findOne({ where: { title } });
+      const postItem = await Post.findOne({
+        where: { title },
+        include: [
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: Tag,
+            as: "tags",
+          },
+        ],
+      });
       return postItem;
     } catch (error) {
       throw error;
@@ -73,7 +106,18 @@ export class PostRepository {
    */
   async getAll() {
     try {
-      const posts = await Post.findAll();
+      const posts = await Post.findAll({
+        include: [
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: Tag,
+            as: "tags",
+          },
+        ],
+      });
       return posts;
     } catch (error) {
       throw error;
