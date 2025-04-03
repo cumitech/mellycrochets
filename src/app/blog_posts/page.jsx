@@ -1,53 +1,70 @@
 "use client";
 
-import { Button, Typography, Space } from "antd";
-import { HeartOutlined } from "@ant-design/icons";
+import { Empty } from "antd";
+import BlogHero from "../../components/shared/post-hero.component";
+import { motion } from "framer-motion";
+import AppPost from "../../components/posts/post.component";
+import { postAPI } from "../../store/api/post_api";
+import SpinnerList from "../../components/crochet-card.skeleton";
 
 export default function IndexPage() {
-  const text = encodeURIComponent(
-    `Hello MellyCrochet, I am contacting from your website. I wish to inquire about your products`
-  );
+  const {
+    data: posts,
+    isLoading,
+    isFetching,
+  } = postAPI.useFetchAllPostsQuery(1);
+
+  if (isLoading || isFetching) {
+    return (
+      <motion.div
+        className="box"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <SpinnerList />
+      </motion.div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-100 to-pink-100">
-      <div className="px-5">
-        <div className="text-center max-w-lg p-8 bg-white rounded-lg shadow-lg">
-          <Typography.Title
-            level={1}
-            className="text-4xl font-bold text-pink-600 mb-4"
+    <>
+      <BlogHero />
+
+      <section
+        id="services"
+        className="pt-16 pb-30 px-10 mb-15 md:px-20 bg-green-50 text-center"
+      >
+        {(isLoading || isFetching) && (
+          <motion.div
+            className="box"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            Coming Soon...
-          </Typography.Title>
-          <Typography.Paragraph className="text-lg text-gray-700 mb-6">
-            We&apos;re working hard on something amazing! Stay tuned for the latest
-            crochet trends, tutorials, and more.
-          </Typography.Paragraph>
-          <Space direction="vertical" className="space-y-4">
-            <Button
-              type="primary"
-              size="large"
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white"
-              href={`https://wa.me/237681077051?text=${text}`}
-            >
-              Notify Me
-            </Button>
-            <Button
-              type="default"
-              size="large"
-              className="w-full bg-transparent border border-pink-500 hover:bg-pink-50"
-              icon={<HeartOutlined />}
-              href={`https://wa.me/237681077051?text=${text}`}
-            >
-              Show Your Support
-            </Button>
-          </Space>
-          <div className="mt-6">
-            <Typography.Text className="text-sm text-gray-600">
-              Crafted with <span className="text-red-500">❤️</span> by your
-              crochet community.
-            </Typography.Text>
+            <SpinnerList />
+          </motion.div>
+        )}
+        {posts && posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {posts.map((service, index) => (
+              <AppPost service={service} key={index} />
+            ))}
           </div>
-        </div>
-      </div>
-    </div>
+        ) : (
+          <div className="empty-wrap">
+            <Empty />
+          </div>
+        )}
+        {/* <div className="mt-12">
+          <Link
+            href="/blog_posts"
+            className="services_link font-semibold py-3 px-6 rounded-lg shadow-lg text-xl"
+          >
+            View All Services
+          </Link>
+        </div> */}
+      </section>
+    </>
   );
 }
