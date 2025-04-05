@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Category, Post, Tag } from "../entities";
+import { Category, Post, Tag, User } from "../entities";
 
 export class PostRepository {
   constructor() {}
@@ -115,6 +115,38 @@ export class PostRepository {
           {
             model: Tag,
             as: "tags",
+          },
+          {
+            model: User,
+            as: "user", // if you defined this association
+            attributes: ["id", "email","username"],
+          },
+        ],
+      });
+      return posts;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getLatestPosts() {
+    try {
+      const posts = await Post.findAll({
+        limit: 5, 
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: Tag,
+            as: "tags",
+          },
+          {
+            model: User,
+            as: "user", // if you defined this association
+            attributes: ["id", "email","username"],
           },
         ],
       });

@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Category } from "../entities";
+import { Category, Post } from "../entities";
 
 export class CategoryRepository {
   constructor() {}
@@ -37,12 +37,12 @@ export class CategoryRepository {
 
   /**
    * Receives a String as parameter
-   * @title
+   * @name
    * returns Category
    */
-  async findByTitle(title) {
+  async findByName(name) {
     try {
-      const categoryItem = await Category.findOne({ where: { title } });
+      const categoryItem = await Category.findOne({ where: { name } });
       return categoryItem;
     } catch (error) {
       throw error;
@@ -54,7 +54,14 @@ export class CategoryRepository {
    */
   async getAll() {
     try {
-      const categories = await Category.findAll();
+      const categories = await Category.findAll({
+        include: [
+          {
+            model: Post,
+            as: "posts",
+          },
+        ],
+      });
       return categories;
     } catch (error) {
       throw error;

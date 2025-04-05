@@ -36,6 +36,10 @@ export default function IndexPage({ params }) {
       <CrochetTypeHero
         title={crochetType.name}
         description={crochetType.description}
+        breadcrumbs={[
+          { title: "Crochet Designs", href: "/shop" },
+          { title: crochetType.name, href: "#" },
+        ]}
       />
       <div className="w-full px-10 pb-10" data-aos="fade-up">
         {/* listings */}

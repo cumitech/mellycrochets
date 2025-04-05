@@ -27,8 +27,6 @@ const BlogHero = () => {
           style={{
             borderRadius: 50,
             padding: "0 50px",
-            backgroundColor: "#D97706",
-            borderColor: "#D97706",
           }}
         >
           Explore Blog

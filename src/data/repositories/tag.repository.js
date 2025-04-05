@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Tag } from "../entities";
+import { Post, Tag } from "../entities";
 
 export class TagRepository {
   constructor() {}
@@ -37,12 +37,21 @@ export class TagRepository {
 
   /**
    * Receives a String as parameter
-   * @title
+   * @name
    * returns Tag
    */
-  async findByTitle(title) {
+  async findByName(name) {
     try {
-      const tagItem = await Tag.findOne({ where: { title } });
+      const tagItem = await Tag.findOne({
+        where: { name },
+        include: [
+          {
+            model: Post,
+            as: "posts",
+            through: { attributes: [] },
+          },
+        ],
+      });
       return tagItem;
     } catch (error) {
       throw error;
@@ -54,7 +63,15 @@ export class TagRepository {
    */
   async getAll() {
     try {
-      const tags = await Tag.findAll();
+      const tags = await Tag.findAll({
+        include: [
+          {
+            model: Post,
+            as: "posts",
+            through: { attributes: [] },
+          },
+        ],
+      });
       return tags;
     } catch (error) {
       throw error;

@@ -93,12 +93,12 @@ export const App = (props) => {
     getPermissions: async () => {
       if (!data?.user) return null; // Ensure user exists
 
-      // return { role: data?.user?.role ?? "user" }; // Default role is "user"
       return {
         role: data.user.role ?? "user", // Ensure role is always set
         email: data.user.email,
         name: data.user.name,
         image: data.user.image,
+        id: data.user.id,
       };
     },
     getIdentity: async () => {
@@ -109,6 +109,7 @@ export const App = (props) => {
           email: user.email,
           avatar: user.image,
           role: data.user.role ?? "user",
+          id: data.user.id,
         };
       }
 

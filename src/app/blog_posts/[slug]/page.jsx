@@ -1,52 +1,181 @@
 "use client";
 
-import { Button, Typography, Space } from "antd";
-import { HeartOutlined } from "@ant-design/icons";
-import ShopHero from "../../../components/shared/shop-hero.component";
+import { Typography, Card, Divider, Tag, Space } from "antd";
+import { postAPI } from "../../../store/api/post_api";
+import { categoryAPI } from "../../../store/api/category_api";
+import { tagAPI } from "../../../store/api/tag_api";
+import { API_URL_UPLOADS_POSTS } from "../../../constants/api-url";
+import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
+import Link from "next/link";
+import { CiFolderOn } from "react-icons/ci";
+import PostComments from "../../../components/comment/comment.component";
 
-export default function IndexPage() {
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-100 to-pink-100">
-      <ShopHero />
-      <div className="px-5">
-        <div className="text-center max-w-lg p-8 bg-white rounded-lg shadow-lg">
-          <Typography.Title
-            level={1}
-            className="text-4xl font-bold text-pink-600 mb-4"
-          >
-            Coming Soon...
-          </Typography.Title>
-          <Typography.Paragraph className="text-lg text-gray-700 mb-6">
-            We&apos;re working hard on something amazing! Stay tuned for the
-            latest crochet trends, tutorials, and more.
-          </Typography.Paragraph>
-          <Space direction="vertical" className="space-y-4">
-            <Button
-              type="primary"
-              size="large"
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white"
-              href={`https://wa.me/237681077051?text=${text}`}
-            >
-              Notify Me
-            </Button>
-            <Button
-              type="default"
-              size="large"
-              className="w-full bg-transparent border border-pink-500 hover:bg-pink-50"
-              icon={<HeartOutlined />}
-              href={`https://wa.me/237681077051?text=${text}`}
-            >
-              Show Your Support
-            </Button>
-          </Space>
-          <div className="mt-6">
-            <Typography.Text className="text-sm text-gray-600">
-              Crafted with <span className="text-red-500">❤️</span> by your
-              crochet community.
-            </Typography.Text>
-          </div>
-        </div>
+const { Title, Paragraph } = Typography;
+export default function IndexPage({ params }) {
+  const {
+    data: post,
+    isLoading: isLoadingPost,
+    isFetching: isFetchingPost,
+  } = postAPI.useGetSinglePostBySlugQuery(params.slug);
+
+  const {
+    data: categories,
+    isLoading: isLoadingCategory,
+    isFetching: isFetchingCategory,
+  } = categoryAPI.useFetchAllCategoriesQuery(1);
+
+  const {
+    data: tags,
+    isLoading: isLoadingTag,
+    isFetching: isFetchingTag,
+  } = tagAPI.useFetchAllTagsQuery(1);
+
+  const {
+    data: latestPosts,
+    isLoading: isLoadingLatestPost,
+    isFetching: isFetchingLatestPost,
+  } = postAPI.useFetchAllLatestPostsQuery(1);
+
+  if (
+    isLoadingPost ||
+    isFetchingPost ||
+    isLoadingCategory ||
+    isFetchingCategory ||
+    isLoadingTag ||
+    isFetchingTag ||
+    isLoadingLatestPost ||
+    isFetchingLatestPost
+  ) {
+    return (
+      <div
+        style={{
+          minHeight: "65vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p className="text-lg text-center">Details loading...</p>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <>
+      <CrochetTypeHero
+        title={"Post Details"}
+        description={post.title}
+        breadcrumbs={[
+          { title: "Posts", href: "/blog_posts" },
+          { title: "Details", href: "#" },
+        ]}
+      />
+      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Post Content */}
+        <div className="lg:col-span-2">
+          <Card
+            cover={
+              <img
+                src={`${API_URL_UPLOADS_POSTS}/${post.imageUrl}`}
+                alt={post.title}
+                className="rounded-t-xl object-cover w-full"
+              />
+            }
+            className="rounded-xl"
+            variant="borderless"
+          >
+            <Typography>
+              <Title level={2}>{post.title}</Title>
+              <Paragraph type="secondary">{post.summary}</Paragraph>
+              <Divider />
+              <div className="prose max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              </div>
+              <Divider />
+              <div className="flex flex-wrap gap-2 mt-4">
+                {post.tags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    color="#ffe3e2"
+                    style={{ color: "#333", fontWeight: 500 }}
+                  >
+                    {tag.name.toUpperCase()}
+                  </Tag>
+                ))}
+              </div>
+            </Typography>
+          </Card>
+        </div>
+
+        {/* Sidebar */}
+        <Space direction="vertical" size={"small"} className="space-y-6">
+          {/* Latest Posts */}
+          <Card
+            variant="borderless"
+            size="small"
+            title="Latest Posts"
+            className="rounded-xl shadow-sm"
+          >
+            <ul className="space-y-2">
+              {latestPosts.map((p) => (
+                <li key={p.id}>
+                  <Link href={`/posts/${p.slug}`}>{p.title.toUpperCase()}</Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          {/* Categories */}
+          <Card
+            variant="borderless"
+            size="small"
+            title="Categories"
+            className="rounded-xl shadow-sm"
+          >
+            <ul className="space-y-1">
+              {categories.map((cat) => (
+                <li key={cat.id}>
+                  <Link
+                    style={{
+                      marginBottom: 5,
+                    }}
+                    href={`/categories/${cat.slug}`}
+                  >
+                    <Space style={{ columnGap: 2 }}>
+                      <CiFolderOn size={20} /> {cat.name.toUpperCase()}
+                    </Space>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          {/* Tags */}
+          <Card
+            variant="borderless"
+            size="small"
+            title="Tags"
+            className="rounded-xl shadow-sm"
+          >
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                  <Tag
+                    size="large"
+                    color="#ffe3e2"
+                    style={{ color: "#333", fontWeight: 500 }}
+                  >
+                    {tag.name.toUpperCase()}
+                  </Tag>
+                </Link>
+              ))}
+            </div>
+          </Card>
+        </Space>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <PostComments postId={post.id} />
+      </div>
+    </>
   );
 }

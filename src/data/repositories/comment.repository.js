@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Comment } from "../entities";
+import { Comment, User } from "../entities";
 
 export class CommentRepository {
   constructor() {}
@@ -54,7 +54,20 @@ export class CommentRepository {
    */
   async getAll() {
     try {
-      const comments = await Comment.findAll();
+      const comments = await Comment.findAll({
+        include: [
+          {
+            model: User,
+            as: "user",
+            // attributes: ["id", "username", "email"],
+          },
+          // {
+          //   model: Post,
+          //   as: "post",
+          //   attributes: ["id", "title"],
+          // },
+        ],
+      });
       return comments;
     } catch (error) {
       throw error;
