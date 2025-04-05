@@ -20,6 +20,8 @@ import { cartItemAPI } from "./api/cart_item_api";
 import { currencyReducer } from "./slice/currency.slice";
 import { paymentMethodReducer } from "./slice/payment.slice";
 import { crochetReducer } from "./slice/crochet.slice";
+import { tagAPI } from "./api/tag_api";
+import { commentAPI } from "./api/comment_api";
 
 const persistConfig = {
   key: "root",
@@ -45,6 +47,8 @@ export const store = configureStore({
     [afterCareAPI.reducerPath]: afterCareAPI.reducer,
     [sizeAPI.reducerPath]: sizeAPI.reducer,
     [cartItemAPI.reducerPath]: cartItemAPI.reducer,
+    [tagAPI.reducerPath]: tagAPI.reducer,
+    [commentAPI.reducerPath]: commentAPI.reducer,
     crochets: persistedCrochetReducer,
     paymentMethod: persistedPaymentMethodReducer,
     currency: persistedCurrencyReducer,
@@ -63,6 +67,8 @@ export const store = configureStore({
       afterCareAPI.middleware,
       sizeAPI.middleware,
       cartItemAPI.middleware,
+      tagAPI.middleware,
+      commentAPI.middleware,
     ]),
 });
 

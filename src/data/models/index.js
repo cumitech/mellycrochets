@@ -7,7 +7,7 @@ const emptyCartItem = {
   total: 0,
   price: 0,
   colors: [],
-  currency: ""
+  currency: "",
 };
 
 const emptyCrochetType = {
@@ -93,6 +93,24 @@ const emptyRole = {
   name: "",
 };
 
+const emptyTag = {
+  id: "",
+  name: "",
+};
+
+const emptyComment = {
+  id: "",
+  userId: "",
+  postId: "",
+  message: "",
+  toggle: false,
+};
+
+const emptyCategory = {
+  id: "",
+  name: "",
+};
+
 const emptySubscriber = {
   id: "",
   email: "",
@@ -127,10 +145,9 @@ const emptyPost = {
   slug: "",
   content: "",
   imageUrl: "",
-  readTime: "",
   publishedAt: null,
   authorId: "",
-  crochetTypeId: "",
+  categoryId: "",
 };
 
 export {
@@ -149,4 +166,7 @@ export {
   emptyAfterCare,
   emptySize,
   emptyPost,
+  emptyCategory,
+  emptyTag,
+  emptyComment
 };

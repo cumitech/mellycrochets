@@ -34,5 +34,29 @@ export const postAPI = createApi({
       },
       providesTags: (result) => ["Post"],
     }),
+    fetchAllPosts: build.query({
+      query: (page = 1) => `/posts?page=${page}`,
+      transformResponse: (response) => {
+        // Ensure each category's createdAt field is an ISO string
+        const transformedCategories = response.map((category) => ({
+          ...category,
+          createdAt: new Date(category.createdAt).toISOString(), // Convert date to ISO string
+        }));
+        return transformedCategories;
+      },
+      providesTags: (result) => ["Post"],
+    }),
+    fetchAllLatestPosts: build.query({
+      query: (page = 1) => `/posts/latest_posts?page=${page}`,
+      transformResponse: (response) => {
+        // Ensure each category's createdAt field is an ISO string
+        const transformedCategories = response.map((category) => ({
+          ...category,
+          createdAt: new Date(category.createdAt).toISOString(), // Convert date to ISO string
+        }));
+        return transformedCategories;
+      },
+      providesTags: (result) => ["Post"],
+    }),
   }),
 });

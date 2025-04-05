@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      slug: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        unique: true,
+      },
     },
     {
       sequelize,

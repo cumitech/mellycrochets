@@ -19,6 +19,7 @@ const CrochetSize = require("./crochet_size")(sequelize, DataTypes);
 const Tag = require("./tag")(sequelize, DataTypes);
 const Category = require("./category")(sequelize, DataTypes);
 const PostTag = require("./post-tag")(sequelize, DataTypes);
+const Comment = require("./comment")(sequelize, DataTypes);
 // User <=> post Associations
 User.hasMany(Post, {
   foreignKey: "authorId",
@@ -56,6 +57,29 @@ Tag.belongsToMany(Post, {
   as: "posts",
 });
 
+// user <=> comment
+User.hasMany(Comment, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  as: "comments",
+});
+Comment.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
+});
+
+// post <=> comments
+Post.hasMany(Comment, {
+  foreignKey: "postId",
+  onDelete: "CASCADE",
+  as: "comments",
+});
+
+Comment.belongsTo(Post, {
+  foreignKey: "postId",
+  as: "post",
+});
+
 // category <=> post Associations
 // Crochet <=> Crochet Type
 CrochetType.hasMany(Crochet, { foreignKey: "crochetTypeId", as: "crochets" });
@@ -76,16 +100,6 @@ Size.belongsToMany(Crochet, {
   as: "crochets",
 });
 
-CrochetType.hasMany(Post, {
-  foreignKey: "crochetTypeId",
-  onDelete: "SET NULL",
-  as: "posts",
-});
-Post.belongsTo(CrochetType, {
-  foreignKey: "CrochetTypeId",
-  onDelete: "SET NULL",
-  as: "crochetType",
-});
 
 // Order <=> Crochet relationship with Crochet
 Order.belongsToMany(Crochet, {
@@ -151,4 +165,8 @@ module.exports = {
   AfterCare,
   Size,
   CrochetSize,
+  Category,
+  Tag,
+  Post,
+  Comment,
 };
