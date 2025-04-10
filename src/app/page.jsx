@@ -31,7 +31,7 @@ export default function IndexPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <SpinnerList />
+        <SpinnerList /> 
       </motion.div>
     );
   }

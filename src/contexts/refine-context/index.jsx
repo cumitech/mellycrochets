@@ -17,7 +17,7 @@ export const RefineContext = (props) => {
   return (
     <SessionProvider>
       <ColorModeContextProvider defaultMode={defaultMode}>
-        <SocketProvider>
+        {/* <SocketProvider> */}
           <App {...props} />
           <FloatButton.Group
             shape="circle"
@@ -50,7 +50,7 @@ export const RefineContext = (props) => {
               className="contact-us"
             />
           </FloatButton.Group>
-        </SocketProvider>
+        {/* </SocketProvider> */}
       </ColorModeContextProvider>
     </SessionProvider>
   );
