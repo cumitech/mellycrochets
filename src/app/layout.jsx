@@ -10,25 +10,12 @@ import AppNavigation from "../components/nav.component";
 import Footer from "../components/footer/footer.component";
 import { LoadingOutlined } from "@ant-design/icons";
 import PrivacyConsent from "../components/privacy-policy/privacy-policy.component";
+import "../lib/polyfils";
+import { keywords } from "../constants/constant";
 
 export const metadata = {
   metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
-  keywords: [
-    "Crochet Fashion",
-    "Handmade Crochet",
-    "Crochet Crop Top",
-    "Crochet Bikini",
-    "Crochet Dress",
-    "Crochet Bags",
-    "Crochet Pullover",
-    "Crochet Beachwear",
-    "Stylish Crochet Outfits",
-    "Eco-Friendly Crochet",
-    "Custom Crochet Wear",
-    "Crochet Accessories",
-    "Crochet Jackets",
-    "Crochet Two-Piece Sets",
-  ],
+  keywords: keywords.join(", "),
   title: {
     default:
       "Premium Crochet Creations - Handcrafted with Love | MellyCrochets",

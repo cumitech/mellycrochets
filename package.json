@@ -36,6 +36,7 @@
     "axios": "^1.7.9",
     "bcryptjs": "^3.0.2",
     "class-validator": "^0.14.1",
+    "core-js": "^3.41.0",
     "critters": "^0.0.25",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.7",
@@ -60,6 +61,7 @@
     "react-redux": "^9.2.0",
     "react-select": "^5.10.0",
     "redux-persist": "^6.0.0",
+    "regenerator-runtime": "^0.14.1",
     "sass": "^1.84.0",
     "sequelize": "^6.37.5",
     "slugify": "^1.6.6",
@@ -69,6 +71,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "babel-loader": "^10.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "^14.1.0",
@@ -80,5 +83,11 @@
   },
   "browser": {
     "crypto": "crypto-browserify"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "IE 11"
+  ]
 }

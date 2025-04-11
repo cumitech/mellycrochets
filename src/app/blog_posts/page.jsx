@@ -56,14 +56,6 @@ export default function IndexPage() {
             <Empty />
           </div>
         )}
-        {/* <div className="mt-12">
-          <Link
-            href="/blog_posts"
-            className="services_link font-semibold py-3 px-6 rounded-lg shadow-lg text-xl"
-          >
-            View All Services
-          </Link>
-        </div> */}
       </section>
     </>
   );

@@ -49,6 +49,35 @@ export class CategoryRepository {
     }
   }
 
+  /**
+   * Receives a String as parameter
+   * @slug
+   * returns Crochet
+   */
+  async findBySlug(slug) {
+    try {
+      const categoryItem = await Category.findOne({
+        where: { slug },
+        include: [
+          {
+            model: Post,
+            as: "posts",
+          },
+        ],
+      });
+
+      const plainCategoryItem = categoryItem ? categoryItem.toJSON() : null;
+
+      if (!plainCategoryItem) {
+        throw new Error("Category not found");
+      }
+
+      return plainCategoryItem;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /*
    * Returns an array of Category
    */

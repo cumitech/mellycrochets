@@ -1,4 +1,4 @@
-import { Button } from "antd";
+// import { Button } from "antd";
 import { motion } from "framer-motion";
 
 const ShopHero = () => {
@@ -17,14 +17,14 @@ const ShopHero = () => {
           Explore our beautifully crafted crochet wear, designed for style,
           comfort, and elegance.
         </p>
-        <Button
+        {/* <Button
           type="primary"
           href="#crochet-list"
           size="large"
           style={{ borderRadius: 50, padding: "0 50px" }}
         >
           Shop Now
-        </Button>
+        </Button> */}
       </motion.div>
     </div>
   );

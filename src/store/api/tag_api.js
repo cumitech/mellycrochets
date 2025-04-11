@@ -15,6 +15,14 @@ export const tagAPI = createApi({
         createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
       }),
     }),
+    getSingleTagBySlug: build.query({
+      query: (slug) => `/tags/slugs/${slug}`,
+      transformResponse: (response) => ({
+        ...response,
+        createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
+        updatedAt: new Date(response.updatedAt).toISOString(),
+      }),
+    }),
     fetchAllTags: build.query({
       query: (page = 1) => `/tags?page=${page}`,
       transformResponse: (response) => {

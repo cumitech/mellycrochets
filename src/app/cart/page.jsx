@@ -49,41 +49,6 @@ const CheckoutCartBtn = ({ onFinish, cartItems }) => {
 
   const onConfirmOrder = async (data) => {
     console.log(data);
-    // const obj = {
-    //   ...emptyOrder,
-    //   orderNo: generateOrderNumber(),
-    //   crochets: cartItems.map((mp) => {
-    //     return {
-    //       crochetId: mp.crochetId,
-    //       qtty: mp.quantity,
-    //       price: mp.price,
-    //     };
-    //   }),
-    //   status: "ORDERED",
-    //   totalAmount: total,
-    //   totalQtty: totalQtty,
-    //   address: data.address,
-    //   cellPhone: data.telephone,
-    //   email: data.email,
-    //   username: data.username,
-    // };
-    // try {
-    //   const response = await OrderService.create(obj);
-
-    //   if (response.success) {
-    //     setCheckoutDrawerOpen(false);
-    //     onFinish();
-    //     message.success("Placing your order!");
-    //     const query = { orderId: response.data.id, method };
-    //     navigator.push(
-    //       `/process-payment?${new URLSearchParams(query).toString()}`
-    //     );
-    //   }
-    //   return response;
-    // } catch (error) {
-    //   message.error("An error occured!");
-    //   return error;
-    // }
   };
 
   return (

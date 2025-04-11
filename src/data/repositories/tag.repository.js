@@ -58,6 +58,36 @@ export class TagRepository {
     }
   }
 
+  /**
+   * Receives a String as parameter
+   * @slug
+   * returns Crochet
+   */
+  async findBySlug(slug) {
+    try {
+      const tagItem = await Tag.findOne({
+        where: { slug },
+        include: [
+          {
+            model: Post,
+            as: "posts",
+            through: { attributes: [] },
+          },
+        ],
+      });
+
+      const plainTagItem = tagItem ? tagItem.toJSON() : null;
+
+      if (!plainTagItem) {
+        throw new Error("Tag not found");
+      }
+
+      return plainTagItem;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /*
    * Returns an array of Tag
    */

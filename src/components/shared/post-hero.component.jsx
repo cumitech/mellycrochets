@@ -1,4 +1,4 @@
-import { Button } from "antd";
+// import { Button } from "antd";
 import { motion } from "framer-motion";
 
 const BlogHero = () => {
@@ -20,7 +20,7 @@ const BlogHero = () => {
           Dive into the world of crochet fashion, DIY patterns, and styling
           tips. Get inspired by handmade creations and the stories behind them.
         </p>
-        <Button
+        {/* <Button
           type="primary"
           href="#blog-posts"
           size="large"
@@ -30,7 +30,7 @@ const BlogHero = () => {
           }}
         >
           Explore Blog
-        </Button>
+        </Button> */}
       </motion.div>
     </div>
   );

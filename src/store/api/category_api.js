@@ -15,6 +15,14 @@ export const categoryAPI = createApi({
         createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
       }),
     }),
+    getSingleCategoryBySlug: build.query({
+      query: (slug) => `/categories/slugs/${slug}`,
+      transformResponse: (response) => ({
+        ...response,
+        createdAt: new Date(response.createdAt).toISOString(), // Ensure createdAt is a string
+        updatedAt: new Date(response.updatedAt).toISOString(),
+      }),
+    }),
     fetchAllCategories: build.query({
       query: (page = 1) => `/categories?page=${page}`,
       transformResponse: (response) => {

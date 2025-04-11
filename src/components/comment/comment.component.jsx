@@ -10,6 +10,8 @@ const { TextArea } = Input;
 const { Paragraph, Text } = Typography;
 
 const PostComments = ({ postId }) => {
+  const [justPosted, setJustPosted] = useState(false);
+
   const { mutate } = useCreate({
     resource: "comments",
   });
@@ -42,6 +44,7 @@ const PostComments = ({ postId }) => {
         {
           onSuccess: () => {
             setContent("");
+            setJustPosted(true);
             message.success("Your comment has been posted!");
             refetch();
           },
@@ -61,13 +64,14 @@ const PostComments = ({ postId }) => {
   };
 
   useEffect(() => {
-    if (comments && comments.length > 0) {
+    if (justPosted && comments && comments.length > 0) {
       const lastComment = document.getElementById(
         `comment-${comments[comments.length - 1].id}`
       );
       lastComment?.scrollIntoView({ behavior: "smooth" });
+      setJustPosted(false); // reset after scrolling
     }
-  }, [comments]);
+  }, [comments, justPosted]);
 
   if (isLoadingComment || isFetchingComment) {
     return (

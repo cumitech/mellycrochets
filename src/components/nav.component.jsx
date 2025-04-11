@@ -14,7 +14,6 @@ import { CartService } from "../service/cart.service";
 import AppCurrency from "./shared/currency.component";
 import { crochetTypeAPI } from "@/store/api/crochet_type_api";
 import AppNavigationSkeleton from "./nav-skeleton.component";
-import CrochetDropdown from "./shared/crochet-type-menu.component";
 import CrochetDropdownV2 from "./shared/crochet-type-menu-v2.component";
 
 const AppNavigation = () => {

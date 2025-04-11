@@ -5,7 +5,7 @@ import { keywords } from "../../../constants/constant";
 const fetchCrochetDetails = async (slug) => {
   const response = await axios.get(
     `${process.env.NEXTAUTH_URL}/api/crochets/slugs/${slug}`
-  ); 
+  );
   if (response.status !== 200) {
     throw new Error("Failed to fetch crochet details");
   } else {
@@ -15,7 +15,6 @@ const fetchCrochetDetails = async (slug) => {
 
 // 🏷️ Generate Metadata for SEO
 export async function generateMetadata({ params }) {
-  console.log("params: ", params);
   if (!params?.slug) {
     console.warn("Slug is missing in params!");
     return {}; // Avoid breaking the app
@@ -29,11 +28,16 @@ export async function generateMetadata({ params }) {
     description: crochet.description,
     slug: params.slug,
     image: `${process.env.NEXTAUTH_URL}/uploads/crochets/${crochet.imageUrls[0]}`,
-    keywords: keywords,
+    keywords: keywords.join(", "),
+    url: `${process.env.NEXTAUTH_URL}/crochets/${params.slug}`,
     publishedTime: new Date(crochet.createdAt).toISOString(),
     modifiedTime: new Date(crochet.updatedAt).toISOString(),
   });
 }
 export default async function Layout({ children }) {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+    </>
+  );
 }
