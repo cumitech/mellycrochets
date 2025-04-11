@@ -1,13 +1,8 @@
 "use client";
 
-// import { gelocation } from "../lib/geolocation";
-// import AppHero from "../components/app-hero/app-hero.component";
-// import SocialIcons from "../components/shared/social-icons.component";
 import { FiArrowRight } from "react-icons/fi";
 import CrochetList from "../components/crochet/crochet-list.component";
-// import FilterCrochets from "../components/filter-crochet.component";
-import { Button, Row } from "antd";
-// import CrochetCareTips from "../components/after-care/after-care.component";
+import { Button } from "antd";
 import SignupPrompt from "../components/signup/signup.component";
 import { useTranslations } from "next-intl";
 import HeroSection from "../components/app-hero/text-hero.component";
@@ -39,11 +34,6 @@ export default function IndexPage() {
   return (
     <>
       <HeroSection />
-      {/* <AppHero /> */}
-      {/* <div className="social w-full">
-        <SocialIcons />
-      </div> */}
-
       {/* listings */}
       <div className="w-full px-10 md:pt-10" data-aos="fade-up">
         <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -74,7 +64,6 @@ export default function IndexPage() {
       </div>
 
       {/* filter content */}
-      {/* <FilterCrochets /> */}
       <div className="w-full px-10 pb-20" data-aos="fade-up">
         {/* listings */}
         <CrochetList crochets={crochets} />
@@ -139,8 +128,6 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-
-      {/* <CrochetCareTips /> */}
 
       <SignupPrompt />
     </>

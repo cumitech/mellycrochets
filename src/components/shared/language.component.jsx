@@ -6,7 +6,7 @@ const AppLanguage = () => {
   const { changeLocale } = useTranslation();
   const [menu, setMenu] = useState({
     key: "en",
-    label: "Eng",
+    label: "ENG",
     extra: (
       <Image
         src="./en.png"
@@ -20,7 +20,7 @@ const AppLanguage = () => {
 
   const items = [
     {
-      label: "Eng",
+      label: "ENG",
       key: "en",
       extra: (
         <Image
@@ -33,7 +33,7 @@ const AppLanguage = () => {
       ),
     },
     {
-      label: "Fren",
+      label: "FREN",
       key: "fr",
       extra: (
         <Image
@@ -69,7 +69,7 @@ const AppLanguage = () => {
         placement="bottomLeft"
         className="cursor-pointer font-medium"
       >
-        <Button size="middle" style={{ width: "30px" }}>
+        <Button size="middle" style={{ width: "40px" }}>
           {menu.label}
         </Button>
       </Dropdown>

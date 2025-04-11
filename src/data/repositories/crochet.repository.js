@@ -119,6 +119,7 @@ export class CrochetRepository {
             },
           },
         ],
+        order: [['createdAt', 'DESC']]
       });
 
       // Convert imageUrls to an array if it's stored as a string

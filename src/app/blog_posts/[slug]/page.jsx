@@ -119,7 +119,7 @@ export default function IndexPage({ params }) {
             <ul className="space-y-2">
               {latestPosts.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/posts/${p.slug}`}>{p.title.toUpperCase()}</Link>
+                  <Link href={`/blog_posts/${p.slug}`}>{p.title.toUpperCase()}</Link>
                 </li>
               ))}
             </ul>
