@@ -1,8 +1,7 @@
 "use client";
 
-import { useMany } from "@refinedev/core";
 import PageBreadCrumbs from "../../../components/page-breadcrumb/page-breadcrumb.component";
-import { API_URL_UPLOADS_MEDIA } from "../../../constants/api-url";
+import { API_URL_UPLOADS_POSTS } from "../../../constants/api-url";
 import { format } from "../../../lib/format";
 import {
   DeleteButton,
@@ -37,7 +36,7 @@ export default function MediaList() {
             title={"Image"}
             render={(value, record) => (
               <Image
-                src={`${API_URL_UPLOADS_MEDIA}/${record.imageUrl}`}
+                src={`${API_URL_UPLOADS_POSTS}/${record.imageUrl}`}
                 alt={record?.title}
                 height={50}
                 width={50}

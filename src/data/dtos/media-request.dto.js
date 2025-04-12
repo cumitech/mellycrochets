@@ -17,7 +17,6 @@ class MediaRequestDto {
     }
 
     this.title = data.title;
-    this.carId = data.carId;
     this.imageUrl = data.imageUrl;
   }
 
@@ -26,7 +25,6 @@ class MediaRequestDto {
       ...emptyMedia,
       id: nanoid(10),
       title: this.title,
-      carId: this.carId,
       slug: slugify(this.title, { lower: true, replacement: "-" }),
       imageUrl: this.imageUrl,
     };
@@ -40,7 +38,6 @@ class MediaRequestDto {
     return {
       id: data.id,
       title: data.title,
-      carId: data.carId,
       slug: data.slug,
       imageUrl: data.imageUrl,
     };

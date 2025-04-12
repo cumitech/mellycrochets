@@ -19,55 +19,105 @@ import { FiGitPullRequest } from "react-icons/fi";
 import { GrUserSettings } from "react-icons/gr";
 import { FaUserShield } from "react-icons/fa";
 
-export const menus = [
-  {
-    name: "dashboard",
-    label: "Dashboard",
-  },
-  {
-    name: "configurations",
-    meta: {
-      // canDelete: true,
-      // label: "Configurations",
-      canAccess: ["admin", "editor"],
+export const useMenu = () => {
+  const menus = [
+    {
+      name: "dashboard",
+      label: "Dashboard",
     },
-    icon: <FcDataConfiguration />,
-  },
-  {
-    name: "media",
-    list: "/dashboard/media",
-    create: "/dashboard/media/create",
-    edit: "/dashboard/media/edit/:id",
-    show: "/dashboard/media/show/:id",
-    parentName: "configurations",
-    meta: {
-      // canDelete: true,
-      canAccess: ["admin", "editor"],
-      parent: "configurations",
+    {
+      name: "posts",
+      list: "/dashboard/posts",
+      create: "/dashboard/posts/create",
+      edit: "/dashboard/posts/edit/:id",
+      show: "/dashboard/posts/show/:id",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+      },
+      icon: <MdOutlinePermMedia />,
     },
-    icon: <MdOutlinePermMedia />,
-  },
-  {
-    name: "settings",
-    meta: {
-      // canDelete: true,
-      canAccess: ["admin"],
-      label: "Settings",
+    {
+      name: "subscribers",
+      list: "/dashboard/subscribers",
+      create: "/dashboard/subscribers/create",
+      edit: "/dashboard/subscribers/edit/:id",
+      show: "/dashboard/subscribers/show/:id",
+      meta: {
+        canAccess: ["admin", "editor"],
+      },
+      icon: <MdOutlinePermMedia />,
     },
-    icon: <FaUserShield />,
-  },
-  {
-    name: "users",
-    list: "/dashboard/users",
-    create: "/dashboard/users/create",
-    edit: "/dashboard/users/edit/:id",
-    show: "/dashboard/users/show/:id",
-    parentName: "settings",
-    meta: {
-      // canDelete: true,
-      canAccess: ["admin"],
-      parent: "settings",
+    {
+      name: "configurations",
+      meta: {
+        canAccess: ["admin", "editor"],
+      },
+      icon: <FcDataConfiguration />,
     },
-    icon: <GrUserSettings />,
-  },
-];
+    {
+      name: "media",
+      list: "/dashboard/media",
+      create: "/dashboard/media/create",
+      edit: "/dashboard/media/edit/:id",
+      show: "/dashboard/media/show/:id",
+      parentName: "configurations",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+        parent: "configurations",
+      },
+      icon: <MdOutlinePermMedia />,
+    },
+    {
+      name: "categories",
+      list: "/dashboard/categories",
+      create: "/dashboard/categories/create",
+      edit: "/dashboard/categories/edit/:id",
+      show: "/dashboard/categories/show/:id",
+      parentName: "configurations",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+        parent: "configurations",
+      },
+      icon: <MdOutlinePermMedia />,
+    },
+    {
+      name: "tags",
+      list: "/dashboard/tags",
+      create: "/dashboard/tags/create",
+      edit: "/dashboard/tags/edit/:id",
+      show: "/dashboard/tags/show/:id",
+      parentName: "configurations",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+        parent: "configurations",
+      },
+      icon: <MdOutlinePermMedia />,
+    },
+    {
+      name: "settings",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin"],
+        label: "Settings",
+      },
+      icon: <FaUserShield />,
+    },
+    {
+      name: "users",
+      list: "/dashboard/users",
+      show: "/dashboard/users/show/:id",
+      parentName: "settings",
+      meta: {
+        canAccess: ["admin"],
+        parent: "settings",
+      },
+      icon: <GrUserSettings />,
+    },
+  ];
+
+  return { menus };
+};

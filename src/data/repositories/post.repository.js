@@ -1,5 +1,6 @@
+import { nanoid } from "nanoid";
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Category, Post, Tag, User } from "../entities";
+import { Category, Post, Tag, User, PostTag } from "../entities";
 
 export class PostRepository {
   constructor() {}
@@ -9,9 +10,21 @@ export class PostRepository {
    * @post
    * returns void
    */
-  async create(post) {
+  async create(post, tags) {
     try {
-      return await Post.create({ ...post });
+      const createdPost = await Post.create({ ...post });
+      // Find or create tags
+      if (tags && tags.length > 0) {
+        const postTagEntries = tags.map((tagId) => ({
+          id: nanoid(20), // Custom ID
+          postId: createdPost.id,
+          tagId,
+        }));
+
+        await PostTag.bulkCreate(postTagEntries);
+      }
+
+      return createdPost;
     } catch (error) {
       throw error;
     }
@@ -119,7 +132,7 @@ export class PostRepository {
           {
             model: User,
             as: "user", // if you defined this association
-            attributes: ["id", "email","username"],
+            attributes: ["id", "email", "username"],
           },
         ],
       });
@@ -132,7 +145,7 @@ export class PostRepository {
   async getLatestPosts() {
     try {
       const posts = await Post.findAll({
-        limit: 5, 
+        limit: 5,
         order: [["createdAt", "DESC"]],
         include: [
           {
@@ -146,7 +159,7 @@ export class PostRepository {
           {
             model: User,
             as: "user", // if you defined this association
-            attributes: ["id", "email","username"],
+            attributes: ["id", "email", "username"],
           },
         ],
       });

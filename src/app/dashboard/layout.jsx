@@ -7,6 +7,7 @@ import { Header } from "../../components/header";
 import { Authenticated } from "@refinedev/core";
 import { Col, Row } from "antd";
 import Login from "../register/page";
+import { NavigateToResource } from "@refinedev/nextjs-router";
 
 export default async function Layout({ children }) {
   const data = await getData();
@@ -23,6 +24,7 @@ export default async function Layout({ children }) {
             <Col xs={22} md={18}>
               <Authenticated key="home-page" fallback={<Login />}>
                 {children}
+                <NavigateToResource />
               </Authenticated>
             </Col>
           </Row>

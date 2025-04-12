@@ -33,7 +33,7 @@ export default function MediaCreate() {
           >
             <Upload.Dragger
               name="file"
-              action={`${BASE_URL}/api/uploads`}
+              action={`${BASE_URL}/uploads`}
               listType="picture"
               maxCount={1}
               multiple={false}

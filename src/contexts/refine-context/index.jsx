@@ -9,7 +9,7 @@ import {
   WhatsAppOutlined,
 } from "@ant-design/icons";
 import { ColorModeContextProvider } from "../color-mode";
-import { SocketProvider } from "../../providers/socket";
+// import { SocketProvider } from "../../providers/socket";
 
 export const RefineContext = (props) => {
   const defaultMode = props?.defaultMode;

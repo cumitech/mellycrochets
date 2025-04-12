@@ -143,6 +143,14 @@ export default async function IndexPage({ params }) {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative py-3">
+              {crochet.imageUrls?.map((item, i) => (
+                <img
+                  key={`preload-${i}`}
+                  src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
+                  alt="preload"
+                  style={{ display: "none" }}
+                />
+              ))}
               <Image.PreviewGroup
                 items={crochet.imageUrls?.map(
                   (url) => `${API_URL_UPLOADS_CROCHETS}/${url || "nodata"}`

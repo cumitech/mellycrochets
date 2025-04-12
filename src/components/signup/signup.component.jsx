@@ -39,7 +39,7 @@ export default function EmailSubscriptionPopup() {
         });
       } else {
         setOpen(false);
-        localStorage.setItem("emailPopupShown", "true")
+        localStorage.setItem("emailPopupShown", "true");
         openNotification({
           type: "success",
           message: `Your Email is already subscribed!`,
@@ -48,7 +48,7 @@ export default function EmailSubscriptionPopup() {
         });
       }
     } catch (error) {
-      localStorage.setItem("emailPopupShown", "true")
+      localStorage.setItem("emailPopupShown", "true");
       setOpen(false);
       openNotification({
         type: "error",
@@ -70,7 +70,7 @@ export default function EmailSubscriptionPopup() {
     >
       <div className="w-full overflow-hidden">
         <Image
-          src="/mellycrochets/29b694e67cf2b71447bbcd2bb5b4958d.jpg"
+          src="/mellycrochets/joy-ru-P72cSc3M0cM-unsplash.jpg"
           alt="Advertisement of crochets"
           className="w-full h-full object-cover"
           style={{

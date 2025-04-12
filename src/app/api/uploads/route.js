@@ -14,7 +14,7 @@ export const POST = async (request) => {
 
     const bufferData = await Buffer.from(byteLength);
 
-    const pathOfImage = `./public/uploads/media/${image.name}`;
+    const pathOfImage = `./public/uploads/posts/${image.name}`;
 
     writeFile(pathOfImage, bufferData);
 
