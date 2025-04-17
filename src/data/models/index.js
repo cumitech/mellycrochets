@@ -34,7 +34,7 @@ const emptyOrder = {
   username: "",
   address: "",
   email: "",
-  cellPhone: "",
+  telephone: "",
   status: "",
 };
 
@@ -42,9 +42,7 @@ const emptyPayment = {
   id: "",
   userId: "",
   orderId: "",
-  orderNo: "",
-  amount: 0.0,
-  address: "",
+  price: 0.0,
   email: "",
   cellPhone: "",
   status: "",

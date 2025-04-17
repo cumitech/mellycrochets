@@ -1,23 +1,11 @@
 // icons
-import { IoLogoModelS } from "react-icons/io";
-import {
-  MdEngineering,
-  MdFlag,
-  MdOutlineBrowseGallery,
-  MdOutlinePermMedia,
-} from "react-icons/md";
-import { TbSettingsAutomation } from "react-icons/tb";
-import { FcDataConfiguration, FcEngineering } from "react-icons/fc";
-import { BsFuelPump } from "react-icons/bs";
-import { BiLocationPlus } from "react-icons/bi";
-import {
-  RiCarFill,
-  RiMailSettingsLine,
-  RiPsychotherapyFill,
-} from "react-icons/ri";
-import { FiGitPullRequest } from "react-icons/fi";
+import { MdOutlinePermMedia, MdOutlineTag, MdPayments } from "react-icons/md";
+import { FcDataConfiguration } from "react-icons/fc";
+import { GiShoppingCart } from "react-icons/gi";
 import { GrUserSettings } from "react-icons/gr";
 import { FaUserShield } from "react-icons/fa";
+import { FaUsersViewfinder } from "react-icons/fa6";
+import { BiCategory } from "react-icons/bi";
 
 export const useMenu = () => {
   const menus = [
@@ -38,6 +26,30 @@ export const useMenu = () => {
       icon: <MdOutlinePermMedia />,
     },
     {
+      name: "orders",
+      list: "/dashboard/orders",
+      create: "/dashboard/orders/create",
+      edit: "/dashboard/orders/edit/:id",
+      show: "/dashboard/orders/show/:id",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+      },
+      icon: <GiShoppingCart />,
+    },
+    {
+      name: "payments",
+      list: "/dashboard/payments",
+      create: "/dashboard/payments/create",
+      edit: "/dashboard/payments/edit/:id",
+      show: "/dashboard/payments/show/:id",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+      },
+      icon: <MdPayments />,
+    },
+    {
       name: "subscribers",
       list: "/dashboard/subscribers",
       create: "/dashboard/subscribers/create",
@@ -46,7 +58,7 @@ export const useMenu = () => {
       meta: {
         canAccess: ["admin", "editor"],
       },
-      icon: <MdOutlinePermMedia />,
+      icon: <FaUsersViewfinder />,
     },
     {
       name: "configurations",
@@ -81,7 +93,7 @@ export const useMenu = () => {
         canAccess: ["admin", "editor"],
         parent: "configurations",
       },
-      icon: <MdOutlinePermMedia />,
+      icon: <BiCategory />,
     },
     {
       name: "tags",
@@ -95,7 +107,7 @@ export const useMenu = () => {
         canAccess: ["admin", "editor"],
         parent: "configurations",
       },
-      icon: <MdOutlinePermMedia />,
+      icon: <MdOutlineTag />,
     },
     {
       name: "settings",

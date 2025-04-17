@@ -21,6 +21,8 @@ const nextConfig = withNextIntl({
     optimizeCss: true, // Enable CSS optimization
   },
   swcMinify: true,
+  compress: true,
+  optimizeFonts: true,
   eslint: {
     ignoreDuringBuilds: true,
   },

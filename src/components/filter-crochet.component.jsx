@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import "react-input-range/lib/css/index.css";
-import { Button, Space } from "antd";
+import { Button, message, Space } from "antd";
 import { FaFilter, FaRedo } from "react-icons/fa";
 import { BASE_URL } from "../constants/api-url";
 import { crochetAPI } from "../store/api/crochet_api";
 import { useFilter } from "../hooks/filter.hook";
-import { useNotification } from "@refinedev/core";
 import CrochetTypeSelect from "./filter-product/crochet-type-select.component";
 import SizeSelect from "./filter-product/size.component";
 import { crochetTypeAPI } from "../store/api/crochet_type_api";
@@ -14,7 +13,6 @@ import { sizeAPI } from "../store/api/size_api";
 import { useTranslations } from "next-intl";
 
 const FilterCrochets = () => {
-  const { open } = useNotification();
   const { setFilteredCrochets, resetFilter } = useFilter();
   const t = useTranslations("filtercrochet");
   const [fetchFilteredCrochets] =
@@ -48,12 +46,7 @@ const FilterCrochets = () => {
 
       const { data } = await fetchFilteredCrochets(filters);
       setFilteredCrochets(data);
-      open({
-        type: "success",
-        message: `${data.length} Crochets returned!`,
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.success(`${data.length} Crochets returned!`);
     } catch (error) {
       setLoading(false);
     } finally {

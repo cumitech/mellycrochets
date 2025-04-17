@@ -1,7 +1,7 @@
 // src/presentation/dtos/OrderRequestDto.ts
 
-import { v4 } from "uuid";
 import { emptyOrder } from "../models";
+import { nanoid } from "nanoid";
 
 // Order Request DTO
 class OrderRequestDto {
@@ -11,7 +11,7 @@ class OrderRequestDto {
     }
     if (!data.status || !data.orderNo || !data.email || !data.username) {
       throw new Error(
-        "Order status, order number, email, and username are required."
+        "Status, OrderNo, email, and username are required."
       );
     }
     if (
@@ -25,26 +25,30 @@ class OrderRequestDto {
     this.orderNo = data.orderNo;
     this.totalAmount = data.totalAmount;
     this.totalQtty = data.totalQtty;
-    this.crochets = data.crochets;
-    this.cellPhone = data.cellPhone;
+    this.items = data.items;
+    this.telephone = data.telephone;
     this.address = data.address;
     this.email = data.email;
     this.username = data.username;
+    this.userId = data.userId;
+    this.paymentMethod = data.paymentMethod;
   }
 
   toData() {
     return {
       ...emptyOrder,
-      id: v4(),
+      id: nanoid(20),
       orderNo: this.orderNo,
       status: this.status,
       totalAmount: this.totalAmount,
       totalQtty: this.totalQtty,
-      crochets: this.crochets,
-      cellPhone: this.cellPhone,
+      items: this.items,
+      telephone: this.telephone,
       address: this.address,
       email: this.email,
       username: this.username,
+      userId: this.userId,
+      paymentMethod: this.paymentMethod,
     };
   }
 

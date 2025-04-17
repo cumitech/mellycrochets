@@ -24,17 +24,18 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      orderNo: {
+      transactionId: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        unique: true,
+      },
+      requestId: {
         type: DataTypes.STRING(255),
         allowNull: false,
         unique: true,
       },
       price: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
-      },
-      address: {
-        type: DataTypes.STRING(255),
         allowNull: false,
       },
       email: {
@@ -45,9 +46,37 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      username: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      paymentMethod: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
       status: {
         type: DataTypes.STRING(10),
         allowNull: false,
+      },
+      currency: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
+      transactionTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      countryCode: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
+      mchTransactionRef: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
     },
     {

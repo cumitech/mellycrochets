@@ -117,6 +117,12 @@ Crochet.belongsToMany(Order, {
   as: "orders",
 });
 
+Order.hasMany(OrderItem, { foreignKey: "orderId", as: "orderItems" });
+OrderItem.belongsTo(Order, { foreignKey: "orderId" });
+
+Crochet.hasMany(OrderItem, { foreignKey: "crochetId", as: "orderItems" });
+OrderItem.belongsTo(Crochet, { foreignKey: "crochetId" });
+
 // Order <=> User
 User.hasMany(Order, {
   foreignKey: "userId",
@@ -169,5 +175,5 @@ module.exports = {
   Tag,
   Post,
   Comment,
-  PostTag
+  PostTag,
 };

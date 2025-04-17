@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ThemedTitleV2 } from "@refinedev/antd";
-import { Button, Space, Form, Input, Typography, Divider } from "antd";
+import { Button, Space, Form, Input, Typography, Divider, message } from "antd";
 import { SiAuth0 } from "react-icons/si";
 import Link from "next/link";
 
@@ -29,20 +29,10 @@ export default function Register() {
 
     if (response?.success) {
       router.push("/login");
-      open({
-        type: "success",
-        message: "Registration Successful!",
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.success("Registration Successful!");
       setLoading(false);
     } else {
-      open({
-        type: "error",
-        message: "Registration Failed!",
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.error("Registration Failed!");
       setLoading(false);
     }
     setLoading(false);

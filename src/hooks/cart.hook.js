@@ -52,7 +52,34 @@ const useCart = () => {
     }
   };
 
-  return { loadCartCrochets, addToCart, removeCrochet, clearCrochet };
+  const getCartTotal = (cartItems) => {
+    const total = cartItems.reduce((prev, curr) => {
+      return prev + curr.total;
+    }, 0);
+    return total;
+  };
+  const getCartQuantity = (cartItems) => {
+    const totalQtty = cartItems.reduce((prev, curr) => {
+      return prev + curr.quantity;
+    }, 0);
+    return totalQtty;
+  };
+  const getCartItemCount = (cartItems) => {
+    const totalCount = cartItems.reduce((prev, curr) => {
+      return prev + curr.count;
+    }, 0);
+    return totalCount;
+  };
+
+  return {
+    loadCartCrochets,
+    addToCart,
+    removeCrochet,
+    clearCrochet,
+    getCartTotal,
+    getCartQuantity,
+    getCartItemCount,
+  };
 };
 
 export { useCart };

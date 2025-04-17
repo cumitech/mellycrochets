@@ -104,6 +104,25 @@
       "show": "Show Post"
     }
   },
+  "payments": {
+    "payments": "Payments",
+    "titles": {
+      "list": "List Payments",
+      "create": "Create Payment",
+      "edit": "Edit Payment",
+      "show": "Show Payment"
+    }
+  },
+
+  "orders": {
+    "orders": "Orders",
+    "titles": {
+      "list": "List Orders",
+      "create": "Create Order",
+      "edit": "Edit Order",
+      "show": "Show Order"
+    }
+  },
   "tags": {
     "tags": "Tags",
     "titles": {

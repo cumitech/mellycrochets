@@ -1,5 +1,7 @@
+import { nanoid } from "nanoid";
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Order } from "../entities";
+import { CartItem, Order, OrderItem } from "../entities";
+import sequelize from "../../database/db-sequelize.config";
 
 export class OrderRepository {
   constructor() {}
@@ -10,9 +12,32 @@ export class OrderRepository {
    * returns void
    */
   async create(order) {
+    const { items, ...orderDetails } = order;
+    const transaction = await sequelize.transaction();
     try {
-      return await Order.create({ ...order });
+      const newOrder = await Order.create({ ...orderDetails }, { transaction });
+      const { id, userId } = newOrder.toJSON();
+      const orderItems = items.map((item) => ({
+        id: nanoid(20),
+        orderId: id,
+        crochetId: item.crochetId,
+        qtty: item.qtty,
+        price: parseFloat(item.amount),
+      }));
+
+      console.log("orderItems", orderItems);
+      // 3. Bulk insert order items
+      await OrderItem.bulkCreate(orderItems, { transaction });
+
+      // 4. Clear user's cart (assuming cart is per user)
+      await CartItem.destroy({ where: { userId }, transaction });
+
+      // 5. Commit the transaction
+      await transaction.commit();
+
+      return newOrder;
     } catch (error) {
+      await transaction.rollback();
       throw error;
     }
   }
@@ -30,6 +55,20 @@ export class OrderRepository {
         throw new NotFoundException("Order", id);
       }
       return orderItem;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Receives a String as parameter
+   * @userId
+   * returns Order
+   */
+  async findByUser(userId) {
+    try {
+      const userOrders = await Order.findAll({ where: { userId } });
+      return userOrders;
     } catch (error) {
       throw error;
     }

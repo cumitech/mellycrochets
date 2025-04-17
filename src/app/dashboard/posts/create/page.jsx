@@ -6,6 +6,7 @@ import { Create, useForm, useSelect } from "@refinedev/antd";
 import { Col, Form, Image, Input, Row, Select, Space, Typography } from "antd";
 import { EditorComponent } from "../../../../components/editor/editor.component";
 
+
 export default function BlogPostCreate() {
   const { formProps, saveButtonProps } = useForm({});
 

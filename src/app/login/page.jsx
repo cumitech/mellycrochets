@@ -4,12 +4,11 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ThemedTitleV2 } from "@refinedev/antd";
-import { Button, Space, Form, Input, Typography, Divider } from "antd";
+import { Button, Space, Form, Input, Typography, message } from "antd";
 import { SiAuth0 } from "react-icons/si";
 import Link from "next/link";
 import "../../assets/css/globals.css";
 import { FaLock } from "react-icons/fa";
-import { useNotification } from "@refinedev/core";
 
 export default function Login() {
   const searchParams = useSearchParams();
@@ -18,7 +17,6 @@ export default function Login() {
   console.log("redirect: ", redirect);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { open } = useNotification();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -32,19 +30,9 @@ export default function Login() {
     setLoading(false);
     if (response?.ok) {
       router.push(redirect); // Redirect after successful login
-      open({
-        type: "success",
-        message: "Login Successful!",
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.success("Login Successful!");
     } else {
-      open({
-        type: "error",
-        message: "Login Failed!",
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.error("Login Failed!");
     }
   };
   return (

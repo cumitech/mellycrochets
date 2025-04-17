@@ -8,7 +8,7 @@ export const getCartSummary = (cartItems) => {
   }, 0);
 
   return (
-    <div style={{ margin: "2.5rem 0 1rem 0" }} className="services-text-box">
+    <div className="services-text-box px-6 pt-2">
       <div className="cartSummary font-semibold">
         Total amount :
         <Typography.Text style={{ fontWeight: 600, fontSize: 18 }} type="danger">
