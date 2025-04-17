@@ -4,12 +4,12 @@ import PageBreadCrumbs from "../../../../../components/page-breadcrumb/page-brea
 import { Edit, useForm } from "@refinedev/antd";
 import { Form, Input, Select } from "antd";
 
-export default function CategoryEdit() {
+export default function UserEdit() {
   const { formProps, saveButtonProps } = useForm({});
 
   return (
     <>
-      <PageBreadCrumbs items={["Roles", "Lists", "Create"]} />
+      <PageBreadCrumbs items={["Users", "Lists", "Edit"]} />
       <Edit saveButtonProps={saveButtonProps}>
         <Form {...formProps} layout="vertical">
           <Form.Item label="Email" name="email" rules={[{ required: true }]}>

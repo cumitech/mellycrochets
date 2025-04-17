@@ -36,7 +36,11 @@ export async function PATCH(req, { params }) {
   }
 
   try {
-    const dto = new OrderRequestDto(await req.json());
+    const body = await req.json();
+    body.totalAmount = parseFloat(Number(body.totalAmount));
+    body.totalQtty = parseFloat(Number(body.totalQtty));
+    
+    const dto = new OrderRequestDto(body);
     const validationErrors = await validate(dto);
 
     if (validationErrors.length > 0) {

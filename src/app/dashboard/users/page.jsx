@@ -1,43 +1,46 @@
 "use client";
 
+import { format } from "../../../lib/format";
 import PageBreadCrumbs from "../../../components/page-breadcrumb/page-breadcrumb.component";
 import {
-  DeleteButton,
-  EditButton,
   List,
   ShowButton,
   useTable,
 } from "@refinedev/antd";
-import { Space, Table } from "antd";
+import { Image, Space, Table } from "antd";
 
-export default function CategoryList() {
+export default function UserList() {
   const { tableProps } = useTable({
     syncWithLocation: true,
   });
 
   return (
     <>
-      <PageBreadCrumbs items={["Roles", "Lists", "Create"]} />
+      <PageBreadCrumbs items={["Users", "Lists"]} />
       <List>
         <Table {...tableProps} rowKey="id">
-          <Table.Column dataIndex="id" title={"ID"} />
+          <Table.Column
+            dataIndex="id"
+            title={"ID"}
+            render={(value, record, index) => format.number(index + 1)}
+          />
           <Table.Column title="Email" dataIndex="email" />
           <Table.Column title="Username" dataIndex="username" />
-          <Table.Column title="Phone" dataIndex="phone" />
-          <Table.Column title="Role" dataIndex={["role", "name"]} />
+          <Table.Column title="Provider" dataIndex="provider" />
+          <Table.Column title="Role" dataIndex="role" />
           <Table.Column
             title="Image"
             dataIndex="image"
-            render={(value) => <img src={value} alt="User" width={50} />}
+            render={(value) => (
+              <Image src={value} alt="User" preview={false} width={30} />
+            )}
           />
           <Table.Column
             title={"Actions"}
             dataIndex="actions"
             render={(_, record) => (
               <Space>
-                <EditButton hideText size="small" recordItemId={record.id} />
                 <ShowButton hideText size="small" recordItemId={record.id} />
-                <DeleteButton hideText size="small" recordItemId={record.id} />
               </Space>
             )}
           />

@@ -46,7 +46,7 @@ export async function POST(request) {
   }
 
   try {
-    const mediaResponse = await mediaRepository.createMedia(dto.toData());
+    const mediaResponse = await mediaRepository.create(dto.toData());
 
     return NextResponse.json(
       {

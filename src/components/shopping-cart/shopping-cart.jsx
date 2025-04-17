@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, List, Popover, Space, Typography } from "antd";
+import { Avatar, Badge, Button, List, message, Popover, Space, Typography } from "antd";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
@@ -23,20 +23,10 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
     const feedback = await removeCrochet(item.id);
     console.log("feedback: ", feedback);
     if (feedback) {
-      open({
-        type: "success",
-        message: `${item.crochet.name} has been removed from cart`,
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.success(`${item.crochet.name} has been removed from cart`);
       window.location.reload();
     } else {
-      open({
-        type: "error",
-        message: `${item.crochet.name} was not removed`,
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.error(`${item.crochet.name} was not removed`);
     }
   };
 
@@ -115,7 +105,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
               }}
               htmlType="button"
             >
-              Confirm your order
+              View Cart
             </Button>
           </Space>
         )}

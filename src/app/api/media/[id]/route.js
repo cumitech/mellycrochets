@@ -32,7 +32,7 @@ export async function PATCH(req, { params }) {
         ...dto.toData(),
         id: id,
       };
-      const updatedMedia = await mediaRepository.updateMedia(obj);
+      const updatedMedia = await mediaRepository.update(obj);
 
       return NextResponse.json(
         {
@@ -61,7 +61,7 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const media = await mediaRepository.getMediaById(id);
+    const media = await mediaRepository.findById(id);
     if (!media) {
       throw new NotFoundException("Media", id);
     }
@@ -84,7 +84,7 @@ export async function DELETE(req, { params }) {
   try {
     const id = params.id;
 
-    await mediaRepository.deleteMedia(id);
+    await mediaRepository.delete(id);
 
     return NextResponse.json({
       message: `Operation successfully completed!`,

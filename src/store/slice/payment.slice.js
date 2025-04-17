@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  method: "COD",
+  method: "mobile_money",
 };
 
 export const paymentMethodSlice = createSlice({

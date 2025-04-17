@@ -115,3 +115,21 @@ export const SEOConfig = {
   },
   keywords: keywords.join(", "),
 };
+
+export const ORDER_STATUS = {
+  PENDING: "PENDING",
+  PROCESSING: "PROCESSING",
+  CONFIRMED: "CONFIRMED",
+  SHIPPED: "SHIPPED",
+  DELIVERED: "DELIVERED",
+  COMPLETED: "COMPLETED",
+  CANCELLED: "CANCELLED",
+  REFUNDED: "REFUNDED",
+};
+
+export const PAYMENT_STATUS = {
+  SUCCESS: "SUCCESS", // Payment completed successfully
+  FAILED: "FAILED", // Payment failed
+  CANCELLED: "CANCELLED", // User or system cancelled the payment
+  REFUNDED: "REFUNDED", // Payment refunded back to the user
+};

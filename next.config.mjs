@@ -21,9 +21,12 @@ const nextConfig = withNextIntl({
     optimizeCss: true, // Enable CSS optimization
   },
   swcMinify: true,
-
+  compress: true,
+  optimizeFonts: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack(config, { isServer, dev }) {
-    // ✅ Only apply in production
     if (!dev) {
       config.optimization.minimize = true;
       config.optimization.splitChunks = {
@@ -33,12 +36,6 @@ const nextConfig = withNextIntl({
 
     return config;
   },
-  // webpack(config) {
-  //   config.optimization.splitChunks = {
-  //     chunks: "all", // Improve code splitting
-  //   };
-  //   return config;
-  // },
 });
 
 export default nextConfig;

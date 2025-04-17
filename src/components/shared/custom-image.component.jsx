@@ -35,53 +35,63 @@ const CustomImage = ({ imageList }) => {
       });
   };
   return (
-    <Image.PreviewGroup
-      preview={{
-        toolbarRender: (
-          _,
-          {
-            transform: { scale },
-            actions: {
-              onActive,
-              onFlipY,
-              onFlipX,
-              onRotateLeft,
-              onRotateRight,
-              onZoomOut,
-              onZoomIn,
-              onReset,
-            },
-          }
-        ) => (
-          <Space size={12} className="toolbar-wrapper" wrap>
-            <LeftOutlined onClick={() => onActive?.(-1)} />
-            <RightOutlined onClick={() => onActive?.(1)} />
-            <DownloadOutlined onClick={onDownload} />
-            <SwapOutlined rotate={90} onClick={onFlipY} />
-            <SwapOutlined onClick={onFlipX} />
-            <RotateLeftOutlined onClick={onRotateLeft} />
-            <RotateRightOutlined onClick={onRotateRight} />
-            <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
-            <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
-            <UndoOutlined onClick={onReset} />
-          </Space>
-        ),
-        onChange: (index) => {
-          setCurrent(index);
-        },
-      }}
-    >
-      <Space size={"large"} wrap>
-        {imageList.map((item) => (
-          <Image
-            key={item}
-            src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
-            width={100}
-            height={100}
-          />
-        ))}
-      </Space>
-    </Image.PreviewGroup>
+    <>
+      {imageList?.map((item, i) => (
+        <img
+          key={`preload-${i}`}
+          src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
+          alt="preload"
+          style={{ display: "none" }}
+        />
+      ))}
+      <Image.PreviewGroup
+        preview={{
+          toolbarRender: (
+            _,
+            {
+              transform: { scale },
+              actions: {
+                onActive,
+                onFlipY,
+                onFlipX,
+                onRotateLeft,
+                onRotateRight,
+                onZoomOut,
+                onZoomIn,
+                onReset,
+              },
+            }
+          ) => (
+            <Space size={12} className="toolbar-wrapper" wrap>
+              <LeftOutlined onClick={() => onActive?.(-1)} />
+              <RightOutlined onClick={() => onActive?.(1)} />
+              <DownloadOutlined onClick={onDownload} />
+              <SwapOutlined rotate={90} onClick={onFlipY} />
+              <SwapOutlined onClick={onFlipX} />
+              <RotateLeftOutlined onClick={onRotateLeft} />
+              <RotateRightOutlined onClick={onRotateRight} />
+              <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
+              <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
+              <UndoOutlined onClick={onReset} />
+            </Space>
+          ),
+          onChange: (index) => {
+            setCurrent(index);
+          },
+        }}
+      >
+        <Space size={"large"} wrap>
+          {imageList.map((item) => (
+            <Image
+              key={item}
+              src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
+              width={100}
+              height={100}
+            />
+          ))}
+        </Space>
+      </Image.PreviewGroup>
+    </>
   );
 };
 

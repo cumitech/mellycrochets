@@ -17,8 +17,8 @@
     "message": "Browse our latest crochet collections",
     "crochetaftercare": "Crochets Aftercare",
     "summary": "MELLYCROCHETS ETS is a sustainable fashion brand dedicated to crafting high-quality, eco-friendly products using biodegradable materials like wool and cotton. With a commitment to durability and recyclability, our designs cater to all age groups, promoting a greener future without compromising on style and comfort",
-    "subSummary":"Stay inspired with exclusive crochet fashion tips & updates!",
-    "btn":"Join Our Community",
+    "subSummary": "Stay inspired with exclusive crochet fashion tips & updates!",
+    "btn": "Join Our Community",
     "view-more": "View More"
   },
   "filtercrochet": {
@@ -27,18 +27,18 @@
     "size": "Size"
   },
   "footer": {
-    "socialMedia":"Social Media Pages",
-    "Links":"Links",
-    "aboutUs":"About Us",
-    "contact":"Contact Us",
-    "shop":"Shop",
-    "privacyPolicy":"Privacy Policy"
+    "socialMedia": "Social Media Pages",
+    "Links": "Links",
+    "aboutUs": "About Us",
+    "contact": "Contact Us",
+    "shop": "Shop",
+    "privacyPolicy": "Privacy Policy"
   },
-  "signup":{
-    "title":"Subscribe for Crochet Updates!",
-    "message":"Get the latest styles and offers via email.",
-    "btn":"Subscribe",
-    "placeHolder":"Enter your email"
+  "signup": {
+    "title": "Subscribe for Crochet Updates!",
+    "message": "Get the latest styles and offers via email.",
+    "btn": "Subscribe",
+    "placeHolder": "Enter your email"
   },
   "menus": {
     "dashboard": "Dashboard",
@@ -47,21 +47,14 @@
     "users": "Users",
     "categories": "Categories",
     "settings": "Settings",
-    "faqs": "FAQ",
     "posts": "Blog Posts",
-    "events": "Events",
     "ecommerce": "Ecommerce",
-    "products": "Products",
+    "crochets": "Crochets",
     "customers": "Customers",
     "inventory": "Inventory",
     "orders": "Orders",
     "payments": "Payments",
-    "our_services": "Our Services",
-    "services": "Services",
-    "consultations": "Consultations",
-    "appointments": "Appointments",
-    "trainings": "Trainings",
-    "profiles": "Profiles"
+    "consultations": "Consultations"
   },
   "buttons": {
     "delete": "Delete",
@@ -94,12 +87,12 @@
       "backHome": "Back Home"
     }
   },
-  "services": {
-    "services": "Services",
+  "categories": {
+    "categories": "Categories",
     "titles": {
-      "list": "List Services",
-      "create": "Create Service",
-      "edit": "Edit Service"
+      "list": "List Categories",
+      "create": "Create Category",
+      "edit": "Edit Category"
     }
   },
   "posts": {
@@ -107,71 +100,66 @@
     "titles": {
       "list": "List Posts",
       "create": "Create Post",
-      "edit": "Edit Post"
+      "edit": "Edit Post",
+      "show": "Show Post"
     }
   },
-  "events": {
-    "events": "Events",
+  "payments": {
+    "payments": "Payments",
     "titles": {
-      "list": "List Events",
-      "create": "Create Event",
-      "edit": "Edit Event"
+      "list": "List Payments",
+      "create": "Create Payment",
+      "edit": "Edit Payment",
+      "show": "Show Payment"
     }
   },
-  "trainings": {
-    "trainings": "Trainings",
+
+  "orders": {
+    "orders": "Orders",
     "titles": {
-      "list": "List Trainings",
-      "create": "Create Training",
-      "edit": "Edit Training"
+      "list": "List Orders",
+      "create": "Create Order",
+      "edit": "Edit Order",
+      "show": "Show Order"
     }
   },
-  "faqs": {
-    "faqs": "Faqs",
+  "tags": {
+    "tags": "Tags",
     "titles": {
-      "list": "List Faqs",
-      "create": "Create Faq",
-      "edit": "Edit Faq"
+      "list": "List Tags",
+      "create": "Create Tag",
+      "edit": "Edit Tag",
+      "show": "Show Tag"
     }
   },
-  "products": {
-    "products": "Products",
+  "subscribers": {
+    "subscribers": "Subscribers",
     "titles": {
-      "list": "List Products",
-      "create": "Create Product",
-      "edit": "Edit Product"
+      "list": "List Subscribers",
+      "create": "Create Subscriber",
+      "edit": "Edit Subscriber",
+      "show": "Show Subscriber"
     }
+  },
+  "media": {
+    "media": "Media",
+    "titles": {
+      "list": "List Media",
+      "create": "Create Media",
+      "edit": "Edit Media",
+      "show": "Show Media"
+    }
+  },
+  "configurations": {
+    "configurations": "Configurations"
   },
   "users": {
     "users": "Users",
     "titles": {
       "list": "List Users",
       "create": "Create User",
-      "edit": "Edit User"
-    }
-  },
-  "profiles": {
-    "profiles": "Profiles",
-    "titles": {
-      "list": "List Profiles",
-      "create": "Create Profile",
-      "edit": "Edit Profile"
-    }
-  },
-  "appointments": {
-    "appointments": "Appointments",
-    "titles": {
-      "list": "List Appointments",
-      "create": "Create Appointment",
-      "edit": "Edit Appointment"
-    }
-  },
-  "consultations": {
-    "consultations": "Consultations",
-    "titles": {
-      "list": "List Consultations",
-      "create": "Create Consultation",
-      "edit": "Edit Consultation"
+      "edit": "Edit User",
+      "show": "Show User"
     }
   }
 }

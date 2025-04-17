@@ -8,7 +8,10 @@ const { Meta } = Card;
 const CrochetCard = ({ crochet }) => {
   const { getConvertedPrice } = useCurrency();
 
-  const convertedPrice = getConvertedPrice(crochet.priceInCfa, crochet.priceInUsd);
+  const convertedPrice = getConvertedPrice(
+    crochet.priceInCfa,
+    crochet.priceInUsd
+  );
 
   return (
     <>
@@ -17,9 +20,17 @@ const CrochetCard = ({ crochet }) => {
           hoverable
           cover={
             <div className="relative custom-image-group">
+              {crochet.imageUrls?.map((item, i) => (
+                <img
+                  key={`preload-${i}`}
+                  src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
+                  alt="preload"
+                  style={{ display: "none" }}
+                />
+              ))}
               <Image.PreviewGroup
-                items={crochet.imageUrls?.map((med) => {
-                  return `${API_URL_UPLOADS_CROCHETS}/${med || "nodata"}`;
+                items={crochet.imageUrls?.map((item) => {
+                  return `${API_URL_UPLOADS_CROCHETS}/${item || "nodata"}`;
                 })}
               >
                 <Image

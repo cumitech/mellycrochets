@@ -1,0 +1,10 @@
+.toastui-editor.md-mode.active {
+    background-color: #fff !important;
+    color: #000 !important;
+    /* border: 1px solid #bfbdbd !important; */
+    border-radius: 0 !important;
+    padding: 1rem !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    margin: 0 !important;
+}

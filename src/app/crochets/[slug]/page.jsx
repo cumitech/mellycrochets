@@ -3,13 +3,21 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button, Card, Descriptions, Image, Input, Space, Tooltip } from "antd";
+import {
+  Button,
+  Card,
+  Descriptions,
+  Image,
+  Input,
+  Space,
+  Tooltip,
+  message,
+} from "antd";
 import {
   ContactsOutlined,
   MinusOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useNotification } from "@refinedev/core";
 
 import { API_URL_UPLOADS_CROCHETS } from "../../../constants/api-url";
 import { crochetAPI } from "../../../store/api/crochet_api";
@@ -19,6 +27,7 @@ import { allColors, allSizes } from "../../../constants/constant";
 import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
 import { sizeAPI } from "../../../store/api/size_api";
 import { useCurrency } from "../../../hooks/currency.hook";
+import { useNotification } from "@refinedev/core";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -28,13 +37,14 @@ const inputStyles = {
   borderRadius: 0,
 };
 
-export default async function IndexPage({ params }) {
+export default function IndexPage({ params }) {
   const [cartQty, setCartQty] = useState(1);
   const [loadingAddToCart, setLoadingAddToCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
 
   const { open } = useNotification();
+
   const { data: session } = useSession();
   const { addToCart } = useCart();
   const router = useRouter();
@@ -69,12 +79,7 @@ export default async function IndexPage({ params }) {
 
   const handleAddToCart = async () => {
     if (!selectedSize) {
-      return open({
-        type: "error",
-        message: "Please select a size and color before adding to cart.",
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
+      message.warning("Please select a size and color before adding to cart.");
     }
 
     setLoadingAddToCart(true);
@@ -89,20 +94,10 @@ export default async function IndexPage({ params }) {
       );
 
       if (updatedCartItem?.length > 0) {
-        open({
-          type: "success",
-          message: `${crochet.name} has been added to cart 👌`,
-          key: "notification-key-open",
-          placement: "bottomRight",
-        });
+        message.success(`${crochet.name} has been added to cart 👌`);
         window.location.reload();
       } else {
-        open({
-          type: "error",
-          message: "Crochet not added to cart",
-          key: "notification-key-open",
-          placement: "bottomRight",
-        });
+        message.error(`${crochet.name} has not been added to cart`);
         setLoadingAddToCart(true);
       }
     } else {
@@ -143,6 +138,14 @@ export default async function IndexPage({ params }) {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative py-3">
+              {crochet.imageUrls?.map((item, i) => (
+                <img
+                  key={`preload-${i}`}
+                  src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
+                  alt="preload"
+                  style={{ display: "none" }}
+                />
+              ))}
               <Image.PreviewGroup
                 items={crochet.imageUrls?.map(
                   (url) => `${API_URL_UPLOADS_CROCHETS}/${url || "nodata"}`

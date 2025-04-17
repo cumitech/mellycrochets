@@ -58,9 +58,13 @@ export async function POST(request) {
       );
     }
 
-    const postResponse = await postRepository.create({
-      ...dto.toData(),
-    });
+    const postResponse = await postRepository.create(
+      {
+        ...dto.toData(),
+        authorId: session.user.id,
+      },
+      dto.tags
+    );
     return NextResponse.json(
       {
         data: postResponse,

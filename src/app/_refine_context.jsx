@@ -11,7 +11,7 @@ import routerProvider from "@refinedev/nextjs-router";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "@refinedev/antd/dist/reset.css";
 import { dataProvider } from "../providers/data-provider";
-import { menus } from "../utils/menus";
+import { menus, useMenu } from "../utils/menus";
 
 // import { initializeDB } from "../utils/initialize-db";
 import { Spin } from "antd";
@@ -24,6 +24,7 @@ export const App = (props) => {
   const { data, status } = useSession();
   const to = usePathname();
   const t = useTranslations();
+  const { menus } = useMenu();
 
   if (status === "loading") {
     return (

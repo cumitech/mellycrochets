@@ -43,9 +43,10 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    const dto = new OrderRequestDto(body);
-    const validationErrors = await validate(dto);
 
+    const dto = new OrderRequestDto(body);
+
+    const validationErrors = await validate(dto);
     if (validationErrors.length > 0) {
       return NextResponse.json(
         {
@@ -61,16 +62,15 @@ export async function POST(request) {
     const orderResponse = await orderRepository.create({
       ...dto.toData(),
     });
+
     return NextResponse.json(
       {
-        data: orderResponse,
-        message: "order created Successfully!",
-        validationErrors: [],
-        success: true,
+        ...orderResponse.toJSON(),
       },
       { status: 201 }
     );
   } catch (error) {
+    console.log("error", error);
     return NextResponse.json(
       {
         data: null,

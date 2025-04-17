@@ -3,6 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const OrderItem = sequelize.define(
     "OrderItem",
     {
+      id: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        primaryKey: true,
+      },
       crochetId: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -19,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      quantity: {
+      qtty: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
