@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import {
   Button,
   Card,
@@ -27,7 +25,6 @@ import { allColors, allSizes } from "../../../constants/constant";
 import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
 import { sizeAPI } from "../../../store/api/size_api";
 import { useCurrency } from "../../../hooks/currency.hook";
-import { useNotification } from "@refinedev/core";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -43,12 +40,9 @@ export default function IndexPage({ params }) {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
 
-  const { open } = useNotification();
 
-  const { data: session } = useSession();
-  const { addToCart } = useCart();
-  const router = useRouter();
   const { slug } = params;
+  const { addToCart } = useCart();
   const { currency, getConvertedPrice } = useCurrency();
 
   const {
@@ -62,7 +56,9 @@ export default function IndexPage({ params }) {
     isLoading,
   } = crochetAPI.useGetSingleCrochetBySlugQuery(slug);
 
-  if (isLoading || isFetching || isLoadingSize || isFetchingSize) {
+  const isLoadingData = isLoading || isFetching || isLoadingSize || isFetchingSize;
+
+  if (isLoadingData) {
     return (
       <div className="flex items-center justify-center min-h-[65vh]">
         <CrochetDetailSkeleton />
@@ -78,13 +74,12 @@ export default function IndexPage({ params }) {
   const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
 
   const handleAddToCart = async () => {
-    if (!selectedSize) {
+    if (!selectedSize || !selectedColor) {
       message.warning("Please select a size and color before adding to cart.");
-    }
+      setLoadingAddToCart(false);
+    } else {
+      setLoadingAddToCart(true);
 
-    setLoadingAddToCart(true);
-
-    if (session?.user) {
       const updatedCartItem = await addToCart(
         crochet.id,
         selectedSizeObj.id,
@@ -93,6 +88,7 @@ export default function IndexPage({ params }) {
         selectedColor
       );
 
+      console.log("Updated Cart Item: ", updatedCartItem);
       if (updatedCartItem?.length > 0) {
         message.success(`${crochet.name} has been added to cart 👌`);
         window.location.reload();
@@ -100,28 +96,9 @@ export default function IndexPage({ params }) {
         message.error(`${crochet.name} has not been added to cart`);
         setLoadingAddToCart(true);
       }
-    } else {
-      open({
-        type: "info",
-        message: "Please sign in to continue",
-        description: (
-          <Button
-            href={`/login?redirect=${encodeURIComponent(
-              window.location.pathname
-            )}`}
-          >
-            Sign In
-          </Button>
-        ),
-        key: "notification-key-open",
-        placement: "bottomRight",
-      });
-      router.push(
-        `/login?redirect=${encodeURIComponent(window.location.pathname)}`
-      );
-    }
 
-    setTimeout(() => setLoadingAddToCart(false), 1500);
+      setTimeout(() => setLoadingAddToCart(false), 1500);
+    }
   };
 
   const text = encodeURIComponent(
@@ -207,7 +184,6 @@ export default function IndexPage({ params }) {
                 </p>
                 <Space wrap>
                   {allColors.map((color) => {
-                    // const isAvailable = availableColors.includes(color);
                     const isActive = selectedColor === color;
                     return (
                       <Tooltip title={color} key={color}>
@@ -220,7 +196,6 @@ export default function IndexPage({ params }) {
                             border: "2px solid #cb384e",
                             color: isActive ? "white" : "black",
                           }}
-                          // size="small"
                           onClick={() => setSelectedColor(color)}
                         >
                           {color}
@@ -230,8 +205,6 @@ export default function IndexPage({ params }) {
                   })}
                 </Space>
               </div>
-
-              {/* <p className="text-gray-600 text-lg">{crochet.description}</p> */}
 
               <div className="mt-4 flex flex-col gap-4">
                 <Space style={{ columnGap: 0 }}>

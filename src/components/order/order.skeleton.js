@@ -1,7 +1,5 @@
 "use client";
-import { Skeleton, Card, Typography, Space, Row, Col } from "antd";
-
-const { Title } = Typography;
+import { Skeleton, Card, Space, Row, Col } from "antd";
 
 const TableSkeleton = () => {
   const rows = Array.from({ length: 5 });
@@ -11,9 +9,6 @@ const TableSkeleton = () => {
       <Col xs={24} md={16} className="min-h-screen bg-gray-50 my-20 mx-4">
         <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-8">
           <Card className="shadow-md rounded-2xl">
-            <Title level={3} className="mb-4">
-              My Orders
-            </Title>
             <div className="w-full overflow-x-auto">
               <table className="w-full table-auto border-separate border-spacing-y-3">
                 <thead>

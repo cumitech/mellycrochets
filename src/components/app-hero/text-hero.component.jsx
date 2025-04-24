@@ -17,20 +17,6 @@ export default function HeroSection() {
           Crafting elegance, one stitch at a time. Explore our collection of
           handmade crochets.
         </p>
-        {/* <div className="mt-6 flex justify-center gap-4">
-          <Button
-            type="primary"
-            size="large"
-            style={{
-              borderRadius: 30,
-              padding: "20px 15px",
-              //   backgroundColor: "#101828",
-              //   borderColor: "#101828",
-            }}
-          >
-            Explore Crochets Now
-          </Button>
-        </div> */}
       </motion.div>
     </section>
   );

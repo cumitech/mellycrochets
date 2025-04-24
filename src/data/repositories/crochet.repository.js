@@ -103,6 +103,48 @@ export class CrochetRepository {
   /*
    * Returns an array of Crochet
    */
+  async filterByIds(ids) {
+    try {
+      const crochets = await Crochet.findAll({
+        where: {
+          id: ids,
+        },
+        include: [
+          {
+            model: CrochetType,
+            as: "crochetType",
+          },
+          {
+            model: Size,
+            as: "sizes",
+            through: {
+              attributes: ["colors"],
+            },
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+      });
+
+      // Convert imageUrls to an array if it's stored as a string
+      const formattedCrochets = crochets.map((crochet) => ({
+        ...crochet.get(),
+        imageUrls: JSON.parse(crochet.imageUrls),
+        sizes: crochet.sizes.map((size) => ({
+          id: size.id,
+          label: size.label,
+          price: size.CrochetSize?.price,
+          stock: size.CrochetSize?.stock,
+        })),
+      }));
+      return formattedCrochets;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /*
+   * Returns an array of Crochet
+   */
   async getAll() {
     try {
       const crochets = await Crochet.findAll({
@@ -119,7 +161,7 @@ export class CrochetRepository {
             },
           },
         ],
-        order: [['createdAt', 'DESC']]
+        order: [["createdAt", "DESC"]],
       });
 
       // Convert imageUrls to an array if it's stored as a string

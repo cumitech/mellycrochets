@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import { OrderRepository } from "../../../data/repositories/order.repository";
 import { OrderRequestDto } from "../../../data/dtos/order-request.dto";
 import { displayValidationErrors } from "../../../lib/displayValidationErrors";
-import authOptions from "../../../lib/options";
-import { getServerSession } from "next-auth";
+// import authOptions from "../../../lib/options";
+// import { getServerSession } from "next-auth";
 
 const orderRepository = new OrderRepository();
 
@@ -27,23 +27,23 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions); //get session info
+  // const session = await getServerSession(authOptions); //get session info
 
-  if (!session || !session.user) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized: Please log in to access this resource.",
-        success: false,
-        data: null,
-        validationErrors: [],
-      },
-      { status: 401 }
-    );
-  }
+  // if (!session || !session.user) {
+  //   return NextResponse.json(
+  //     {
+  //       message: "Unauthorized: Please log in to access this resource.",
+  //       success: false,
+  //       data: null,
+  //       validationErrors: [],
+  //     },
+  //     { status: 401 }
+  //   );
+  // }
 
   try {
     const body = await request.json();
-
+    console.log("body", body);
     const dto = new OrderRequestDto(body);
 
     const validationErrors = await validate(dto);

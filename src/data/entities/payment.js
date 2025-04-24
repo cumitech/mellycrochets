@@ -27,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       transactionId: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       requestId: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       price: {
         type: DataTypes.DECIMAL,

@@ -1,18 +1,25 @@
-import { Avatar, Badge, Button, List, message, Popover, Space, Typography } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  List,
+  message,
+  Popover,
+  Space,
+  Typography,
+} from "antd";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
 import { useRouter } from "next/navigation";
 import { format } from "../../lib/format";
 import { useCart } from "../../hooks/cart.hook";
-import { useNotification } from "@refinedev/core";
 import { CURRENCY } from "../../constants/constant";
 
 const ShoppingCart = ({ cartCount = 1, cartItems }) => {
   const [popovervisible, setPopovervisible] = useState(false);
   const navigator = useRouter();
   const { removeCrochet } = useCart();
-  const { open } = useNotification();
 
   const handleCheckoutSubmit = () => {
     navigator.push("/cart");
@@ -20,8 +27,7 @@ const ShoppingCart = ({ cartCount = 1, cartItems }) => {
   };
 
   const handleRemoveCartItem = async (item) => {
-    const feedback = await removeCrochet(item.id);
-    console.log("feedback: ", feedback);
+    const feedback = await removeCrochet(item.crochet.id);
     if (feedback) {
       message.success(`${item.crochet.name} has been removed from cart`);
       window.location.reload();

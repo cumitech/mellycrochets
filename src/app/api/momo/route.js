@@ -1,23 +1,23 @@
 import { NextResponse } from "next/server";
-import authOptions from "../../../lib/options";
-import { getServerSession } from "next-auth";
+// import authOptions from "../../../lib/options";
+// import { getServerSession } from "next-auth";
 import { initiateMomoPayment } from "../../../lib/tranzak.token";
 import { nanoid } from "nanoid";
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions); //get session info
+  // const session = await getServerSession(authOptions); //get session info
 
-  if (!session || !session.user) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized: Please log in to access this resource.",
-        success: false,
-        data: null,
-        validationErrors: [],
-      },
-      { status: 401 }
-    );
-  }
+  // if (!session || !session.user) {
+  //   return NextResponse.json(
+  //     {
+  //       message: "Unauthorized: Please log in to access this resource.",
+  //       success: false,
+  //       data: null,
+  //       validationErrors: [],
+  //     },
+  //     { status: 401 }
+  //   );
+  // }
 
   try {
     const body = await request.json();

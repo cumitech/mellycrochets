@@ -2,6 +2,7 @@
 
 import { nanoid } from "nanoid";
 import { emptyCrochet } from "../models";
+import slugify from "slugify";
 
 class CrochetRequestDto {
   constructor(data) {
@@ -12,7 +13,8 @@ class CrochetRequestDto {
     this.description = data.description;
     this.crochetTypeId = data.crochetTypeId;
     this.imageUrls = Array.isArray(data.imageUrls) ? data.imageUrls : [];
-    this.price = typeof data.price === "number" ? data.price : 0.0;
+    this.priceInCfa = typeof data.priceInCfa === "number" ? data.priceInCfa : 0.0;
+    this.priceInUsd = typeof data.priceInUsd === "number" ? data.priceInUsd : 0.0;
   }
 
   toData() {
@@ -24,7 +26,8 @@ class CrochetRequestDto {
       description: this.description,
       crochetTypeId: this.crochetTypeId,
       imageUrls: this.imageUrls,
-      price: this.price,
+      priceInCfa: this.priceInCfa,
+      priceInUsd: this.priceInUsd,
     };
   }
 

@@ -23,6 +23,7 @@ import { crochetReducer } from "./slice/crochet.slice";
 import { tagAPI } from "./api/tag_api";
 import { commentAPI } from "./api/comment_api";
 import { orderAPI } from "./api/order_api";
+import { orderItemAPI } from "./api/order_item_api";
 
 const persistConfig = {
   key: "root",
@@ -51,6 +52,7 @@ export const store = configureStore({
     [tagAPI.reducerPath]: tagAPI.reducer,
     [commentAPI.reducerPath]: commentAPI.reducer,
     [orderAPI.reducerPath]: orderAPI.reducer,
+    [orderItemAPI.reducerPath]: orderItemAPI.reducer,
     crochets: persistedCrochetReducer,
     paymentMethod: persistedPaymentMethodReducer,
     currency: persistedCurrencyReducer,
@@ -71,7 +73,8 @@ export const store = configureStore({
       cartItemAPI.middleware,
       tagAPI.middleware,
       commentAPI.middleware,
-      orderAPI.middleware
+      orderAPI.middleware,
+      orderItemAPI.middleware
     ]),
 });
 

@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { useNotificationProvider } from "@refinedev/antd";
 import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
@@ -9,11 +9,11 @@ import { usePathname } from "next/navigation";
 import routerProvider from "@refinedev/nextjs-router";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+
 import "@refinedev/antd/dist/reset.css";
 import { dataProvider } from "../providers/data-provider";
-import { menus, useMenu } from "../utils/menus";
+import { useMenu } from "../utils/menus";
 
-// import { initializeDB } from "../utils/initialize-db";
 import { Spin } from "antd";
 import { accessControlProvider } from "../providers/access-control-provider";
 import ClientProvider from "../contexts/redux/provider";

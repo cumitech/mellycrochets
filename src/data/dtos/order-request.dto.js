@@ -26,7 +26,6 @@ class OrderRequestDto {
     this.totalAmount = data.totalAmount;
     this.totalQtty = data.totalQtty;
     this.items = data.items;
-    this.telephone = data.telephone;
     this.address = data.address;
     this.email = data.email;
     this.username = data.username;
@@ -43,7 +42,6 @@ class OrderRequestDto {
       totalAmount: this.totalAmount,
       totalQtty: this.totalQtty,
       items: this.items,
-      telephone: this.telephone,
       address: this.address,
       email: this.email,
       username: this.username,

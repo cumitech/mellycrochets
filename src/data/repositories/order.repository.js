@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { NotFoundException } from "../../exceptions/not-found.exception";
 import { CartItem, Order, OrderItem } from "../entities";
 import sequelize from "../../database/db-sequelize.config";
+import { Op } from "sequelize";
 
 export class OrderRepository {
   constructor() {}
@@ -49,7 +50,14 @@ export class OrderRepository {
    */
   async findById(id) {
     try {
-      const orderItem = await Order.findByPk(id);
+      const orderItem = await Order.findByPk(id, {
+        include: [
+          {
+            model: OrderItem,
+            as: "orderItems",
+          },
+        ],
+      });
 
       if (!orderItem) {
         throw new NotFoundException("Order", id);
@@ -67,7 +75,18 @@ export class OrderRepository {
    */
   async findByUser(userId) {
     try {
-      const userOrders = await Order.findAll({ where: { userId } });
+      const userOrders = await Order.findAll({
+        // where: { userId },
+        where: {
+          [Op.or]: [{ userId }, { telephone: userId }],
+        },
+        include: [
+          {
+            model: OrderItem,
+            as: "orderItems",
+          },
+        ],
+      });
       return userOrders;
     } catch (error) {
       throw error;
@@ -81,7 +100,15 @@ export class OrderRepository {
    */
   async findByTitle(title) {
     try {
-      const orderItem = await Order.findOne({ where: { title } });
+      const orderItem = await Order.findOne({
+        where: { title },
+        include: [
+          {
+            model: OrderItem,
+            as: "orderItems",
+          },
+        ],
+      });
       return orderItem;
     } catch (error) {
       throw error;
@@ -93,7 +120,14 @@ export class OrderRepository {
    */
   async getAll() {
     try {
-      const orders = await Order.findAll();
+      const orders = await Order.findAll({
+        include: [
+          {
+            model: OrderItem,
+            as: "orderItems",
+          },
+        ],
+      });
       return orders;
     } catch (error) {
       throw error;
@@ -105,16 +139,16 @@ export class OrderRepository {
    * @order
    * returns void
    */
-  async update(order) {
-    const { id } = order;
+  async update(orderInput) {
+    const { id } = orderInput;
     try {
-      const orderItem = await Order.findByPk(id);
+      const order = await Order.findByPk(id);
 
-      if (!orderItem) {
+      if (!order) {
         throw new NotFoundException("Order", id.toString());
       }
 
-      return await orderItem?.update({ ...order });
+      return await order?.update({ ...orderInput });
     } catch (error) {
       throw error;
     }

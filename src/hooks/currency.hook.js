@@ -22,6 +22,12 @@ export const useCurrency = () => {
 
     return convertedPrice;
   }
+
+  function getPrice(priceInCfa, priceInUsd) {
+    const convertedPrice = currency === CURRENCY.cfa ? priceInCfa : priceInUsd;
+
+    return convertedPrice;
+  }
   useEffect(() => {
     const fetchCurrency = async () => {
       const countryCode = await getGeolocation();
@@ -37,5 +43,5 @@ export const useCurrency = () => {
     fetchCurrency();
   }, []);
 
-  return { currency, setCurrencyFun, getConvertedPrice };
+  return { currency, setCurrencyFun, getConvertedPrice, getPrice };
 };

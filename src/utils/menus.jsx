@@ -1,5 +1,10 @@
 // icons
-import { MdOutlinePermMedia, MdOutlineTag, MdPayments } from "react-icons/md";
+import {
+  MdOutlineAddShoppingCart,
+  MdOutlinePermMedia,
+  MdOutlineTag,
+  MdPayments,
+} from "react-icons/md";
 import { FcDataConfiguration } from "react-icons/fc";
 import { GiShoppingCart } from "react-icons/gi";
 import { GrUserSettings } from "react-icons/gr";
@@ -12,6 +17,18 @@ export const useMenu = () => {
     {
       name: "dashboard",
       label: "Dashboard",
+    },
+    {
+      name: "crochets",
+      list: "/dashboard/crochets",
+      create: "/dashboard/crochets/create",
+      edit: "/dashboard/crochets/edit/:id",
+      show: "/dashboard/crochets/show/:id",
+      meta: {
+        // canDelete: true,
+        canAccess: ["admin", "editor"],
+      },
+      icon: <MdOutlineAddShoppingCart />,
     },
     {
       name: "posts",
