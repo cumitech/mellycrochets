@@ -11,19 +11,23 @@ export default function robots() {
         "/shop",
         "/contact",
         "/privacy",
+        "/feed.xml", // optional
+        "/rss.xml",  // optional
       ],
       disallow: [
         "/dashboard/*",
         "/api/*",
         "/admin/*",
         "/checkout/*",
-        "/cart",
+        "/cart*",
         "/account/*",
         "/private-*",
+        "/404", // optional
       ],
+      crawlDelay: 10,
+      cleanParam: "ref,utm_source,utm_medium,utm_campaign,sessionid",
     },
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
-    crawlDelay: 10, // Recommended for shared hosting
   };
 }

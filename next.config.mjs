@@ -18,7 +18,7 @@ const nextConfig = withNextIntl({
   },
   crossOrigin: "anonymous",
   experimental: {
-    optimizeCss: true, // Enable CSS optimization
+    optimizeCss: true,
   },
   swcMinify: true,
   compress: true,
@@ -26,6 +26,7 @@ const nextConfig = withNextIntl({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  reactStrictMode: false,
   webpack(config, { isServer, dev }) {
     if (!dev) {
       config.optimization.minimize = true;
@@ -33,7 +34,6 @@ const nextConfig = withNextIntl({
         chunks: "all",
       };
     }
-
     return config;
   },
 });

@@ -94,7 +94,6 @@ export async function POST(request) {
           : Number(crochet.priceInUsd),
       selectedColors: body.color,
     });
-    console.log("dto: ", dto.toData());
 
     const validationErrors = await validate(dto);
     //desstructure the object

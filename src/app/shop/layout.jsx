@@ -1,7 +1,15 @@
 import { keywords } from "../../constants/constant";
 
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+
 export const metadata = {
-  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
+  metadataBase: new URL(`${url}`),
+  title: {
+    default: "MellyCrochets Shop - Handmade Crochet Fashion & Accessories",
+    template: "%s | MellyCrochets Shop",
+  },
+  description:
+    "Discover our stunning range of handmade crochet clothing, accessories, and home decor. Crafted with love and sustainability in mind, MellyCrochets delivers timeless fashion with a personal touch.",
   keywords: [
     "crochet shop",
     "handmade crochet",
@@ -10,37 +18,51 @@ export const metadata = {
     "crochet fashion",
     ...keywords,
   ].join(", "),
-  title: {
-    default: "MellyCrochets Shop - Handmade Crochet Fashion & Accessories",
-    template: "%s | MellyCrochets Shop",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
+  themeColor: "#f472b6", // Tailwind pink-400
+  manifest: "/site.webmanifest",
   alternates: {
-    canonical: `${process.env.NEXTAUTH_URL}/shop`,
+    canonical: `${url}/shop`,
   },
   openGraph: {
     title: "MellyCrochets Shop - Unique Handmade Crochet Creations",
     description:
       "Discover our collection of beautifully handmade crochet clothing, accessories, and home decor. Ethically crafted, sustainable fashion for every style.",
+    url: `${url}/shop`,
+    type: "website",
+    siteName: "MellyCrochets",
+    locale: "en_US",
     images: [
       {
-        url: `${process.env.NEXTAUTH_URL}/uploads/shop/diasy-crochet-trousers.jpg`,
+        url: `${url}/uploads/shop/diasy-crochet-trousers.jpg`,
         width: 1200,
         height: 630,
         alt: "MellyCrochets shop featuring various crochet products",
       },
     ],
-    url: `${process.env.NEXTAUTH_URL}/shop`,
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@mellycrochets", // Replace with actual Twitter handle if available
+    creator: "@mellycrochets",
     title: "MellyCrochets Shop - Handmade Crochet Fashion",
     description:
       "Shop unique, handmade crochet pieces - from clothing to accessories. Sustainable fashion with love.",
     images: [
-      `${process.env.NEXTAUTH_URL}/uploads/crochets/diasy-crochet-trousers.jpg`,
-      `${process.env.NEXTAUTH_URL}/uploads/crochets/granny-sq-cropped-top-4.jpg`,
-      `${process.env.NEXTAUTH_URL}/uploads/crochets/cameroon.jpg`,
+      `${url}/uploads/crochets/diasy-crochet-trousers.jpg`,
+      `${url}/uploads/crochets/granny-sq-cropped-top-4.jpg`,
+      `${url}/uploads/crochets/cameroon.jpg`,
     ],
   },
   icons: {
@@ -52,6 +74,7 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
 };
+
 export default function Layout({ children }) {
   return <>{children}</>;
 }

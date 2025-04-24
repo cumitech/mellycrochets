@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import { PaymentRepository } from "../../../data/repositories/payment.repository";
 import { PaymentRequestDto } from "../../../data/dtos/payment-request.dto";
 import { displayValidationErrors } from "../../../lib/displayValidationErrors";
-import authOptions from "../../../lib/options";
-import { getServerSession } from "next-auth";
 
 const paymentRepository = new PaymentRepository();
 
@@ -27,24 +25,11 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions); //get session info
-
-  if (!session || !session.user) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized: Please log in to access this resource.",
-        success: false,
-        data: null,
-        validationErrors: [],
-      },
-      { status: 401 }
-    );
-  }
-
   try {
     const body = await request.json();
     console.log("body: ", body);
     const dto = new PaymentRequestDto(body);
+    console.log("dto: ", dto);
     const validationErrors = await validate(dto);
 
     if (validationErrors.length > 0) {
@@ -72,6 +57,7 @@ export async function POST(request) {
       { status: 201 }
     );
   } catch (error) {
+    console.log("Error creating payment: ", error);
     return NextResponse.json(
       {
         data: null,
@@ -79,7 +65,7 @@ export async function POST(request) {
         validationErrors: [],
         success: false,
       },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }

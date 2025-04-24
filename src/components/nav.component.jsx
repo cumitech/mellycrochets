@@ -9,12 +9,11 @@ import AppLanguage from "./shared/language.component";
 import ShoppingCart from "./shopping-cart/shopping-cart";
 import { useTranslations } from "next-intl";
 import { useGetIdentity } from "@refinedev/core";
-import { useSocket } from "../providers/socket";
-import { CartService } from "../service/cart.service";
 import AppCurrency from "./shared/currency.component";
 import { crochetTypeAPI } from "@/store/api/crochet_type_api";
 import AppNavigationSkeleton from "./nav-skeleton.component";
 import CrochetDropdownV2 from "./shared/crochet-type-menu-v2.component";
+import { useCart } from "../hooks/cart.hook";
 
 const AppNavigation = () => {
   const {
@@ -22,6 +21,7 @@ const AppNavigation = () => {
     isLoading,
     isFetching,
   } = crochetTypeAPI.useFetchAllCrochetTypesQuery(1);
+  const { loadCartCrochets } = useCart();
 
   const [isOpen, setOpen] = useState(false);
   const { data: user } = useGetIdentity({});
@@ -35,8 +35,6 @@ const AppNavigation = () => {
   const t = useTranslations("navigation");
 
   const role = user?.role;
-
-  const socket = useSocket();
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -64,27 +62,14 @@ const AppNavigation = () => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (!socket) return;
-
-    const handleCartEvent = (data) => {
-      setCartItems(data);
-      setCartCount(data.length);
+    const fetchCartItems = async () => {
+      const items = await loadCartCrochets();
+      console.log("items: ", items);
+      setCartItems(items);
+      setCartCount(items.length);
     };
 
-    socket.on("cart-updated", handleCartEvent);
-
-    return () => {
-      socket.off("cart-updated", handleCartEvent); // Cleanup
-    };
-  }, [socket]);
-
-  useEffect(() => {
-    CartService.list()
-      .then((res) => {
-        setCartItems(res);
-        setCartCount(res.length);
-      })
-      .catch((err) => console.log(err));
+    fetchCartItems();
   }, []);
 
   if (isLoading || isFetching) {

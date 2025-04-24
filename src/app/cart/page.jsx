@@ -4,7 +4,6 @@ import { useCart } from "../../hooks/cart.hook";
 import {
   CheckCircleOutlined,
   DeleteOutlined,
-  DollarCircleOutlined,
   MobileOutlined,
 } from "@ant-design/icons";
 import {
@@ -24,22 +23,21 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { format } from "../../lib/format";
-import { API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
-import { cartItemAPI } from "../../store/api/cart_item_api";
+import { API_URL, API_URL_UPLOADS_CROCHETS } from "../../constants/api-url";
 import { getCartSummary } from "../../components/shared/cart-summary-table.component";
-import { CURRENCY, ORDER_STATUS } from "../../constants/constant";
+import { ORDER_STATUS } from "../../constants/constant";
 import { useRouter } from "next/navigation";
 import { useCurrency } from "../../hooks/currency.hook";
 import { useCreate, useGetIdentity } from "@refinedev/core";
 import { generateOrderNumber } from "../../utils/order-no";
 import CheckoutSkeleton from "../../skeleton/cart.skeleton";
+import { nanoid } from "nanoid";
 
 const CheckoutCartBtn = ({ cartItems }) => {
   const [checkoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
-  const [isOrdering, setOrdering] = useState(false);
   const { setPaymentMethod, paymentMethod } = usePaymentMethod();
   const { currency } = useCurrency();
-  const { getCartTotal, getCartQuantity } = useCart();
+  const { getCartTotal, getCartQuantity, clearCrochet } = useCart();
 
   const { data: user } = useGetIdentity({});
   const navigation = useRouter();
@@ -60,11 +58,11 @@ const CheckoutCartBtn = ({ cartItems }) => {
       label: "Mobile Money",
       icon: <MobileOutlined className="text-4xl text-blue-500" />,
     },
-    {
-      key: "cash_on_delivery",
-      label: "Cash on Delivery",
-      icon: <DollarCircleOutlined className="text-4xl text-green-600" />,
-    },
+    // {
+    //   key: "cash_on_delivery",
+    //   label: "Cash on Delivery",
+    //   icon: <DollarCircleOutlined className="text-4xl text-green-600" />,
+    // },
   ];
 
   const handleDrawerHandler = () => {
@@ -73,16 +71,15 @@ const CheckoutCartBtn = ({ cartItems }) => {
 
   const onConfirmOrder = async (data) => {
     const payload = {
-      userId: user.id,
+      userId: user ? user.id : null,
       totalQtty: totalQtty,
       discount: 0,
       totalAmount: total,
       orderNo: generateOrderNumber(),
-      username: user.name,
+      username: user ? user.name : data.username,
       address: data.address,
-      telephone: data.telephone,
       paymentMethod,
-      email: user.email,
+      email: user ? user.email : data.email,
       status: ORDER_STATUS.PENDING,
       items: cartItems.map((item) => {
         return {
@@ -93,7 +90,6 @@ const CheckoutCartBtn = ({ cartItems }) => {
       }),
     };
     try {
-      setOrdering(true);
       mutateOrder(
         {
           values: payload,
@@ -108,32 +104,27 @@ const CheckoutCartBtn = ({ cartItems }) => {
                   amount: 5,
                   currencyCode: currency,
                   description: `Your order from MellyCrochets`,
-                  returnUrl: `http://localhost:3000/payment-success?orderId=${id}`,
+                  returnUrl: `${API_URL}/payment-success?orderId=${id}`,
                 },
               },
               {
                 onSuccess: (data) => {
+                  clearCrochet();
                   const { links, ...rest } = data.data;
                   const { paymentAuthUrl } = links;
                   navigation.push(paymentAuthUrl);
                 },
                 onError: () => {},
-                onSettled: () => {
-                  setOrdering(false);
-                },
               }
             );
           },
           onError: () => {
             message.error("Failed to place order.");
           },
-          onSettled: () => {
-            setOrdering(false);
-          },
         }
       );
     } catch (err) {
-      setOrdering(false);
+      console.log("Error: ", err);
     }
   };
 
@@ -185,15 +176,29 @@ const CheckoutCartBtn = ({ cartItems }) => {
           </div>
 
           <Form onFinish={onConfirmOrder} layout="vertical">
-            <Form.Item
-              label="Telephone"
-              name="telephone"
-              rules={[
-                { required: true, message: "Please enter your telephone" },
-              ]}
-            >
-              <Input size="large" placeholder="Enter your telephone..." />
-            </Form.Item>
+            {!user && (
+              <>
+                <Form.Item
+                  label="Full Name"
+                  name="username"
+                  rules={[
+                    { required: true, message: "Please enter your username" },
+                  ]}
+                >
+                  <Input size="large" placeholder="Enter your username..." />
+                </Form.Item>
+
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    { required: true, message: "Please enter your email" },
+                  ]}
+                >
+                  <Input size="large" placeholder="Enter your email..." />
+                </Form.Item>
+              </>
+            )}
 
             <Form.Item
               label="Address"
@@ -219,23 +224,12 @@ const CheckoutCartBtn = ({ cartItems }) => {
 };
 
 export default function CartPage() {
-  const { removeCrochet } = useCart();
-  const navigation = useRouter();
-
-  const {
-    data: cartItems,
-    isLoading,
-    isFetching,
-    refetch,
-  } = cartItemAPI.useFetchAllCartItemsQuery(1);
-
-  if (isLoading || isFetching) {
-    return <CheckoutSkeleton />;
-  }
+  const { removeCrochet, loadCartCrochets } = useCart();
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCheckoutSubmit = () => {
     refetch();
-    navigation.push("/process-payment");
   };
 
   const handleRemoveCartItem = async (item) => {
@@ -248,6 +242,20 @@ export default function CartPage() {
     }
   };
 
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      setIsLoading(true);
+      const items = await loadCartCrochets();
+      console.log("items: ", items);
+      setCartItems(items);
+      setIsLoading(false);
+    };
+
+    fetchCartItems();
+  }, []);
+  if (isLoading) {
+    return <CheckoutSkeleton />;
+  }
   return (
     <>
       <Row

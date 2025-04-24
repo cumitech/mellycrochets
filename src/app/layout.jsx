@@ -13,21 +13,39 @@ import PrivacyConsent from "../components/privacy-policy/privacy-policy.componen
 import "../lib/polyfils";
 import { keywords } from "../constants/constant";
 
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
 export const metadata = {
-  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
-  keywords: keywords.join(", "),
+  metadataBase: new URL(`${url}`),
   title: {
-    default:
-      "Premium Crochet Creations - Handcrafted with Love | MellyCrochets",
+    default: "Handcrafted Crochet Fashion | MellyCrochets",
     template: "%s | MellyCrochets",
   },
-  openGraph: {
+  description:
+    "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+  keywords: keywords.join(", "),
+  manifest: `${url}/site.webmanifest`,
+  appleWebApp: {
+    title: "MellyCrochets",
+    statusBarStyle: "default",
+    capable: true,
+    startupImage: "/apple-touch-icon.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MellyCrochets",
     description:
       "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
-    images: [
-      `${process.env.NEXTAUTH_URL}/uploads/crochets/crochet-dress-main.jpg`,
-    ],
-    url: process.env.NEXTAUTH_URL,
+    images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    creator: "@mellycrochets",
+  },
+  openGraph: {
+    title: "MellyCrochets",
+    description:
+      "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+    images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    siteName: "MellyCrochets",
+    locale: "en_US",
+    url: url,
     type: "website",
   },
   icons: {
@@ -50,7 +68,36 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "MellyCrochets",
+              image: `${url}/uploads/crochets/crochet-dress-main.jpg`,
+              description: "Handcrafted crochet fashion and accessories",
+              url: url,
+              telephone: "+237681077051",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Bamenda",
+                addressRegion: "North West",
+                postalCode: "237",
+                streetAddress: "Mile 4 Nkwen",
+                addressCountry: "Cameroon",
+              },
+              openingHours: "Mo,Tu,We,Th,Fr 09:00-17:00",
+              priceRange: "$$",
+            }),
+          }}
+        />
+      </head>
       <body>
         <Suspense
           fallback={
@@ -83,7 +130,7 @@ export default async function RootLayout({ children }) {
               <Footer />
               {/* <EmailSubscriptionPopup /> */}
               <PrivacyConsent />
-            </RefineContext>
+            </RefineContext> 
           </NextIntlClientProvider>
         </Suspense>
       </body>

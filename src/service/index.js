@@ -20,6 +20,7 @@ export const requestType = {
   get: (url) => axios.get(url, apiConfig()).then(responseBody),
   post: (url, body) => axios.post(url, body, apiConfig()).then(responseBody),
   put: (url, body) => axios.put(url, body, apiConfig()).then(responseBody),
+  patch: (url, body) => axios.patch(url, body, apiConfig()).then(responseBody),
   del: (url, body) =>
     axios
       .delete(apiConfig().baseURL + url, {

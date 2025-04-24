@@ -1,34 +1,51 @@
 import { keywords } from "../../constants/constant";
 
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+
 export const metadata = {
-  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
-  keywords: ["crochet blog", "crochet patterns", "crochet tutorials", ...keywords].join(", "),
+  metadataBase: new URL(`${url}`),
   title: {
     default: "Crochet Blog - Tips, Patterns & Inspiration | MellyCrochets",
     template: "%s | MellyCrochets Blog",
   },
+  description:
+    "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets. Perfect for crochet enthusiasts of all skill levels.",
+  keywords: ["crochet blog", "crochet patterns", "crochet tutorials", ...keywords].join(", "),
+  authors: [
+    { name: "MellyCrochets", url: `${url}` },
+  ],
+  creator: "MellyCrochets",
+  publisher: "MellyCrochets",
   alternates: {
-    canonical: `${process.env.NEXTAUTH_URL}/blog_posts`,
+    canonical: `${url}/blog_posts`,
   },
   openGraph: {
     title: "Crochet Blog - Tips, Patterns & Inspiration",
-    description: "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets. Perfect for crochet enthusiasts of all skill levels.",
+    description:
+      "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets. Perfect for crochet enthusiasts of all skill levels.",
+    url: `${url}/blog_posts`,
+    siteName: "MellyCrochets",
     images: [
       {
-        url: `${process.env.NEXTAUTH_URL}/uploads/posts/anastasia-shchukina-V_zqT-zXud0-unsplash.jpg`,
+        url: `${url}/uploads/posts/anastasia-shchukina-V_zqT-zXud0-unsplash.jpg`,
         width: 1200,
         height: 630,
         alt: "Crochet blog header image",
       },
     ],
-    url: `${process.env.NEXTAUTH_URL}/blog_posts`,
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "Crochet Blog - Tips, Patterns & Inspiration | MellyCrochets",
-    description: "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets.",
-    images: [`${process.env.NEXTAUTH_URL}/uploads/posts/christian-bass-EgBvK_nNqg8-unsplash.jpg`],
+    description:
+      "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets.",
+    images: [
+      `${url}/uploads/posts/christian-bass-EgBvK_nNqg8-unsplash.jpg`,
+    ],
+    site: "@mellycrochets", // Replace with actual Twitter handle if exists
+    creator: "@mellycrochets",
   },
   icons: {
     icon: [
@@ -37,8 +54,26 @@ export const metadata = {
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+    },
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
   },
 };
+
+
 export default function Layout({ children }) {
   return <>{children}</>;
 }

@@ -55,7 +55,8 @@ const emptyCrochet = {
   description: "",
   crochetTypeId: "",
   imageUrls: [], // Empty array for images
-  price: 0.0, // Default price
+  priceInCfa: 0.0, // Default price
+  priceInUsd: 0.0, // Def
   createdAt: new Date().toISOString(), // Current timestamp
   updatedAt: new Date().toISOString(),
 };
@@ -166,5 +167,5 @@ export {
   emptyPost,
   emptyCategory,
   emptyTag,
-  emptyComment
+  emptyComment,
 };

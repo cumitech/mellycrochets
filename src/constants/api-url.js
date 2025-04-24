@@ -1,4 +1,5 @@
-// export const API_URL = "https://www.cumitech.com";
+const API_URL = "https://mellycrochets.shop";
+// const API_URL = 'http://localhost:3000';
 const API_URL_UPLOADS_POSTS = `/uploads/posts`;
 const API_URL_UPLOADS_MEDIA = `/uploads/media`;
 const API_URL_UPLOADS_CROCHETS = `/uploads/crochets`;
@@ -12,4 +13,5 @@ module.exports = {
   API_URL_UPLOADS_MEDIA,
   API_URL_UPLOADS_CROCHETS,
   BASE_URL,
+  API_URL
 };

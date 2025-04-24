@@ -5,24 +5,10 @@ import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../../lib/options";
-import { emptyOrder } from "../../../../data/models";
 
 const orderRepository = new OrderRepository();
 
 export async function PATCH(req, { params }) {
-  const session = await getServerSession(authOptions); //get session info
-
-  if (!session || !session.user) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized: Please log in to access this resource.",
-        success: false,
-        data: null,
-        validationErrors: [],
-      },
-      { status: 401 }
-    );
-  }
 
   if (!params?.id) {
     return NextResponse.json(
@@ -39,7 +25,7 @@ export async function PATCH(req, { params }) {
     const body = await req.json();
     body.totalAmount = parseFloat(Number(body.totalAmount));
     body.totalQtty = parseFloat(Number(body.totalQtty));
-    
+
     const dto = new OrderRequestDto(body);
     const validationErrors = await validate(dto);
 
@@ -55,13 +41,12 @@ export async function PATCH(req, { params }) {
       );
     }
 
-    const id = params.id;
-
     const obj = {
-      ...emptyOrder,
-      ...dto.toData(),
-      id: id,
+      ...dto.toUpdateData(body),
+      telephone: body.telephone,
     };
+
+    console.log("obj: ", obj);
     const updatedOrder = await orderRepository.update(obj);
 
     return NextResponse.json(

@@ -10,6 +10,7 @@ export const POST = async (request) => {
 
     const image = file.get("file");
 
+    console.log("image: ", image);
     const byteLength = await image.arrayBuffer();
 
     const bufferData = await Buffer.from(byteLength);

@@ -123,6 +123,15 @@
       "show": "Show Order"
     }
   },
+  "crochets": {
+    "crochets": "Crochets",
+    "titles": {
+      "list": "List Crochets",
+      "create": "Create Crochet",
+      "edit": "Edit Crochet",
+      "show": "Show Crochet"
+    }
+  },
   "tags": {
     "tags": "Tags",
     "titles": {

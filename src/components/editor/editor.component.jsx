@@ -1,8 +1,19 @@
 "use client";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
+// import { Editor } from "@toast-ui/react-editor";
 import { useRef, useEffect } from "react";
 import "./editor.css"; // Custom styles for the editor
+import dynamic from "next/dynamic";
+
+
+// Import the editor dynamically with SSR disabled
+const Editor = dynamic(
+  () => import("@toast-ui/react-editor").then((mod) => mod.Editor),
+  {
+    ssr: false,
+    loading: () => <p>Loading editor...</p>,
+  }
+);
 
 export const EditorComponent = ({ initialValue, onChange }) => {
   const editorRef = useRef(null);
