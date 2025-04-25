@@ -1,49 +1,101 @@
-"use client";
-
-import { crochetTypeAPI } from "../../../store/api/crochet_type_api";
 import CrochetList from "../../../components/crochet/crochet-list.component";
-import { motion } from "framer-motion";
-import SpinnerList from "../../../components/crochet-card.skeleton";
-import { Row } from "antd";
 import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
+import { API_URL, BASE_URL } from "../../../constants/api-url";
+import axios from "axios";
+import { generatePageMetadata } from "../../../lib/metadata-generator";
+import { keywords } from "../../../constants/constant";
 
-export default function IndexPage({ params }) {
+const fetchCrochetTypeDetails = async (slug) => {
+  const response = await axios.get(
+    `${process.env.NEXTAUTH_URL}/api/crochet_types/slugs/${slug}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch crochetType details");
+  } else {
+    return await response.data;
+  }
+};
+
+// 🏷️ Generate Metadata for SEO
+export async function generateMetadata({ params }) {
+  const { slug } = params;
+  const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+  if (!params?.slug) {
+    console.warn("Slug is missing in params!");
+    return {}; // Avoid breaking the app
+  }
+  const crochetType = await fetchCrochetTypeDetails(slug);
+  if (!crochetType) {
+    return {}; // Handle the case where crochetType data is not available
+  }
+  return generatePageMetadata({
+    title: `${crochetType.name} | MellyCrochets Shop`,
+    description:
+      crochetType.description ||
+      `Beautiful handmade ${crochetType.name} crochet designs by MellyCrochets`,
+    alternates: {
+      canonical: `${url}/shop/${slug}`,
+    },
+    slug,
+    image: `${process.env.NEXTAUTH_URL}/uploads/crochets/${crochetType.crochets[0].imageUrls[0]}`,
+    keywords: [
+      crochetType.name,
+      `handmade ${crochetType.name}`,
+      `crochet ${crochetType.name}`,
+      `buy ${crochetType.name} crochet`,
+      "MellyCrochets shop",
+      ...keywords,
+    ].join(", "),
+    openGraph: {
+      title: `${crochetType.name} | MellyCrochets Shop`,
+      description:
+        crochetType.description ||
+        `Handmade ${crochetType.name} crochet creations`,
+      url: `${url}/shop/${slug}`,
+      type: "website",
+      images: [
+        {
+          url: crochetType.image || `${url}/uploads/default-crochet.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `MellyCrochets ${crochetType.name} collection`,
+        },
+      ],
+    },
+    url: `${process.env.NEXTAUTH_URL}/crochet_desigsn/${params.slug}`,
+    publishedTime: new Date(crochetType.createdAt).toISOString(),
+    modifiedTime: new Date(crochetType.updatedAt).toISOString(),
+  });
+}
+
+export default async function Page({ params }) {
   const { slug } = params;
 
-  const {
-    data: crochetType,
-    isLoading,
-    isFetching,
-  } = crochetTypeAPI.useGetSingleCrochetTypeBySlugQuery(slug);
+  const res = await axios.get(
+    `${API_URL}${BASE_URL}/crochet_types/slugs/${slug}`,
+    {
+      cache: "no-store",
+      method: "GET",
+    }
+  );
 
-  if (isLoading || isFetching) {
-    return (
-      <Row gutter={[24, 24]} data-aos="fade-up" data-aos-delay="300">
-        <motion.div
-          className="box"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SpinnerList />
-        </motion.div>
-      </Row>
-    );
+  if (res.status !== 200) {
+    throw new Error("Failed to fetch crochet type");
   }
 
+  const { data } = res;
   return (
     <>
       <CrochetTypeHero
-        title={crochetType.name}
-        description={crochetType.description}
+        title={data.name}
+        description={data.description}
         breadcrumbs={[
           { title: "Crochet Designs", href: "/shop" },
-          { title: crochetType.name, href: "#" },
+          { title: data.name, href: `#` },
         ]}
       />
-      <div className="w-full px-10 pb-10" data-aos="fade-up">
-        {/* listings */}
-        <CrochetList crochets={crochetType?.crochets} />
+      <div className="w-full px-10 pb-10">
+        <CrochetList crochets={data?.crochets} />
       </div>
     </>
   );

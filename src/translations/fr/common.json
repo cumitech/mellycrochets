@@ -1,38 +1,103 @@
 {
   "navigation": {
-    "home": "Bienvenue",
+    "home": "Accueil",
     "about": "À propos",
     "services": "Services",
     "trainings": "Formations",
     "posts": "Articles",
     "faqs": "FAQ",
     "contact": "Contact",
-    "aftercare": "Suivi",
-    "shop": "Shop",
-    "article": "Blog"
+    "aftercare": "Entretien",
+    "shop": "Boutique",
+    "article": "Articles"
   },
   "social": {
     "connect": "Connectons-nous via",
-    "listing": "Liste des crochets",
-    "message": "Parcourez nos dernières collections de crochets",
+    "listing": "Liste de crochets",
+    "message": "Parcourez nos dernières collections de crochet",
     "crochetaftercare": "Entretien des crochets",
-    "summary": "MELLYCROCHETS ETS est une marque de mode durable dédiée à la création de produits écologiques et de haute qualité, utilisant des matériaux biodégradables comme la laine et le coton. Engagés en faveur de la durabilité et de la recyclabilité, nos modèles s’adressent à tous les âges, promouvant un avenir plus vert sans compromis sur le style et le confort.",
-    "subSummary": "Restez inspiré avec des conseils exclusifs sur la mode au crochet et des mises à jour !",
+    "summary": "MELLYCROCHETS ETS est une marque de mode durable dédiée à la création de produits de haute qualité et écologiques utilisant des matériaux biodégradables comme la laine et le coton. Avec un engagement envers la durabilité et le recyclage, nos designs s'adressent à tous les groupes d'âge, promouvant un avenir plus vert sans compromis sur le style et le confort",
+    "subSummary": "Restez inspiré avec des conseils et des mises à jour exclusifs sur la mode crochet !",
     "btn": "Rejoignez notre communauté",
-    "view-more": "Voir plus"
+    "view-more": "Voir plus",
+    "heroInit": "Au-delà",
+    "heroMiddle": "des Aiguilles",
+    "heroLast": "et des Fils",
+    "heroDescription": "Façonner l'élégance, un point à la fois. Découvrez notre collection de crochets faits main."
+  },
+  "shop": {
+    "heroTitle": "Découvrez des pièces de crochet uniques et artisanales",
+    "heroDescription": "Explorez notre collection soigneusement confectionnée, où style, confort et élégance se rencontrent"
+  },
+  "about": {
+    "heroTitle": "À propos de MellyCrochets",
+    "heroDescription": "MellyCrochets ETS est une marque de crochet avant-gardiste qui crée des vêtements intemporels, écologiques et biodégradables en laine et coton naturels. Notre mission est de concevoir des pièces de haute qualité, durables et recyclables qui apportent chaleur, beauté et durabilité aux garde-robes de tous âges et genres.",
+    "bodyTitle": "Connectez-vous avec nous",
+    "bodySubTitle": "Suivez-nous en ligne pour rester informé des nouvelles arrivées, des coulisses et de tout ce qui concerne l'artisanat fait main.",
+    "mission": "Notre Mission",
+    "missionDescription": "Notre mission est de promouvoir la mode durable à travers des designs de crochet artisanaux fabriqués à partir de matériaux biodégradables et écologiques. Nous nous efforçons de créer des pièces élégantes et durables qui non seulement rehaussent votre style mais soutiennent également une planète plus verte. Chaque produit est un mélange de tradition, de créativité et de mode consciente.",
+    "meetMelly": "Rencontrez MellyCrochet",
+    "biography": "Derrière chaque point se cache une histoire, et derrière chaque design se trouve un artisan avec un rêve. Notre fondatrice — une artisane passionnée avec des années d'expérience — dirige le processus créatif chez MellyCrochets ETS. Son parcours, d'une hobbyiste dans l'enfance à entrepreneure à temps plein, incarne le dévouement, l'amour et le savoir-faire qui se retrouvent dans chaque produit MellyCrochets. Sa passion s'est également étendue au-delà de la production — elle a formé plus de 15 personnes à l'art du crochet, dont au moins quatre ont lancé leur propre entreprise de crochet.",
+    "whatCustomerSay": "Ce que disent nos clients",
+    "cuzyUp": "Prêt·e à vous installer confortablement ?",
+    "explore": "Découvrez notre collection artisanale et rapportez chez vous quelque chose d'unique aujourd'hui.",
+    "cta": "Acheter maintenant"
+  },
+  "contact": {
+    "heroTitle": "Contactez Notre Équipe",
+    "heroDescription": "Notre service client est à votre disposition pour toute demande.",
+    "getInTouch": "Contactez-nous",
+    "getInTouchDescription": "Nous serions ravis d'avoir de vos nouvelles ! Que vous ayez une question sur nos produits, besoin d'assistance ou simplement envie de dire bonjour, n'hésitez pas à nous contacter.",
+    "location": "Localisation",
+    "locationDescription": "MellyCrochets ETS est situé au cœur de la ville de Bamenda, au Cameroun, ce qui facilite votre visite. Nous sommes toujours heureux de vous accueillir dans notre boutique.",
+    "phone": "Téléphone",
+    "chatOnWhatsapp": "Discutez avec nous sur WhatsApp",
+    "sendUsMessage": "Envoyez-nous un message",
+    "mssge": "Vous avez une idée de design de crochet personnalisé ? Besoin d'aide pour choisir une taille ou une couleur ? Laissez-nous un message !"
+  },
+  "blog_posts": {
+    "title": "Blog Crochet : Conseils, Modèles et Inspiration Créative",
+    "description": "Découvrez nos guides complets pour choisir, créer et styliser vos pièces crochet. Tutoriels pas à pas, interviews d'artisans et astuces entretien."
+  },
+  "login": {
+    "title": "Connexion",
+    "emailLabel": "Adresse électronique",
+    "passwordLabel": "Mot de passe",
+    "socialAuth": "Se connecter avec Google",
+    "loginBtn": "Se connecter",
+    "register": "Pas encore de compte ?",
+    "registerBtn": "Créer un compte",
+    "securityTips": {
+      "passwordWarning": "Ne partagez jamais vos identifiants",
+      "secureConnection": "Connexion sécurisée"
+    }
+  },
+  "register": {
+    "title": "Création de compte",
+    "usernameLabel": "Nom d'utilisateur",
+    "emailLabel": "Adresse email",
+    "passwordLabel": "Mot de passe",
+    "confPassLabel": "Confirmation du mot de passe",
+    "socialAuth": "S'inscrire avec Google",
+    "registerBtn": "Créer mon compte",
+    "signin": "Déjà inscrit ?",
+    "loginBtn": "Se connecter",
+    "securityNotes": {
+      "passwordRequirements": "8 caractères minimum avec chiffres et symboles",
+      "dataProtection": "Vos données sont sécurisées"
+    }
   },
   "filtercrochet": {
-    "crochetDesigns": "Modèles de crochet",
+    "crochetDesigns": "Designs de crochet",
     "color": "Couleur",
     "size": "Taille"
   },
   "footer": {
-    "socialMedia": "Pages des réseaux sociaux",
+    "socialMedia": "Réseaux sociaux",
     "Links": "Liens",
-    "aboutUs": "À propos de nous",
+    "aboutUs": "À propos",
     "contact": "Contactez-nous",
-    "aftercare": "Entretien",
-    "crochetListing": "Liste des crochets",
+    "shop": "Boutique",
     "privacyPolicy": "Politique de confidentialité"
   },
   "signup": {
@@ -40,5 +105,135 @@
     "message": "Recevez les derniers styles et offres par email.",
     "btn": "S'abonner",
     "placeHolder": "Entrez votre email"
+  },
+  "menus": {
+    "dashboard": "Tableau de bord",
+    "configurations": "Configurations",
+    "media": "Médias",
+    "users": "Utilisateurs",
+    "categories": "Catégories",
+    "settings": "Paramètres",
+    "posts": "Articles de blog",
+    "ecommerce": "E-commerce",
+    "crochets": "Crochets",
+    "customers": "Clients",
+    "inventory": "Inventaire",
+    "orders": "Commandes",
+    "payments": "Paiements",
+    "consultations": "Consultations"
+  },
+  "buttons": {
+    "delete": "Supprimer",
+    "logout": "Déconnexion",
+    "save": "Enregistrer",
+    "create": "Créer",
+    "edit": "Modifier",
+    "cancel": "Annuler",
+    "show": "Afficher",
+    "confirm": "Êtes-vous sûr ?",
+    "notAccessTitle": "Vous n'avez pas la permission d'accéder",
+    "refresh": "Actualiser"
+  },
+  "actions": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "list": "Lister",
+    "show": "Afficher"
+  },
+  "notifications": {
+    "createError": "Transaction échouée !",
+    "createSuccess": "Transaction réussie !",
+    "success": "Succès",
+    "error": "Erreur",
+    "deleteSuccess": "Supprimé avec succès"
+  },
+  "pages": {
+    "error": {
+      "404": "Désolé, la page que vous avez visitée n'existe pas.",
+      "backHome": "Retour à l'accueil"
+    }
+  },
+  "categories": {
+    "categories": "Catégories",
+    "titles": {
+      "list": "Lister les catégories",
+      "create": "Créer une catégorie",
+      "edit": "Modifier une catégorie"
+    }
+  },
+  "posts": {
+    "posts": "Articles",
+    "titles": {
+      "list": "Lister les articles",
+      "create": "Créer un article",
+      "edit": "Modifier un article",
+      "show": "Afficher un article"
+    }
+  },
+  "payments": {
+    "payments": "Paiements",
+    "titles": {
+      "list": "Lister les paiements",
+      "create": "Créer un paiement",
+      "edit": "Modifier un paiement",
+      "show": "Afficher un paiement"
+    }
+  },
+  "orders": {
+    "orders": "Commandes",
+    "titles": {
+      "list": "Lister les commandes",
+      "create": "Créer une commande",
+      "edit": "Modifier une commande",
+      "show": "Afficher une commande"
+    }
+  },
+  "crochets": {
+    "crochets": "Crochets",
+    "titles": {
+      "list": "Lister les crochets",
+      "create": "Créer un crochet",
+      "edit": "Modifier un crochet",
+      "show": "Afficher un crochet"
+    }
+  },
+  "tags": {
+    "tags": "Étiquettes",
+    "titles": {
+      "list": "Lister les étiquettes",
+      "create": "Créer une étiquette",
+      "edit": "Modifier une étiquette",
+      "show": "Afficher une étiquette"
+    }
+  },
+  "subscribers": {
+    "subscribers": "Abonnés",
+    "titles": {
+      "list": "Lister les abonnés",
+      "create": "Créer un abonné",
+      "edit": "Modifier un abonné",
+      "show": "Afficher un abonné"
+    }
+  },
+  "media": {
+    "media": "Médias",
+    "titles": {
+      "list": "Lister les médias",
+      "create": "Créer un média",
+      "edit": "Modifier un média",
+      "show": "Afficher un média"
+    }
+  },
+  "configurations": {
+    "configurations": "Configurations"
+  },
+  "users": {
+    "users": "Utilisateurs",
+    "titles": {
+      "list": "Lister les utilisateurs",
+      "create": "Créer un utilisateur",
+      "edit": "Modifier un utilisateur",
+      "show": "Afficher un utilisateur"
+    }
   }
 }

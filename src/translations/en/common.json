@@ -19,7 +19,65 @@
     "summary": "MELLYCROCHETS ETS is a sustainable fashion brand dedicated to crafting high-quality, eco-friendly products using biodegradable materials like wool and cotton. With a commitment to durability and recyclability, our designs cater to all age groups, promoting a greener future without compromising on style and comfort",
     "subSummary": "Stay inspired with exclusive crochet fashion tips & updates!",
     "btn": "Join Our Community",
-    "view-more": "View More"
+    "view-more": "View More",
+    "heroInit": "Beyond",
+    "heroMiddle": "Needles",
+    "heroLast": "and Threads",
+    "heroDescription": "Crafting elegance, one stitch at a time. Explore our collection of handmade crochets."
+  },
+  "shop": {
+    "heroTitle": "Discover Unique Handmade Crochet Pieces",
+    "heroDescription": "Explore our beautifully crafted crochet wear, designed for style, comfort, and elegance."
+  },
+  "about": {
+    "heroTitle": "About MellyCrochets",
+    "heroDescription": "MellyCrochets ETS is a fashion-forward crochet brand that creates timeless, eco-friendly, and biodegradable fashion using natural wool and cotton. Our mission is to craft high-quality, long-lasting, and recyclable pieces that bring warmth, beauty, and sustainability to wardrobes of all age groups and genders.",
+    "bodyTitle": "Connect With Us",
+    "bodySubTitle": "Follow us online to stay updated with new arrivals, behind-the-scenes, and all things handmade.",
+    "mission": "Our Mission",
+    "missionDescription": "Our mission is to promote sustainable fashion through handcrafted crochet designs made from biodegradable and eco-friendly materials. We strive to produce fashionable, long-lasting pieces that not only elevate your style but also support a greener planet. Every product is a blend of tradition, creativity, and conscious living.",
+    "meetMelly": "Meet MellyCrochet",
+    "biography": "Behind every stitch is a story, and behind every design is a maker with a dream. Our founder — a passionate artisan with years of experience — leads the creative process at MellyCrochets ETS. Her journey from childhood hobbyist to full-time entrepreneur embodies the dedication, love, and craftsmanship that go into every MellyCrochets product. Her passion has also extended beyond production — she has trained over 15 individuals in the art of crocheting, with at least four of them launching their own crochet businesses.",
+    "whatCustomerSay": "What Our Customers Say",
+    "cuzyUp": "Ready to Cozy Up?",
+    "explore": "Explore our handmade collection and bring home something special today.",
+    "cta": "Shop Now"
+  },
+  "contact": {
+    "heroTitle": "Contact Us",
+    "heroDescription": "Get in touch for all your inquiries.",
+    "getInTouch": "Get In Touch",
+    "getInTouchDescription": "We'd love to hear from you! Whether you have a question about our products, need assistance, or just want to say hi, feel free to reach out.",
+    "location": "Location",
+    "locationDescription": "MellyCrochets ETS is located in the heart of the city of Bamenda, Cameroon, making it easy for you to visit us. We are always happy to welcome you to our store.",
+    "phone": "Phone",
+    "chatOnWhatsapp": "Chat with us on WhatsApp",
+    "sendUsMessage": "Send us a message",
+    "mssge": "Have a custom crochet design in mind? Need help choosing a size or color? Drop us a message!"
+  },
+  "blog_posts": {
+    "description": "Dive into the world of crochet fashion, DIY patterns, and styling tips. Get inspired by handmade creations and the stories behind them.",
+    "title": "Welcome to the Cozy Crochet Blog"
+  },
+  "login": {
+    "title": "Login",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "socialAuth": "Sign In with Google",
+    "loginBtn": "Sign In",
+    "register": "Don&lsquo;t have an account?",
+    "registerBtn": "Sign up"
+  },
+  "register": {
+    "title": "Register",
+    "usernameLabel": "Username",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "confPassLabel": "Confirm Password",
+    "socialAuth": "Register with Google",
+    "registerBtn": "Sign Up",
+    "signin": "Already have an account?",
+    "loginBtn": "Sign In"
   },
   "filtercrochet": {
     "crochetDesigns": "Crochet Designs",

@@ -1,34 +1,111 @@
-"use client";
-
-import { motion } from "framer-motion";
-import SpinnerList from "../../../components/crochet-card.skeleton";
-import { Row } from "antd";
 import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
-import { tagAPI } from "../../../store/api/tag_api";
 import PostList from "../../../components/posts/post-list.component";
-export default function IndexPage({ params }) {
+import { fetchTagBySlug } from "../../../utils/data";
+import axios from "axios";
+import { generatePageMetadata } from "../../../lib/metadata-generator";
+import { keywords } from "../../../constants/constant";
+
+const fetchTagDetails = async (slug) => {
+  const response = await axios.get(
+    `${process.env.NEXTAUTH_URL}/api/tags/slugs/${slug}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch tag details");
+  } else {
+    return await response.data;
+  }
+};
+
+// 🏷️ Generate Metadata for SEO
+export async function generateMetadata({ params }) {
+  if (!params?.slug) {
+    console.warn("Slug is missing in params!");
+    return {}; // Avoid breaking the app
+  }
+  const tag = await fetchTagDetails(params.slug);
+  if (!tag) {
+    return {}; // Handle the case where tag data is not available
+  }
+  return generatePageMetadata({
+    title: `${tag.name} Content | MellyCrochets Blog`,
+    description:
+      tag.description ||
+      `Discover ${tag.posts?.length || ""} articles tagged with ${tag.name}`,
+    keywords: [
+      ...keywords,
+      tag.name,
+      ...(
+        tag.posts?.slice(0, 3).map((post) => post.title.split(" ")) || []
+      ).flat(),
+      `${tag.name} articles`,
+      `${tag.name} blog posts`,
+      `posts about ${tag.name}`,
+    ]
+      .filter(Boolean)
+      .join(", "),
+    url: `/tags/${params.slug}`,
+    alternates: {
+      canonical: `/tags/${params.slug}`,
+    },
+
+    // Media
+    image: tag.posts[0]?.imageUrl
+      ? `${process.env.NEXTAUTH_URL}/uploads/posts/${tag.posts[0].imageUrl}`
+      : `${process.env.NEXTAUTH_URL}/uploads/default-tag.jpg`,
+    images:
+      tag.posts?.slice(0, 3).map((post) => ({
+        url: `${process.env.NEXTAUTH_URL}/uploads/posts/${post.imageUrl}`,
+        width: 800,
+        height: 600,
+        alt: post.title,
+      })) || [],
+
+    url: `${process.env.NEXTAUTH_URL}/tags/${params.slug}`,
+    publishedTime: new Date(tag.createdAt).toISOString(),
+    modifiedTime: new Date(tag.updatedAt).toISOString(),
+    // OpenGraph
+    openGraph: {
+      type: "website",
+      title: `${tag.name} Content Collection`,
+      description: `${tag.posts?.length || ""} articles tagged with ${
+        tag.name
+      }`,
+    },
+
+    // Twitter
+    twitter: {
+      card: "summary_large_image",
+      title: `#${tag.name} Articles`,
+      description: `Explore ${tag.posts?.length || ""} posts about ${tag.name}`,
+    },
+
+    // Structured data
+    schema: {
+      collectionPage: {
+        name: `${tag.name} Articles`,
+        about: tag.name,
+        description: `Collection of content tagged with ${tag.name}`,
+        hasPart:
+          tag.posts?.map((post) => ({
+            "@type": "BlogPosting",
+            name: post.title,
+            url: `${process.env.NEXTAUTH_URL}/blog_posts/${post.slug}`,
+            keywords: tag.name,
+          })) || [],
+      },
+      // Add hashtag schema for better topic recognition
+      hashtag: {
+        "@type": "Thing",
+        name: tag.name,
+        url: `${process.env.NEXTAUTH_URL}/tags/${params.slug}`,
+      },
+    },
+  });
+}
+export default async function IndexPage({ params }) {
   const { slug } = params;
 
-  const {
-    data: tag,
-    isLoading,
-    isFetching, 
-  } = tagAPI.useGetSingleTagBySlugQuery(slug);
-
-  if (isLoading || isFetching) {
-    return (
-      <Row gutter={[24, 24]} data-aos="fade-up" data-aos-delay="300">
-        <motion.div
-          className="box"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SpinnerList />
-        </motion.div>
-      </Row>
-    );
-  }
+  const tag = await fetchTagBySlug(slug);
 
   return (
     <>

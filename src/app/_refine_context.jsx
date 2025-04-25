@@ -5,11 +5,8 @@ import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-
 import routerProvider from "@refinedev/nextjs-router";
-
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-
 import "@refinedev/antd/dist/reset.css";
 import { dataProvider } from "../providers/data-provider";
 import { useMenu } from "../utils/menus";

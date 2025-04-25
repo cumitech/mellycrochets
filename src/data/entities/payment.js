@@ -15,14 +15,16 @@ module.exports = (sequelize, DataTypes) => {
           model: "users",
           key: "id",
         },
+        onDelete: "SET NULL",
       },
       orderId: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "orders",
           key: "id",
         },
+        onDelete: "SET NULL",
       },
       transactionId: {
         type: DataTypes.STRING(255),

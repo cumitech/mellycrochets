@@ -1,65 +1,109 @@
-"use client";
-
-import { Typography, Card, Divider, Tag, Space } from "antd";
-import { postAPI } from "../../../store/api/post_api";
-import { categoryAPI } from "../../../store/api/category_api";
-import { tagAPI } from "../../../store/api/tag_api";
+import { Card, Divider, Tag, Space } from "antd";
 import { API_URL_UPLOADS_POSTS } from "../../../constants/api-url";
 import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
 import Link from "next/link";
 import { CiFolderOn } from "react-icons/ci";
 import PostComments from "../../../components/comment/comment.component";
+import {
+  fetchCategories,
+  fetchLatestPosts,
+  fetchPostBySlug,
+  fetchTags,
+} from "../../../utils/data";
 
-const { Title, Paragraph } = Typography;
-export default function IndexPage({ params }) {
-  const {
-    data: post,
-    isLoading: isLoadingPost,
-    isFetching: isFetchingPost,
-  } = postAPI.useGetSinglePostBySlugQuery(params.slug);
+import axios from "axios";
+import { generatePageMetadata } from "../../../lib/metadata-generator";
+import { keywords } from "../../../constants/constant";
 
-  const {
-    data: categories,
-    isLoading: isLoadingCategory,
-    isFetching: isFetchingCategory,
-  } = categoryAPI.useFetchAllCategoriesQuery(1);
-
-  const {
-    data: tags,
-    isLoading: isLoadingTag,
-    isFetching: isFetchingTag,
-  } = tagAPI.useFetchAllTagsQuery(1);
-
-  const {
-    data: latestPosts,
-    isLoading: isLoadingLatestPost,
-    isFetching: isFetchingLatestPost,
-  } = postAPI.useFetchAllLatestPostsQuery(1);
-
-  if (
-    isLoadingPost ||
-    isFetchingPost ||
-    isLoadingCategory ||
-    isFetchingCategory ||
-    isLoadingTag ||
-    isFetchingTag ||
-    isLoadingLatestPost ||
-    isFetchingLatestPost
-  ) {
-    return (
-      <div
-        style={{
-          minHeight: "65vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p className="text-lg text-center">Details loading...</p>
-      </div>
-    );
+const fetchPostDetails = async (slug) => {
+  const response = await axios.get(
+    `${process.env.NEXTAUTH_URL}/api/posts/slug/${slug}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch post details");
+  } else {
+    return await response.data;
   }
+};
 
+// 🏷️ Generate Metadata for SEO
+export async function generateMetadata({ params }) {
+  if (!params?.slug) {
+    console.warn("Slug is missing in params!");
+    return {}; // Avoid breaking the app
+  }
+  const post = await fetchPostDetails(params.slug);
+  if (!post) {
+    return {}; // Handle the case where post data is not available
+  }
+  return generatePageMetadata({
+    title: `${post.title} | MellyCrochets Blog`,
+    description: post.summary || `Read this post about ${post.title}`,
+    keywords: [
+      ...keywords,
+      ...(post.tags?.map((tag) => tag.name) || []),
+      post.category?.name || "",
+    ]
+      .filter(Boolean)
+      .join(", "),
+    url: `/blog_posts/${params.slug}`,
+    alternates: {
+      canonical: `/blog_posts/${params.slug}`,
+    },
+    slug: params.slug,
+    image: `${process.env.NEXTAUTH_URL}/uploads/posts/${post.imageUrl}`,
+    images: [
+      {
+        url: `${process.env.NEXTAUTH_URL}/uploads/posts/${post.imageUrl}`,
+        width: 1200,
+        height: 630,
+        alt: post.title,
+      },
+    ],
+    // Article specific
+    type: "article",
+    authors: post.user ? [post.user.email] : undefined,
+    url: `${process.env.NEXTAUTH_URL}/posts/${params.slug}`,
+    publishedTime: new Date(post.createdAt).toISOString(),
+    modifiedTime: new Date(post.updatedAt).toISOString(),
+    // OpenGraph
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.summary,
+      publishedTime: new Date(post.createdAt).toISOString(),
+      modifiedTime: new Date(post.updatedAt).toISOString(),
+      tags: post.tags?.map((tag) => tag.name) || [],
+    },
+
+    // Twitter
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      images: [`/uploads/posts/${post.imageUrl}`],
+    },
+
+    // Article schema
+    schema: {
+      article: {
+        publishedTime: new Date(post.createdAt).toISOString(),
+        modifiedTime: new Date(post.updatedAt).toISOString(),
+        authors: post.author ? [post.author.name] : undefined,
+        tags: post.tags?.map((tag) => tag.name) || [],
+      },
+    },
+  });
+}
+
+export default async function IndexPage({ params }) {
+  // Fetch data on server
+  const [post, categories, tags, latestPosts] = await Promise.all([
+    fetchPostBySlug(params.slug),
+    fetchCategories(),
+    fetchTags(),
+    fetchLatestPosts(),
+  ]);
   return (
     <>
       <CrochetTypeHero
@@ -84,9 +128,9 @@ export default function IndexPage({ params }) {
             className="rounded-xl"
             variant="borderless"
           >
-            <Typography>
-              <Title level={2}>{post.title}</Title>
-              <Paragraph type="secondary">{post.summary}</Paragraph>
+            <>
+              <h2>{post.title}</h2>
+              <p>{post.summary}</p>
               <Divider />
               <div className="prose max-w-none">
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -103,7 +147,7 @@ export default function IndexPage({ params }) {
                   </Tag>
                 ))}
               </div>
-            </Typography>
+            </>
           </Card>
         </div>
 
@@ -119,7 +163,9 @@ export default function IndexPage({ params }) {
             <ul className="space-y-2">
               {latestPosts.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/blog_posts/${p.slug}`}>{p.title.toUpperCase()}</Link>
+                  <Link href={`/blog_posts/${p.slug}`}>
+                    {p.title.toUpperCase()}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: false, 
         primaryKey: true,
       },
       userId: {
@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
           model: "users",
           key: "id",
         },
+        onDelete: "SET NULL",
       },
       totalQtty: {
         type: DataTypes.INTEGER,

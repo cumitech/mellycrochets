@@ -1,8 +1,14 @@
+import axios from "axios";
 import { Empty } from "antd";
-import React from "react";
-import AppPost from "./post.component";
+import AppPost from "../../../components/posts/post.component";
 
-const PostList = ({ posts }) => {
+export default async function BlogListWrapper() {
+  const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/posts`);
+
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch crochetType details");
+  }
+  const { data: posts } = response;
   return (
     <section
       id="blog-posts"
@@ -21,6 +27,4 @@ const PostList = ({ posts }) => {
       )}
     </section>
   );
-};
-
-export default PostList;
+}

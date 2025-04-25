@@ -1,62 +1,88 @@
-"use client";
-
-import { Empty } from "antd";
+import { getTranslations } from "next-intl/server";
+import BlogListWrapper from "../../components/pages/blog/blog-list-wrapper.component";
 import BlogHero from "../../components/shared/post-hero.component";
-import { motion } from "framer-motion";
-import AppPost from "../../components/posts/post.component";
-import { postAPI } from "../../store/api/post_api";
-import SpinnerList from "../../components/crochet-card.skeleton";
+import { keywords } from "../../constants/constant";
 
-export default function IndexPage() {
-  const {
-    data: posts,
-    isLoading,
-    isFetching,
-  } = postAPI.useFetchAllPostsQuery(1);
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
 
-  if (isLoading || isFetching) {
-    return (
-      <motion.div
-        className="box"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <SpinnerList />
-      </motion.div>
-    );
-  }
+export const metadata = {
+  metadataBase: new URL(`${url}`),
+  title: {
+    default: "Crochet Blog - Tips, Patterns & Inspiration | MellyCrochets",
+    template: "%s | MellyCrochets Blog",
+  },
+  description:
+    "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets. Perfect for crochet enthusiasts of all skill levels.",
+  keywords: [
+    "crochet blog",
+    "crochet patterns",
+    "crochet tutorials",
+    ...keywords,
+  ].join(", "),
+  authors: [{ name: "MellyCrochets", url: `${url}` }],
+  creator: "MellyCrochets",
+  publisher: "MellyCrochets",
+  alternates: {
+    canonical: `${url}/blog_posts`,
+  },
+  openGraph: {
+    title: "Crochet Blog - Tips, Patterns & Inspiration",
+    description:
+      "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets. Perfect for crochet enthusiasts of all skill levels.",
+    url: `${url}/blog_posts`,
+    siteName: "MellyCrochets",
+    images: [
+      {
+        url: `${url}/uploads/posts/anastasia-shchukina-V_zqT-zXud0-unsplash.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Crochet blog header image",
+      },
+    ],
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Crochet Blog - Tips, Patterns & Inspiration | MellyCrochets",
+    description:
+      "Discover crochet patterns, tutorials, and creative inspiration from MellyCrochets.",
+    images: [`${url}/uploads/posts/christian-bass-EgBvK_nNqg8-unsplash.jpg`],
+    site: "@mellycrochets", // Replace with actual Twitter handle if exists
+    creator: "@mellycrochets",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+    },
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+};
 
+export default async function IndexPage() {
+  const t = await getTranslations("blog_posts");
   return (
     <>
-      <BlogHero />
-
-      <section
-        id="blog-posts"
-        className="pt-16 pb-30 px-10 mb-15 md:px-20 text-center"
-      >
-        {(isLoading || isFetching) && (
-          <motion.div
-            className="box"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <SpinnerList />
-          </motion.div>
-        )}
-        {posts && posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {posts.map((post, index) => (
-              <AppPost post={post} key={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="empty-wrap">
-            <Empty />
-          </div>
-        )}
-      </section>
+      <BlogHero title={t("title")} description={t("description")} />
+      <BlogListWrapper />
     </>
   );
 }

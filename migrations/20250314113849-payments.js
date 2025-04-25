@@ -26,24 +26,25 @@ module.exports = {
       },
       orderId: {
         type: Sequelize.STRING(50),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "orders",
           key: "id",
         },
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
       },
-      orderNo: {
+      transactionId: {
         type: Sequelize.STRING(255),
         allowNull: false,
-        unique: true,
+        unique: false,
+      },
+      requestId: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        unique: false,
       },
       price: {
         type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
-      address: {
-        type: Sequelize.STRING(255),
         allowNull: false,
       },
       email: {
@@ -54,9 +55,37 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      username: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      paymentMethod: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
       status: {
         type: Sequelize.STRING(10),
         allowNull: false,
+      },
+      currency: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      transactionTime: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      countryCode: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      mchTransactionRef: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

@@ -26,8 +26,6 @@ export default function EmailSubscriptionPopup() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(`${BASE_URL}/subscribers`, { email });
-      // const { message } = response.data;
-      console.log("response: ", response);
       if (response.status === 201) {
         localStorage.setItem("emailPopupShown", "true");
         setOpen(false);

@@ -10,13 +10,13 @@ import Link from "next/link";
 
 import "../../assets/css/globals.css";
 import { FaLock } from "react-icons/fa";
-import { useNotification } from "@refinedev/core";
 import { userService } from "../../service/user.service";
+import { useTranslations } from "next-intl";
 
 export default function Register() {
+  const t = useTranslations("register");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { open } = useNotification();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -53,7 +53,7 @@ export default function Register() {
               marginBottom: "24px",
             }}
             icon={null}
-            text={"Register"}
+            text={t("title")}
           />
 
           {/* Login Form */}
@@ -67,7 +67,7 @@ export default function Register() {
           >
             {/* Full Name */}
             <Form.Item
-              label="Username"
+              label={t("usernameLabel")}
               name="username"
               rules={[{ required: true, message: "Please enter your name" }]}
             >
@@ -75,7 +75,7 @@ export default function Register() {
             </Form.Item>
 
             <Form.Item
-              label="Email"
+              label={t("emailLabel")}
               name="email"
               rules={[
                 { required: true, message: "Please enter your email!" },
@@ -90,7 +90,7 @@ export default function Register() {
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label={t("passwordLabel")}
               name="password"
               rules={[
                 { required: true, message: "Please enter your password!" },
@@ -106,7 +106,7 @@ export default function Register() {
 
             {/* Confirm Password */}
             <Form.Item
-              label="Confirm Password"
+              label={t("confPassLabel")}
               name="confirmPassword"
               dependencies={["password"]}
               rules={[
@@ -136,7 +136,7 @@ export default function Register() {
               disabled={loading}
               loading={loading}
             >
-              Sign up
+              {t("registerBtn")}
             </Button>
           </Form>
           {/* Divider */}
@@ -150,15 +150,15 @@ export default function Register() {
               onClick={() => signIn("auth0")}
               size="large"
             >
-              Auth0
+              {t("socialAuth")}
             </Button>
           </Space>
 
           {/* Signup Link */}
           <Typography.Text>
-            Already have an account?{" "}
+            {t("signin")}{" "}
             <Link href="/login" style={{ color: "#1890ff" }}>
-              Sign-in
+              {t("loginBtn")}
             </Link>
           </Typography.Text>
         </Space>

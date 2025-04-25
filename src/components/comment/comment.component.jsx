@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { commentAPI } from "../../store/api/comment_api";
 import { useGetIdentity } from "@refinedev/core";
 import { useCreate } from "@refinedev/core";
-import { Comment } from "@ant-design/compatible";
+import  Comment  from "@ant-design/compatible/lib/comment";
 import dayjs from "dayjs";
 const { TextArea } = Input;
 const { Paragraph, Text } = Typography;
@@ -117,7 +117,7 @@ const PostComments = ({ postId }) => {
         ) : (
           <Paragraph className="text-center text-gray-500 italic">
             Please{" "}
-            <a href="/login" className="text-blue-600 underline">
+            <a href={`/login?redirect=${encodeURIComponent(window.location.pathname)}`} className="text-blue-600 underline">
               sign in
             </a>{" "}
             to leave a comment.

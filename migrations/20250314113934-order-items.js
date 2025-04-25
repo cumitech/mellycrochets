@@ -10,6 +10,11 @@ module.exports = {
      * await queryInterface.createTable('orderItems', { id: Sequelize.INTEGER });
      */
     await queryInterface.createTable("order_items", {
+      id: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        primaryKey: true,
+      },
       crochetId: {
         type: Sequelize.STRING(50),
         allowNull: false,
@@ -25,6 +30,7 @@ module.exports = {
           model: "orders",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       qtty: {
         type: Sequelize.INTEGER,

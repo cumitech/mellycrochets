@@ -1,40 +1,70 @@
-"use client";
-
-import { FiArrowRight } from "react-icons/fi";
-import CrochetList from "../components/crochet/crochet-list.component";
-import { Button } from "antd";
-import SignupPrompt from "../components/signup/signup.component";
-import { useTranslations } from "next-intl";
+// app/page.js
+import { getTranslations } from "next-intl/server";
 import HeroSection from "../components/app-hero/text-hero.component";
-import { crochetAPI } from "../store/api/crochet_api";
-import SpinnerList from "../components/crochet-card.skeleton";
-import { motion } from "framer-motion";
+import GallerySection from "../components/pages/home/gallery.component";
+import CrochetListWrapper from "../components/pages/home/list-wrapper.component";
+import ViewMoreButton from "../components/pages/home/view-more-button.component";
+import SignupPrompt from "../components/signup/signup.component";
+import { keywords } from "../constants/constant";
 
-export default function IndexPage() {
-  const t = useTranslations("social");
-  const {
-    data: crochets,
-    isLoading,
-    isFetching,
-  } = crochetAPI.useFetchAllCrochetsQuery(1);
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+export const metadata = {
+  metadataBase: new URL(`${url}`),
+  title: {
+    default: "Handcrafted Crochet Fashion | MellyCrochets",
+    template: "%s | MellyCrochets",
+  },
+  description:
+    "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+  keywords: keywords.join(", "),
+  manifest: `${url}/site.webmanifest`,
+  appleWebApp: {
+    title: "MellyCrochets",
+    statusBarStyle: "default",
+    capable: true,
+    startupImage: "/apple-touch-icon.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MellyCrochets",
+    description:
+      "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+    images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    creator: "@mellycrochets",
+  },
+  openGraph: {
+    title: "MellyCrochets",
+    description:
+      "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
+    images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    siteName: "MellyCrochets",
+    locale: "en_US",
+    url: url,
+    type: "website",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+};
 
-  if (isLoading || isFetching) {
-    return (
-      <motion.div
-        className="box"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <SpinnerList />
-      </motion.div>
-    );
-  }
+export default async function IndexPage() {
+  const t = await getTranslations("social");
 
   return (
     <>
-      <HeroSection />
-      {/* listings */}
+      <HeroSection
+        heroInit={t("heroInit")}
+        heroMiddle={t("heroMiddle")}
+        heroLast={t("heroLast")}
+        description={t("heroDescription")}
+      />
+
+      {/* Listings Section */}
       <div className="w-full px-10 md:pt-10" data-aos="fade-up">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-3/4">
@@ -44,90 +74,22 @@ export default function IndexPage() {
             <p className="text-gray-800">{t("message")}</p>
           </div>
           <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
-            <Button
-              type="primary"
-              href="/shop"
-              size="large"
-              className="text-sm font-semibold transition-all duration-300"
-              style={{
-                borderRadius: 50,
-                padding: "20px 25px",
-                fontWeight: 500,
-              }}
-              icon={<FiArrowRight />}
-              iconPosition="end"
-            >
-              {t("view-more")}
-            </Button>
+            <ViewMoreButton text={t("view-more")} href="/shop" />
           </div>
         </div>
       </div>
 
-      {/* filter content */}
+      {/* Crochet List */}
       <div className="w-full px-10 pb-20" data-aos="fade-up">
-        {/* listings */}
-        <CrochetList crochets={crochets} />
+        <CrochetListWrapper />
       </div>
 
-      <section className="bg-white py-10 px-4">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="grid grid-cols-2 gap-2">
-            <img
-              src="/photos/image8.jpg"
-              alt="Crochet 1"
-              className="rounded-lg border-4 border-pink-200 w-full h-auto object-cover"
-              style={{ width: 245, height: 220 }}
-            />
-            <img
-              src="/photos/image7.jpg"
-              alt="Crochet 2"
-              className="rounded-lg border-2 border-black w-full h-auto object-cover"
-              style={{ width: 245, height: 220 }}
-            />
-            <img
-              src="/mellycrochets/dd/crochet-bags-main.jpg"
-              alt="Crochet 3"
-              className="rounded-lg border-2 border-black w-full h-auto object-cover"
-              style={{ width: 245, height: 220 }}
-            />
-            <img
-              src="/photos/image9.jpg"
-              alt="Crochet 4"
-              className="rounded-lg border-4 border-pink-200 w-full h-auto object-cover"
-              style={{ width: 245, height: 220 }}
-            />
-          </div>
-
-          <div className="text-center max-w-lg mt-20 md:mt-0">
-            <h2
-              className="text-2xl font-semibold text-gray-800 font-playfair"
-              style={{ marginBottom: 30 }}
-            >
-              {t("crochetaftercare")}
-            </h2>
-            <p className="text-gray-700 mb-3">{t("summary")}</p>
-            <p className="text-sm text-gray-600" style={{ marginBottom: 30 }}>
-              {t("subSummary")}
-            </p>
-
-            <Button
-              type="primary"
-              href="https://www.instagram.com/mellycrochets_?igsh=cTkwZTc1eDcyaThw&utm_source=qr"
-              className="transition-all duration-300"
-              style={{
-                borderRadius: 50,
-                padding: "20px 15px",
-                fontWeight: 500,
-              }}
-              size="large"
-              icon={<FiArrowRight />}
-              iconPosition="end"
-            >
-              {t("btn")}
-            </Button>
-          </div>
-        </div>
-      </section>
+      <GallerySection
+        title={t("crochetaftercare")}
+        subSummary={t("subSummary")}
+        buttonText={t("btn")}
+        summary={t("summary")}
+      />
 
       <SignupPrompt />
     </>

@@ -124,7 +124,6 @@ const CheckoutCartBtn = ({ cartItems }) => {
         }
       );
     } catch (err) {
-      console.log("Error: ", err);
     }
   };
 
@@ -233,7 +232,7 @@ export default function CartPage() {
   };
 
   const handleRemoveCartItem = async (item) => {
-    const feedback = await removeCrochet(item.id);
+    const feedback = await removeCrochet(item.crochet.id);
     if (feedback) {
       message.success(`${item.crochet.name} has been removed from cart`);
       window.location.reload();
@@ -246,7 +245,6 @@ export default function CartPage() {
     const fetchCartItems = async () => {
       setIsLoading(true);
       const items = await loadCartCrochets();
-      console.log("items: ", items);
       setCartItems(items);
       setIsLoading(false);
     };
@@ -376,9 +374,10 @@ export default function CartPage() {
                   it? <br /> Return <Link href="/"> home page</Link>.
                 </h2>
                 <Image
-                  src={"./icons/shopping.svg"}
+                  src={"./8505.jpg"}
                   alt="Shopping with us"
                   style={{ width: "280px", maxWidth: "80%" }}
+                  preview={false}
                 />
               </div>
             </div>

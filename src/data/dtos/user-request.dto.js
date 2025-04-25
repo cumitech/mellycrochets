@@ -51,7 +51,6 @@ class UserRequestDto {
     this.password = hashedPassword;
     this.confirmPassword = undefined;
 
-    console.log("hash: ", hashedPassword);
     return {
       ...emptyUser,
       id: nanoid(10),

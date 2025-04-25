@@ -100,7 +100,6 @@ Size.belongsToMany(Crochet, {
   as: "crochets",
 });
 
-
 // Order <=> Crochet relationship with Crochet
 Order.belongsToMany(Crochet, {
   through: OrderItem,
@@ -117,7 +116,11 @@ Crochet.belongsToMany(Order, {
   as: "orders",
 });
 
-Order.hasMany(OrderItem, { foreignKey: "orderId", as: "orderItems" });
+Order.hasMany(OrderItem, {
+  foreignKey: "orderId",
+  as: "orderItems",
+  onDelete: "CASCADE",
+});
 OrderItem.belongsTo(Order, { foreignKey: "orderId" });
 
 Crochet.hasMany(OrderItem, { foreignKey: "crochetId", as: "orderItems" });

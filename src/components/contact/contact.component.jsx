@@ -1,25 +1,28 @@
-"use client";
+import { Button } from "antd";
+import { getTranslations } from "next-intl/server";
 import { FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 
-const ContactSection = () => {
+const ContactSection = async () => {
+  const t = await getTranslations("contact");
   return (
     <section className="bg-[#f9f9f9] py-16 px-6 md:px-16">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 text-center md:text-left">
-          <h2 className="text-3xl font-bold text-[#28041b]">Get in Touch</h2>
-          <p className="text-gray-700">
-            We are here to assist you with all your crochet orders, custom
-            designs, and inquiries.
-          </p>
+          <h2 className="text-3xl font-bold text-[#28041b]">
+            {t("getInTouch")}
+          </h2>
+          <p className="text-gray-700">{t("getInTouchDescription")}</p>
           <div>
-            <p className="text-lg font-semibold text-red-950">Location:</p>
+            <p className="text-lg font-semibold text-red-950">
+              {t("location")}:
+            </p>
             <div className="flex items-center justify-center md:justify-start">
               <FaMapMarkerAlt className="text-xl text-gray-700 mr-2 mb-3" />
-              <p className="text-gray-700">Bamenda, Cameroon</p>
+              <p className="text-gray-700">{t("locationDescription")}</p>
             </div>
           </div>
           <div>
-            <p className="text-lg font-semibold text-red-950">Phone:</p>
+            <p className="text-lg font-semibold text-red-950">{t("phone")}:</p>
             <div className="flex items-center justify-center md:justify-start">
               <FaPhoneAlt className="text-xl text-gray-700 mr-2 mb-3" />
               <p className="text-gray-700 font-semibold">
@@ -27,24 +30,25 @@ const ContactSection = () => {
               </p>
             </div>
           </div>
-          <a
+          <Button
             href="https://wa.me/237681077051"
             target="_blank"
-            className="contact-link"
+            type="primary"
+            size="large"
+            style={{
+              borderRadius: 30,
+            }}
           >
-            <span>Chat on WhatsApp</span>
-            <FaWhatsapp size={25} style={{ marginLeft: 5 }} />
-          </a>
+            <span>{t("chatOnWhatsapp")}</span>
+            <FaWhatsapp size={22} style={{ marginLeft: 5 }} />
+          </Button>
         </div>
 
         <div className="bg-white shadow-xl rounded-lg p-8">
           <h3 className="text-2xl font-bold text-[#28041b] mb-4 text-center">
-            Send Us a Message
+            {t("sendUsMessage")}
           </h3>
-          <p className="text-gray-700 text-center mb-4">
-            Have a custom crochet design in mind? Need help choosing a size or
-            color? Drop us a message!
-          </p>
+          <p className="text-gray-700 text-center mb-4">{t("mssge")}</p>
           <form className="space-y-10">
             <div className="mb-5">
               <input
@@ -74,7 +78,7 @@ const ContactSection = () => {
               type="submit"
               className="w-full px-6 py-3 bg-[#fdf3f3] text-white font-semibold rounded-md shadow-md hover:bg-[#ffe2e2] transition"
             >
-              Send Message
+              {t("sendUsMessage")}
             </button>
           </form>
         </div>

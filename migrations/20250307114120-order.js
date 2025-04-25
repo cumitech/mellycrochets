@@ -57,6 +57,10 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      paymentMethod: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
       status: {
         type: Sequelize.STRING(10),
         allowNull: false,
