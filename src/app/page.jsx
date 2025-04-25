@@ -16,7 +16,14 @@ export const metadata = {
   },
   description:
     "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
-  keywords: keywords.join(", "),
+  keywords: [
+    "crochet fashion",
+    "handcrafted crochet",
+    "MellyCrochets",
+    "trendy crochet outfits",
+    "custom crochet clothing",
+    ...keywords,
+  ].join(", "),
   manifest: `${url}/site.webmanifest`,
   appleWebApp: {
     title: "MellyCrochets",
@@ -31,6 +38,9 @@ export const metadata = {
       "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
     images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
     creator: "@mellycrochets",
+  },
+  alternates: {
+    canonical: `${url}`,
   },
   openGraph: {
     title: "MellyCrochets",

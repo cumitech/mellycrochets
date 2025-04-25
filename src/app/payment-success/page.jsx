@@ -43,7 +43,6 @@ export default function IndexPage() {
           const paymentData = paymentStatus.data;
           const orderData = orderItem.data;
           const { payer } = paymentData.data;
-          debugger;
 
           setTelephone(payer.accountId);
 

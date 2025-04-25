@@ -109,12 +109,15 @@ const CheckoutCartBtn = ({ cartItems }) => {
               },
               {
                 onSuccess: (data) => {
+                  console.log("Data", data);
                   clearCrochet();
                   const { links, ...rest } = data.data;
                   const { paymentAuthUrl } = links;
                   navigation.push(paymentAuthUrl);
                 },
-                onError: () => {},
+                onError: (error) => {
+                  console.log("Error", error);
+                },
               }
             );
           },

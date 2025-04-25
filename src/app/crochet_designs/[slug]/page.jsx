@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
       crochetType.description ||
       `Beautiful handmade ${crochetType.name} crochet designs by MellyCrochets`,
     alternates: {
-      canonical: `${url}/shop/${slug}`,
+      canonical: `${url}/crochet_designs/${slug}`,
     },
     slug,
     image: `${process.env.NEXTAUTH_URL}/uploads/crochets/${crochetType.crochets[0].imageUrls[0]}`,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
       description:
         crochetType.description ||
         `Handmade ${crochetType.name} crochet creations`,
-      url: `${url}/shop/${slug}`,
+      url: `${url}/crochet_designs/${slug}`,
       type: "website",
       images: [
         {
@@ -61,6 +61,21 @@ export async function generateMetadata({ params }) {
           alt: `MellyCrochets ${crochetType.name} collection`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${crochetType.name} Products | MellyCrochets Shop`,
+      description:
+        crochetType.description ||
+        `Explore our collection of ${crochetType.name} crochet designs`,
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
     },
     url: `${process.env.NEXTAUTH_URL}/crochet_desigsn/${params.slug}`,
     publishedTime: new Date(crochetType.createdAt).toISOString(),

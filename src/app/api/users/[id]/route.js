@@ -5,7 +5,7 @@ import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../../lib/options";
-import { emptyUser } from "../../../../data/models";
+import bcrypt from "bcryptjs";
 
 const userRepository = new UserRepository();
 
@@ -38,7 +38,17 @@ export async function PATCH(req, { params }) {
   const userId = session.user.id;
 
   try {
-    const dto = new UserRequestDto(await req.json());
+    const body = await req.json();
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+
+    const dto = new UserRequestDto(body);
+    const data = {
+      ...body,
+      password: hashedPassword,
+      provider: dto.provider,
+      verified: dto.verified,
+      role: dto.role,
+    };
     const validationErrors = await validate(dto);
 
     if (validationErrors.length > 0) {
@@ -56,12 +66,11 @@ export async function PATCH(req, { params }) {
     const id = params.id;
 
     const obj = {
-      ...emptyUser,
-      ...dto.toData(),
+      ...data,
       id: id,
       userId,
     };
-    const updatedUser = await userRepository.updateUser(obj);
+    const updatedUser = await userRepository.update(obj);
 
     return NextResponse.json(
       {
@@ -96,7 +105,7 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const user = await userRepository.getUserById(id);
+    const user = await userRepository.findById(id);
     // const userDTO = userMapper.toDTO(user);
     return NextResponse.json(user);
   } catch (error) {

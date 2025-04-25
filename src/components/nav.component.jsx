@@ -1,6 +1,6 @@
 "use client";
 
-import { Image, Space } from "antd";
+import { Image, Space, Avatar, Dropdown } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +14,7 @@ import { crochetTypeAPI } from "@/store/api/crochet_type_api";
 import AppNavigationSkeleton from "./nav-skeleton.component";
 import CrochetDropdownV2 from "./shared/crochet-type-menu-v2.component";
 import { useCart } from "../hooks/cart.hook";
+import { signOut } from "next-auth/react";
 
 const AppNavigation = () => {
   const {
@@ -35,6 +36,37 @@ const AppNavigation = () => {
   const t = useTranslations("navigation");
 
   const role = user?.role;
+
+  const items = [
+    {
+      key: "profile",
+      label: (
+        <Link href="/profile" className={`nav-link`}>
+          Profile
+        </Link>
+      ),
+    },
+    role === "admin" && {
+      key: "dashboard",
+      label: (
+        <Link href="/dashboard" className={`nav-link`}>
+          Admin
+        </Link>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <Link
+          href="/#"
+          className="nav-link"
+          onClick={() => signOut({ callbackUrl: "/" })}
+        >
+          SignOut
+        </Link>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -156,7 +188,7 @@ const AppNavigation = () => {
           <div className="shoppingCart">
             <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
           </div>
-          {!user && (
+          {!user ? (
             <Link
               href="/login"
               className={`nav-link font-playfair  ${
@@ -165,17 +197,22 @@ const AppNavigation = () => {
             >
               Signin
             </Link>
-          )}
-
-          {role === "admin" && (
-            <Link
-              href="/dashboard"
-              className={`nav-link font-playfair  ${
-                pathname === "/dashboard" ? "active" : ""
-              }`}
-            >
-              Admin
-            </Link>
+          ) : (
+            (user?.name || user?.avatar) && (
+              <Dropdown
+                menu={{ items }}
+                placement="bottomRight"
+                trigger={["click"]}
+              >
+                <div className="cursor-pointer">
+                  <Space style={{ marginLeft: "8px" }} size="middle">
+                    {user?.avatar && (
+                      <Avatar src={user?.avatar} alt={user?.name} />
+                    )}
+                  </Space>
+                </div>
+              </Dropdown>
+            )
           )}
         </div>
 
@@ -263,7 +300,7 @@ const AppNavigation = () => {
                 {t("contact")}
               </Link>
 
-              {!user && (
+              {!user ? (
                 <Link
                   href="/login"
                   className={`nav-link font-playfair  ${
@@ -273,17 +310,22 @@ const AppNavigation = () => {
                 >
                   Signin
                 </Link>
-              )}
-
-              {role === "admin" && (
-                <Link
-                  href="/dashboard"
-                  className={`nav-link font-playfair  ${
-                    pathname === "/dashboard" ? "active" : ""
-                  }`}
-                >
-                  Admin
-                </Link>
+              ) : (
+                (user?.name || user?.avatar) && (
+                  <Dropdown
+                    menu={{ items }}
+                    placement="bottomRight"
+                    trigger={["click"]}
+                  >
+                    <div className="cursor-pointer">
+                      <Space style={{ marginLeft: "8px" }} size="middle">
+                        {user?.avatar && (
+                          <Avatar src={user?.avatar} alt={user?.name} />
+                        )}
+                      </Space>
+                    </div>
+                  </Dropdown>
+                )
               )}
             </div>
           </div>

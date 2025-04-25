@@ -27,7 +27,6 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    console.log("body: ", body);
     const dto = new SubscriberRequestDto(body);
     const validationErrors = await validate(dto);
 

@@ -20,7 +20,7 @@ const fetchCrochetDetails = async (slug) => {
 
 // 🏷️ Generate Metadata for SEO
 export async function generateMetadata({ params }) {
-  const { slug } = params;  
+  const { slug } = params;
   if (!params?.slug) {
     console.warn("Slug is missing in params!");
     return {}; // Avoid breaking the app
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
       title: `${crochet.name} | MellyCrochets Shop`,
       description:
         crochet.description || `Handmade ${crochet.name} crochet creation`,
-      url: `${process.env.NEXTAUTH_URL}/shop/${slug}`,
+      url: `${process.env.NEXTAUTH_URL}/crochets/${slug}`,
       type: "product",
       images: [
         {
@@ -62,6 +62,21 @@ export async function generateMetadata({ params }) {
       "MellyCrochets shop",
       ...keywords,
     ].join(", "),
+    twitter: {
+      card: "summary_large_image",
+      title: `${crochet.name} Products | MellyCrochets Shop`,
+      description:
+        crochet.description ||
+        `Explore our collection of ${crochet.name} crochet designs`,
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
     url: `${process.env.NEXTAUTH_URL}/crochets/${params.slug}`,
     publishedTime: new Date(crochet.createdAt).toISOString(),
     modifiedTime: new Date(crochet.updatedAt).toISOString(),

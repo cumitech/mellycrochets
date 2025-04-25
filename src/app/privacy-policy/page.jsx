@@ -11,7 +11,7 @@ export const metadata = {
     "MellyCrochets data protection",
     "crochet store privacy information",
     "personal data usage crochet shop",
-    ...keywords
+    ...keywords,
   ].join(", "),
   alternates: {
     canonical: `${url}/privacy-policy`,
@@ -30,16 +30,30 @@ export const metadata = {
         alt: "MellyCrochets Privacy Policy Information",
       },
     ],
+    siteName: "MellyCrochets",
+    locale: "en_US",
   },
   twitter: {
     card: "summary",
     title: "Privacy Policy | MellyCrochets Shop",
     description:
       "How we protect your data when you shop our handmade crochet creations.",
+    images: [
+      `${url}/uploads/crochets/crochet-dress-main.jpg`,
+    ],
+    creator: "@mellycrochets",
   },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 export default function IndexPage() {

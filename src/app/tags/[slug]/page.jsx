@@ -43,9 +43,9 @@ export async function generateMetadata({ params }) {
     ]
       .filter(Boolean)
       .join(", "),
-    url: `/tags/${params.slug}`,
+    url: `${process.env.NEXTAUTH_URL}/tags/${params.slug}`,
     alternates: {
-      canonical: `/tags/${params.slug}`,
+      canonical: `${process.env.NEXTAUTH_URL}/tags/${params.slug}`,
     },
 
     // Media
@@ -70,6 +70,13 @@ export async function generateMetadata({ params }) {
       description: `${tag.posts?.length || ""} articles tagged with ${
         tag.name
       }`,
+      images: [
+        `${process.env.NEXTAUTH_URL}/uploads/crochets/crochet-dress-main.jpg`,
+      ],
+      siteName: "MellyCrochets",
+      locale: "en_US",
+      url: process.env.NEXTAUTH_URL,
+      type: "website",
     },
 
     // Twitter
@@ -77,8 +84,19 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: `#${tag.name} Articles`,
       description: `Explore ${tag.posts?.length || ""} posts about ${tag.name}`,
+      images: [
+        `${process.env.NEXTAUTH_URL}/uploads/crochets/crochet-dress-main.jpg`,
+      ],
+      creator: "@mellycrochets",
     },
-
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
     // Structured data
     schema: {
       collectionPage: {
