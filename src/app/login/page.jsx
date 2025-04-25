@@ -1,3 +1,4 @@
+//login page
 "use client";
 
 import { useState } from "react";
@@ -9,12 +10,13 @@ import { SiAuth0 } from "react-icons/si";
 import Link from "next/link";
 import "../../assets/css/globals.css";
 import { FaLock } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 export default function Login() {
+  const t = useTranslations("login");
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
 
-  console.log("redirect: ", redirect);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +53,7 @@ export default function Login() {
               marginBottom: "24px",
             }}
             icon={null}
-            text={"Login"}
+            text={t("title")}
           />
 
           {/* Login Form */}
@@ -63,7 +65,7 @@ export default function Login() {
             size="large"
           >
             <Form.Item
-              label="Email"
+              label={t("emailLabel")}
               name="email"
               rules={[
                 { required: true, message: "Please enter your email!" },
@@ -78,7 +80,7 @@ export default function Login() {
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label={t("passwordLabel")}
               name="password"
               rules={[
                 { required: true, message: "Please enter your password!" },
@@ -100,7 +102,7 @@ export default function Login() {
               loading={loading}
               disabled={loading}
             >
-              Sign in
+              {t("loginBtn")}
             </Button>
           </Form>
 
@@ -111,15 +113,15 @@ export default function Login() {
               onClick={() => signIn("auth0", { callbackUrl: redirect })}
               size="large"
             >
-              Sign in with Google
+              {t("socialAuth")}
             </Button>
           </Space>
 
           {/* Signup Link */}
           <Typography.Text>
-            Don&lsquo;t have an account?{" "}
+            {t("register")}{" "}
             <Link href="/register" style={{ color: "#1890ff" }}>
-              Sign up
+              {t("registerBtn")}
             </Link>
           </Typography.Text>
         </Space>

@@ -115,7 +115,6 @@ export async function GET(req, { params }) {
 
 export async function DELETE(req, { params }) {
   const session = await getServerSession(authOptions); //get session info
-  const io = initializeSocket(req);
 
   if (!session || !session.user) {
     return NextResponse.json(
@@ -134,7 +133,6 @@ export async function DELETE(req, { params }) {
     const userId = session.user.id;
 
     await cartItemRepository.delete(id, userId);
-    io.emit("cart-cleared");
     return NextResponse.json({
       message: `Operation successfully completed!`,
       validationErrors: [],

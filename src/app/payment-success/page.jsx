@@ -14,7 +14,7 @@ export default function IndexPage() {
   const { mutate: createPayment } = useCreate();
   const searchParams = useSearchParams();
   const { data: user } = useGetIdentity({});
-  const [telephone, setTelephone] = useState('');
+  const [telephone, setTelephone] = useState("");
 
   // const [isLoading, setLoading] = useState(false);
 
@@ -44,7 +44,7 @@ export default function IndexPage() {
           const orderData = orderItem.data;
           const { payer } = paymentData.data;
           debugger;
-          
+
           setTelephone(payer.accountId);
 
           const response = await OrderService.update({
@@ -54,36 +54,26 @@ export default function IndexPage() {
           });
           if (response.success) {
             const paymentObj = paymentData.data;
-            createPayment(
-              {
-                resource: "payments",
-                values: {
-                  orderId,
-                  userId: user ? user.id : null,
-                  transactionId,
-                  requestId,
-                  status: paymentObj.status,
-                  username: user ? user.name : orderData.username,
-                  email: user ? user.email : orderData.email,
-                  telephone: paymentObj.payer.accountId,
-                  currency: paymentObj.currencyCode,
-                  price: paymentObj.amount,
-                  countryCode: paymentObj.payer.countryCode,
-                  paymentMethod: paymentObj.payer.paymentMethod,
-                  transactionTime: paymentObj.transactionTime,
-                  mchTransactionRef: paymentObj.mchTransactionRef,
-                  description: paymentObj.description,
-                },
+            createPayment({
+              resource: "payments",
+              values: {
+                orderId,
+                userId: user ? user.id : null,
+                transactionId,
+                requestId,
+                status: paymentObj.status,
+                username: user ? user.name : orderData.username,
+                email: user ? user.email : orderData.email,
+                telephone: paymentObj.payer.accountId,
+                currency: paymentObj.currencyCode,
+                price: paymentObj.amount,
+                countryCode: paymentObj.payer.countryCode,
+                paymentMethod: paymentObj.payer.paymentMethod,
+                transactionTime: paymentObj.transactionTime,
+                mchTransactionRef: paymentObj.mchTransactionRef,
+                description: paymentObj.description,
               },
-              {
-                onSuccess: (data) => {
-                  console.log("Payment created successfully: ", data);
-                },
-                onError: (error) => {
-                  console.log("Payment Error: ", error);
-                },
-              }
-            );
+            });
           }
         } catch (error) {
           console.error("Payment handling error: ", error);

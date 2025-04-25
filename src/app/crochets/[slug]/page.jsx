@@ -1,305 +1,92 @@
-"use client";
+import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
+import { TrustBadge } from "../../../components/shared/payment.component";
+import CrochetDetail from "../../../components/pages/crochet/crochet-detail.component";
+import { fetchCrochetBySlug } from "../../../utils/data";
+import axios from "axios";
+import { generatePageMetadata } from "../../../lib/metadata-generator";
+import { keywords } from "../../../constants/constant";
+import { API_URL_UPLOADS_CROCHETS } from "@/constants/api-url";
 
-import { useState } from "react";
-import {
-  Button,
-  Card,
-  Descriptions,
-  Image,
-  Input,
-  Space,
-  Tooltip,
-  message,
-} from "antd";
-import {
-  ContactsOutlined,
-  MinusOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-
-import { API_URL_UPLOADS_CROCHETS } from "../../../constants/api-url";
-import { crochetAPI } from "../../../store/api/crochet_api";
-import CustomImage from "../../../components/shared/custom-image.component";
-import { useCart } from "../../../hooks/cart.hook";
-import { allColors, allSizes } from "../../../constants/constant";
-import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
-import { sizeAPI } from "../../../store/api/size_api";
-import { useCurrency } from "../../../hooks/currency.hook";
-
-const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
-const inputStyles = {
-  width: 70,
-  height: 40,
-  textAlign: "center",
-  borderRadius: 0,
+const fetchCrochetDetails = async (slug) => {
+  const response = await axios.get(
+    `${process.env.NEXTAUTH_URL}/api/crochets/slugs/${slug}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch crochet details");
+  } else {
+    return await response.data;
+  }
 };
 
-export default function IndexPage({ params }) {
-  const [cartQty, setCartQty] = useState(1);
-  const [loadingAddToCart, setLoadingAddToCart] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-
-
-  const { slug } = params;
-  const { addToCart } = useCart();
-  const { currency, getConvertedPrice } = useCurrency();
-
-  const {
-    data: sizes,
-    isLoading: isLoadingSize,
-    isFetching: isFetchingSize,
-  } = sizeAPI.useFetchAllSizesQuery(1);
-  const {
-    data: crochet,
-    isFetching,
-    isLoading,
-  } = crochetAPI.useGetSingleCrochetBySlugQuery(slug);
-
-  const isLoadingData = isLoading || isFetching || isLoadingSize || isFetchingSize;
-
-  if (isLoadingData) {
-    return (
-      <div className="flex items-center justify-center min-h-[65vh]">
-        <CrochetDetailSkeleton />
-      </div>
-    );
+// 🏷️ Generate Metadata for SEO
+export async function generateMetadata({ params }) {
+  const { slug } = params;  
+  if (!params?.slug) {
+    console.warn("Slug is missing in params!");
+    return {}; // Avoid breaking the app
   }
+  const crochet = await fetchCrochetDetails(slug);
+  if (!crochet) {
+    return {}; // Handle the case where crochet data is not available
+  }
+  return generatePageMetadata({
+    title: `${crochet.name} | MellyCrochets Shop`,
+    description:
+      crochet.description ||
+      `Beautiful handmade ${crochet.name} crochet design`,
+    alternates: {
+      canonical: `${process.env.NEXTAUTH_URL}/crochets/${slug}`,
+    },
+    openGraph: {
+      title: `${crochet.name} | MellyCrochets Shop`,
+      description:
+        crochet.description || `Handmade ${crochet.name} crochet creation`,
+      url: `${process.env.NEXTAUTH_URL}/shop/${slug}`,
+      type: "product",
+      images: [
+        {
+          url: `${API_URL_UPLOADS_CROCHETS}/${crochet.imageUrls[0]}`,
+          width: 1200,
+          height: 630,
+          alt: `MellyCrochets ${crochet.name}`,
+        },
+      ],
+    },
+    slug,
+    image: `${process.env.NEXTAUTH_URL}/uploads/crochets/${crochet.imageUrls[0]}`,
+    keywords: [
+      crochet.name,
+      `handmade ${crochet.name}`,
+      `crochet ${crochet.name}`,
+      `buy ${crochet.name}`,
+      "MellyCrochets shop",
+      ...keywords,
+    ].join(", "),
+    url: `${process.env.NEXTAUTH_URL}/crochets/${params.slug}`,
+    publishedTime: new Date(crochet.createdAt).toISOString(),
+    modifiedTime: new Date(crochet.updatedAt).toISOString(),
+  });
+}
 
-  const convertedPrice = getConvertedPrice(
-    crochet.priceInCfa,
-    crochet.priceInUsd
-  );
-
-  const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
-
-  const handleAddToCart = async () => {
-    if (!selectedSize || !selectedColor) {
-      message.warning("Please select a size and color before adding to cart.");
-      setLoadingAddToCart(false);
-    } else {
-      setLoadingAddToCart(true);
-
-      const updatedCartItem = await addToCart(
-        crochet.id,
-        selectedSizeObj.id,
-        cartQty,
-        currency,
-        selectedColor
-      );
-
-      console.log("Updated Cart Item: ", updatedCartItem);
-      if (updatedCartItem?.length > 0) {
-        message.success(`${crochet.name} has been added to cart 👌`);
-        window.location.reload();
-      } else {
-        message.error(`${crochet.name} has not been added to cart`);
-        setLoadingAddToCart(true);
-      }
-
-      setTimeout(() => setLoadingAddToCart(false), 1500);
-    }
-  };
-
-  const text = encodeURIComponent(
-    `Hello, I found this beautiful ${crochet.name} on your mellycrochets.shop and I'm interested. I would like to ask a few questions about it.`
-  );
+export default async function IndexPage({ params }) {
+  const { slug } = params;
+  const crochet = await fetchCrochetBySlug(slug);
 
   return (
     <>
-      <div className="max-w-5xl mx-auto px-6 my-10 bg-white shadow-lg rounded-lg">
-        <Card
-          variant={"borderless"}
-          style={{ boxShadow: "none" }}
-          className="rounded-lg"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="relative py-3">
-              {crochet.imageUrls?.map((item, i) => (
-                <img
-                  key={`preload-${i}`}
-                  src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
-                  alt="preload"
-                  style={{ display: "none" }}
-                />
-              ))}
-              <Image.PreviewGroup
-                items={crochet.imageUrls?.map(
-                  (url) => `${API_URL_UPLOADS_CROCHETS}/${url || "nodata"}`
-                )}
-              >
-                <Image
-                  width="100%"
-                  height={350}
-                  className="rounded-lg object-cover"
-                  src={`${API_URL_UPLOADS_CROCHETS}/${
-                    crochet.imageUrls[0] || "nodata"
-                  }`}
-                  alt={crochet.name}
-                />
-              </Image.PreviewGroup>
-              <div className="mt-5">
-                <CustomImage imageList={crochet.imageUrls} />
-              </div>
-            </div>
+      <CrochetTypeHero
+        title={crochet.name}
+        description={crochet.description}
+        breadcrumbs={[
+          { title: "Shop", href: "/shop" },
+          { title: crochet.name, href: "#" },
+        ]}
+      />
 
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-1">
-                {crochet.name}
-              </h1>
-              <p className="text-md font-semibold text-gray-700">
-                <span className="text-red-700 text-lg">{convertedPrice}</span>
-              </p>
+      {/* details */}
+      <CrochetDetail crochet={crochet} />
 
-              <div className="mb-8">
-                <p className="text-md font-semibold text-gray-700">
-                  Chose Your Size
-                </p>
-                <Space wrap>
-                  {allSizes.map((size) => {
-                    const isActive = selectedSize === size.key;
-                    return (
-                      <Tooltip title={size.description} key={size.key}>
-                        <Button
-                          key={size.key}
-                          style={{
-                            borderRadius: 50,
-                            padding: "0 15px",
-                            background: isActive ? "#cb384e" : "#fdf3f3",
-                            border: "2px solid #cb384e",
-                            color: isActive ? "white" : "black",
-                          }}
-                          onClick={() => setSelectedSize(size.key)}
-                        >
-                          {size.key}
-                        </Button>
-                      </Tooltip>
-                    );
-                  })}
-                </Space>
-              </div>
-              <div className="mb-8">
-                <p className="text-md font-semibold text-gray-700">
-                  Chose your Colors
-                </p>
-                <Space wrap>
-                  {allColors.map((color) => {
-                    const isActive = selectedColor === color;
-                    return (
-                      <Tooltip title={color} key={color}>
-                        <Button
-                          key={color}
-                          style={{
-                            borderRadius: 50,
-                            padding: "0 15px",
-                            background: isActive ? "#cb384e" : "#fdf3f3",
-                            border: "2px solid #cb384e",
-                            color: isActive ? "white" : "black",
-                          }}
-                          onClick={() => setSelectedColor(color)}
-                        >
-                          {color}
-                        </Button>
-                      </Tooltip>
-                    );
-                  })}
-                </Space>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-4">
-                <Space style={{ columnGap: 0 }}>
-                  <Button
-                    onClick={() => setCartQty((prev) => Math.max(0, prev - 1))}
-                    style={{
-                      ...buttonStyles,
-                      borderTopLeftRadius: 15,
-                      borderBottomLeftRadius: 15,
-                      borderRight: 0,
-                    }}
-                    size="large"
-                  >
-                    <MinusOutlined />
-                  </Button>
-                  <Input
-                    size="large"
-                    value={cartQty}
-                    style={inputStyles}
-                    min={0}
-                  />
-                  <Button
-                    size="large"
-                    onClick={() => setCartQty((prev) => prev + 1)}
-                    style={{
-                      ...buttonStyles,
-                      borderTopRightRadius: 15,
-                      borderBottomRightRadius: 15,
-                      borderLeft: 0,
-                    }}
-                  >
-                    <PlusOutlined />
-                  </Button>
-                </Space>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Button
-                    type="primary"
-                    onClick={handleAddToCart}
-                    loading={loadingAddToCart}
-                    icon={<PlusOutlined />}
-                    style={{ borderRadius: 50 }}
-                    size="large"
-                  >
-                    Place Order
-                  </Button>
-                  <Button
-                    type="dashed"
-                    danger
-                    icon={<ContactsOutlined />}
-                    style={{ borderRadius: 50 }}
-                    href={`https://wa.me/237681077051?text=${text}`}
-                    target="_blank"
-                    size="large"
-                  >
-                    Contact Seller
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <Card
-          style={{ boxShadow: "none" }}
-          className="mt-6"
-          variant={"borderless"}
-        >
-          <Descriptions
-            title="Crochet Details"
-            bordered
-            layout="vertical"
-            column={{ xs: 1, sm: 1, md: 2, lg: 4 }}
-            size="small"
-          >
-            <Descriptions.Item label="Crochet Name">
-              {crochet.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Crochet Design">
-              {crochet?.crochetType?.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Description">
-              {crochet.description}
-            </Descriptions.Item>
-            <Descriptions.Item label="Price">
-              {convertedPrice}
-            </Descriptions.Item>
-            {crochet.color && (
-              <Descriptions.Item label="Color">
-                {crochet.color}
-              </Descriptions.Item>
-            )}
-          </Descriptions>
-        </Card>
-      </div>
+      <TrustBadge />
     </>
   );
 }

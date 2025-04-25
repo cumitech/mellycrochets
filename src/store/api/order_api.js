@@ -35,14 +35,14 @@ export const orderAPI = createApi({
       providesTags: (result) => ["Order"],
     }),
     fetchAllOrdersByUser: build.query({
-        query: ({ page = 1, userId }) => `/orders/users/${userId}?page=${page}`,
-        transformResponse: (response) => {
-          const transformedOrders = response.map((order) => ({
-            ...order,
-            createdAt: new Date(order.createdAt).toISOString(),
-          }));
-          return transformedOrders;
-        },
-      }),
-    })
+      query: ({ userId }) => `/orders/users/${userId}`,
+      transformResponse: (response) => {
+        const transformedOrders = response.map((order) => ({
+          ...order,
+          createdAt: new Date(order.createdAt).toISOString(),
+        }));
+        return transformedOrders;
+      },
+    }),
+  }),
 });

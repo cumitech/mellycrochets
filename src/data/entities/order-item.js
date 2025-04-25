@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           model: "orders",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       qtty: {
         type: DataTypes.INTEGER,

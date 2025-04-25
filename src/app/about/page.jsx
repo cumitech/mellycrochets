@@ -3,34 +3,66 @@ import Image from "next/image";
 import "../../assets/css/globals.css";
 import { FiFacebook, FiInstagram, FiX } from "react-icons/fi";
 import { RiTiktokFill } from "react-icons/ri";
+import { keywords } from "../../constants/constant";
+import { getTranslations } from "next-intl/server";
 
-export default function About() {
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+
+export async function generateMetadata() {
+  return {
+    title: "About Us | MellyCrochets",
+    description:
+      "Learn about MellyCrochets - our mission, values, and the story behind our handcrafted crochet fashion.",
+    keywords: [
+      "about mellycrochets",
+      "crochet brand story",
+      "sustainable fashion",
+      "handmade crochet",
+      "eco-friendly clothing",
+      ...keywords,
+    ].join(", "),
+    openGraph: {
+      title: "About MellyCrochets | Handcrafted Sustainable Fashion",
+      description:
+        "Discover the story behind MellyCrochets and our commitment to eco-friendly, handmade crochet fashion.",
+      images: [`${url}/mellycrochets/ten.jpg`],
+      url: `${url}/about`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "About MellyCrochets | Handcrafted Sustainable Fashion",
+      description:
+        "Discover the story behind MellyCrochets and our commitment to eco-friendly, handmade crochet fashion.",
+      images: [`${url}/mellycrochets/ten.jpg`],
+    },
+  };
+}
+
+export default async function About() {
+  const t = await getTranslations("about");
   return (
     <>
-      <section className="bg-[#fcf8f8] text-gray-700">
-        {/* Hero Section */}
-        <div className="text-center py-16 px-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4 text-red-700">
-            About MellyCrochets
+      <div className="relative w-full bg-gray-100 py-20 px-6 flex flex-col items-center text-center">
+        {/* Background Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-200 opacity-80"></div>
+
+        {/* Fade-in Slide-up Animation */}
+        <div className="relative z-10 text-center max-w-3xl p-6 md:p-12 lg:p-16 animate-fade-in-up">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+            {t("heroTitle")}
           </h1>
-          <p className="text-lg leading-relaxed">
-            MellyCrochets ETS is a fashion-forward crochet brand that creates
-            timeless, eco-friendly, and biodegradable fashion using natural wool
-            and cotton. Our mission is to craft high-quality, long-lasting, and
-            recyclable pieces that bring warmth, beauty, and sustainability to
-            wardrobes of all age groups and genders.
+          <p className="text-lg text-gray-700 max-w-2xl mb-6">
+            {t("heroDescription")}
           </p>
         </div>
-
+      </div>
+      <section className="bg-[#fcf8f8] text-gray-700">
         <section className="bg-gray-50 py-10 px-6 md:px-12">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Connect With Us
+              {t("bodyTitle")}
             </h2>
-            <p className="text-gray-600 mb-6">
-              Follow us online to stay updated with new arrivals,
-              behind-the-scenes, and all things handmade.
-            </p>
+            <p className="text-gray-600 mb-6">{t("bodySubTitle")}</p>
             <div className="flex flex-wrap justify-center gap-6 mt-6">
               <a
                 href="https://www.instagram.com/mellycrochets_"
@@ -69,15 +101,10 @@ export default function About() {
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h2 className="flex items-center justify-center md:justify-start text-2xl font-semibold text-red-950 mb-4">
-                Our Mission
+                t{t("mission")}
               </h2>
               <p className="text-center md:text-left text-base leading-relaxed">
-                Our mission is to promote sustainable fashion through
-                handcrafted crochet designs made from biodegradable and
-                eco-friendly materials. We strive to produce fashionable,
-                long-lasting pieces that not only elevate your style but also
-                support a greener planet. Every product is a blend of tradition,
-                creativity, and conscious living.
+                {t("missionDescription")}
               </p>
             </div>
             <Image
@@ -90,7 +117,7 @@ export default function About() {
                 width: "100%", // Make the image width 100% of its parent container
                 height: "450px", // Let the height scale proportionally based on width
                 objectFit: "cover", // Keep the aspect ratio intact while scaling
-                backgroundPosition: "top"
+                backgroundPosition: "top",
               }}
             />
           </div>
@@ -99,7 +126,7 @@ export default function About() {
         {/* Meet the Maker Section */}
         <div className="py-12 px-6 max-w-5xl mx-auto">
           <h2 className="flex items-center justify-center md:justify-start text-2xl font-semibold text-red-950 mb-4">
-            Meet the Melly
+            {t("meetMelly")}
           </h2>
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <Image
@@ -110,15 +137,7 @@ export default function About() {
               className="w-48 h-48 rounded-full object-cover shadow-md"
             />
             <p className="text-center md:text-left text-base leading-relaxed">
-              Behind every stitch is a story, and behind every design is a maker
-              with a dream. Our founder — a passionate artisan with years of
-              experience — leads the creative process at MellyCrochets ETS. Her
-              journey from childhood hobbyist to full-time entrepreneur embodies
-              the dedication, love, and craftsmanship that go into every
-              MellyCrochets product. Her passion has also extended beyond
-              production — she has trained over 15 individuals in the art of
-              crocheting, with at least four of them launching their own crochet
-              businesses.
+              {t("biography")}
             </p>
           </div>
         </div>
@@ -126,7 +145,7 @@ export default function About() {
         {/* Customer Testimonials */}
         <div className="py-12 px-6 max-w-5xl mx-auto">
           <h2 className="text-2xl font-semibold text-red-950 mb-6 text-center">
-            What Our Customers Say
+            {t("whatCustomerSay")}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow">
@@ -153,17 +172,14 @@ export default function About() {
         {/* Call to Action */}
         <div className="text-center py-12 px-6">
           <h2 className="text-2xl font-semibold text-red-950 mb-4">
-            Ready to Cozy Up?
+            {t("cuzyUp")}
           </h2>
-          <p className="text-base mb-6">
-            Explore our handmade collection and bring home something special
-            today.
-          </p>
+          <p className="text-base mb-6">{t("explore")}</p>
           <a
-            href="/crochets"
+            href="/shop"
             className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-full transition"
           >
-            Shop Now
+            {t("cta")}
           </a>
         </div>
       </section>

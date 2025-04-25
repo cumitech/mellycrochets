@@ -1,5 +1,3 @@
-"use client";
-
 import { ErrorComponent } from "@refinedev/antd";
 
 export default function NotFound() {

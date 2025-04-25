@@ -1,23 +1,20 @@
-// import { Button } from "antd";
-import { motion } from "framer-motion";
-
-export default function HeroSection() {
+export default function HeroSection({
+  heroInit,
+  heroMiddle,
+  heroLast,
+  description,
+}) {
   return (
     <section className="relative flex items-center justify-center h-[70vh] md:h-screen bg-white z-0">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="relative z-10 text-center p-6 md:p-12 lg:p-16"
-      >
+      <div className="relative z-10 text-center p-6 md:p-12 lg:p-16 animate-fade-in-up">
         <h1 className="text-5xl font-extrabold md:text-7xl text-[#101828]">
-          Beyond <span className="text-[#82181a]">Needles</span> and Threads
+          {heroInit} <span className="text-[#82181a]">{heroMiddle}</span>{" "}
+          {heroLast}
         </h1>
         <p className="mt-4 text-lg md:text-2xl max-w-2xl mx-auto text-[#101828]">
-          Crafting elegance, one stitch at a time. Explore our collection of
-          handmade crochets.
+          {description}
         </p>
-      </motion.div>
+      </div>
     </section>
   );
 }

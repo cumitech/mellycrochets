@@ -1,20 +1,65 @@
-"use client";
-
-import { Card } from "antd";
-import Link from "next/link";
-
+import { keywords } from "../../constants/constant";
+import { Button, Card } from "antd";
+const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+export const metadata = {
+  title: "Privacy Policy | MellyCrochets Shop",
+  description:
+    "Learn how MellyCrochets collects, uses, and protects your personal information. Your privacy is important to us.",
+  keywords: [
+    "crochet shop privacy",
+    "handmade crochet privacy policy",
+    "MellyCrochets data protection",
+    "crochet store privacy information",
+    "personal data usage crochet shop",
+    ...keywords
+  ].join(", "),
+  alternates: {
+    canonical: `${url}/privacy-policy`,
+  },
+  openGraph: {
+    title: "Privacy Policy | MellyCrochets Shop",
+    description:
+      "Your privacy matters. Learn how we protect and use your information at MellyCrochets.",
+    url: `${url}/privacy-policy`,
+    type: "article",
+    images: [
+      {
+        url: `${url}/uploads/crochets/cameroon.jpg`, // You might want to add a relevant image
+        width: 1200,
+        height: 630,
+        alt: "MellyCrochets Privacy Policy Information",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | MellyCrochets Shop",
+    description:
+      "How we protect your data when you shop our handmade crochet creations.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 export default function IndexPage() {
   return (
     <div className="min-h-screen bg-white">
-      <section className="bg-[#f3d5d5] text-gray-900 py-16 text-center">
-        <div className="container mx-auto px-6">
-          <h1 className="text-4xl font-bold">Privacy Policy</h1>
-          <p className="text-lg mt-4 max-w-2xl mx-auto">
+      <div className="relative w-full bg-gray-100 py-20 px-6 flex flex-col items-center text-center">
+        {/* Background Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-200 opacity-80"></div>
+
+        {/* Fade-in Slide-up Animation */}
+        <div className="relative z-10 text-center max-w-3xl p-6 md:p-12 lg:p-16 animate-fade-in-up">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+            Privacy Policy
+          </h1>
+          <p className="text-lg text-gray-700 max-w-2xl mb-6">
             Your privacy is important to us. This Privacy Policy explains how we
             collect, use, and protect your information when you use our website.
           </p>
         </div>
-      </section>
+      </div>
 
       {/* Centered Card Container */}
       <div className="flex justify-center px-4 py-12">
@@ -93,9 +138,14 @@ export default function IndexPage() {
               If you have any questions about this Privacy Policy, feel free to
               contact us via email or WhatsApp.
             </p>
-            <Link href="/" className="nav-link active underline">
+            <Button
+              href="/"
+              type="primary"
+              size="large"
+              style={{ borderRadius: 30 }}
+            >
               Back to Home
-            </Link>
+            </Button>
           </section>
         </Card>
       </div>

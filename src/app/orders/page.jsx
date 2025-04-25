@@ -38,9 +38,7 @@ const IndexPage = () => {
     isLoading: ordersLoading,
     isFetching,
   } = orderAPI.useFetchAllOrdersByUserQuery(
-    user || telephone
-      ? { page: 1, userId: user ? user.id : telephone }
-      : skipToken
+    user || telephone ? { userId: user ? user.id : telephone } : skipToken
   );
 
   const {

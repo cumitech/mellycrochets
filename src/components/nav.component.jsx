@@ -64,7 +64,6 @@ const AppNavigation = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       const items = await loadCartCrochets();
-      console.log("items: ", items);
       setCartItems(items);
       setCartCount(items.length);
     };

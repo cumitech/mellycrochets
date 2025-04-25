@@ -9,7 +9,6 @@ import authOptions from "../../../../lib/options";
 const orderRepository = new OrderRepository();
 
 export async function PATCH(req, { params }) {
-
   if (!params?.id) {
     return NextResponse.json(
       {
@@ -125,6 +124,7 @@ export async function DELETE(req, { params }) {
       data: null,
     });
   } catch (error) {
+    console.log("error", error);
     return NextResponse.json(
       {
         message: error.message,

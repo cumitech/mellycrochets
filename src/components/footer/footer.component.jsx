@@ -120,7 +120,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="footer-link">
+              <Link href="/privacy-policy" className="footer-link">
               {t("privacyPolicy")}
               </Link>
             </li>

@@ -26,7 +26,6 @@ export class OrderRepository {
         price: parseFloat(item.amount),
       }));
 
-      console.log("orderItems", orderItems);
       // 3. Bulk insert order items
       await OrderItem.bulkCreate(orderItems, { transaction });
 

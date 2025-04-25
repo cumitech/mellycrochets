@@ -99,9 +99,14 @@ export class CartItemRepository {
    */
   async delete(id, userId) {
     try {
-      const cartItem = await CartItem.findByPk(id);
+      const cartItem = await CartItem.findOne({
+        where: {
+          crochetId: id,
+          userId,
+        },
+      });
 
-      if (!cartItem || cartItem.userId !== userId) {
+      if (!cartItem) {
         throw new NotFoundException("CartItem", id);
       }
 
@@ -109,6 +114,7 @@ export class CartItemRepository {
         force: true,
       });
     } catch (error) {
+      console.error("error: ", error);
       throw error;
     }
   }

@@ -121,3 +121,33 @@ b {
 .float-group-custom .float-btn-custom:nth-child(1) .ant-float-btn-body {
     background-color: #6ca12b !important;
 }
+
+/* animations */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 1s ease-out forwards;
+}
