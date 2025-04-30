@@ -1,6 +1,6 @@
 "use client";
 
-import { Image, Space } from "antd";
+import { Image, Space, Avatar, Dropdown, Typography } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +14,8 @@ import { crochetTypeAPI } from "@/store/api/crochet_type_api";
 import AppNavigationSkeleton from "./nav-skeleton.component";
 import CrochetDropdownV2 from "./shared/crochet-type-menu-v2.component";
 import { useCart } from "../hooks/cart.hook";
+import { signOut } from "next-auth/react";
+import { format } from "../lib/format";
 
 const AppNavigation = () => {
   const {
@@ -30,18 +32,51 @@ const AppNavigation = () => {
 
   const menuRef = useRef(null);
   const navRef = useRef(null);
+  const avatarRef = useRef(null);
 
   const pathname = usePathname();
   const t = useTranslations("navigation");
 
   const role = user?.role;
 
+  const items = [
+    {
+      key: "profile",
+      label: (
+        <Link href="/profile" className={`nav-link`}>
+          Profile
+        </Link>
+      ),
+    },
+    role === "admin" && {
+      key: "dashboard",
+      label: (
+        <Link href="/dashboard" className={`nav-link`}>
+          Admin
+        </Link>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <Link
+          href="/#"
+          className="nav-link"
+          onClick={() => signOut({ callbackUrl: "/" })}
+        >
+          SignOut
+        </Link>
+      ),
+    },
+  ];
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target) &&
-        !navRef.current.contains(event.target)
+        !navRef.current.contains(event.target) &&
+        !(avatarRef.current && avatarRef.current.contains(event.target))
       ) {
         setOpen(false);
       }
@@ -74,10 +109,11 @@ const AppNavigation = () => {
   if (isLoading || isFetching) {
     return <AppNavigationSkeleton />;
   }
+
   return (
     <nav
       ref={navRef}
-      className="bg-[#fdf3f3] py-1 px-10 md:px-30 lg:px-50 shadow-md z-10 w-full"
+      className="bg-[#fdf3f3] py-1 px-5 md:px-30 lg:px-50 shadow-md z-10 w-full"
     >
       <div className="flex justify-between items-center">
         <div className="aspect-w-16 aspect-h-9 text-2xl font-bold text-gray-900">
@@ -156,7 +192,7 @@ const AppNavigation = () => {
           <div className="shoppingCart">
             <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
           </div>
-          {!user && (
+          {!user ? (
             <Link
               href="/login"
               className={`nav-link font-playfair  ${
@@ -165,21 +201,38 @@ const AppNavigation = () => {
             >
               Signin
             </Link>
-          )}
-
-          {role === "admin" && (
-            <Link
-              href="/dashboard"
-              className={`nav-link font-playfair  ${
-                pathname === "/dashboard" ? "active" : ""
-              }`}
+          ) : (
+            <Dropdown
+              menu={{ items }}
+              placement="bottomRight"
+              trigger={["click"]}
+              ref={avatarRef}
             >
-              Admin
-            </Link>
+              <div ref={avatarRef} className="cursor-pointer">
+                <Space style={{ marginLeft: "8px" }} size="middle">
+                  {user?.avatar?.trim() ? (
+                    <Avatar
+                      style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                      src={user.avatar}
+                      alt={user.name}
+                    />
+                  ) : (
+                    <Avatar style={{ backgroundColor: "#fde3cf" }}>
+                      <Typography.Title
+                        level={5}
+                        style={{ marginBottom: 0, color: "#f56a00" }}
+                      >
+                        {format.initials(user.name)}
+                      </Typography.Title>
+                    </Avatar>
+                  )}
+                </Space>
+              </div>
+            </Dropdown>
           )}
         </div>
 
-        <div className="md:hidden lg:hidden xl:hidden absolute right-25 mb-0">
+        <div className="md:hidden lg:hidden xl:hidden absolute right-20 mb-0">
           <Space align="center">
             <AppLanguage />
 
@@ -188,6 +241,32 @@ const AppNavigation = () => {
             <div className="shoppingCart" style={{ marginLeft: 0 }}>
               <ShoppingCart cartCount={cartCount} cartItems={cartItems} />
             </div>
+            {user && (
+              <Dropdown
+                menu={{ items }}
+                placement="bottomRight"
+                trigger={["click"]}
+                ref={avatarRef}
+              >
+                <div ref={avatarRef} className="cursor-pointer">
+                  <Space style={{ marginLeft: "8px" }} size="middle">
+                    {user?.avatar?.trim() ? (
+                      <Avatar
+                        style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                        src={user.avatar}
+                        alt={user.name}
+                      />
+                    ) : (
+                      <Avatar
+                        style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                      >
+                        {format.initials(user.name)}
+                      </Avatar>
+                    )}
+                  </Space>
+                </div>
+              </Dropdown>
+            )}
           </Space>
         </div>
 
@@ -197,7 +276,7 @@ const AppNavigation = () => {
             onClick={() => setOpen(!isOpen)}
             className="py-1 px-1 bg-gray-100 rounded-lg cursor-pointer"
           >
-            <BiMenu size={35} />
+            <BiMenu size={38} />
           </button>
         </div>
 
@@ -262,7 +341,6 @@ const AppNavigation = () => {
               >
                 {t("contact")}
               </Link>
-
               {!user && (
                 <Link
                   href="/login"
@@ -272,17 +350,6 @@ const AppNavigation = () => {
                   style={{ marginBottom: 10 }}
                 >
                   Signin
-                </Link>
-              )}
-
-              {role === "admin" && (
-                <Link
-                  href="/dashboard"
-                  className={`nav-link font-playfair  ${
-                    pathname === "/dashboard" ? "active" : ""
-                  }`}
-                >
-                  Admin
                 </Link>
               )}
             </div>

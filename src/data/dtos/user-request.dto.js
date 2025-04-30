@@ -52,7 +52,6 @@ class UserRequestDto {
     this.confirmPassword = undefined;
 
     return {
-      ...emptyUser,
       id: nanoid(10),
       email: this.email,
       username: this.username,

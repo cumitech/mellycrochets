@@ -55,6 +55,7 @@ export async function getCartItems(userId) {
 
   const formattedCrochets = cartItems.map((cartItem) => ({
     ...cartItem.get(),
+    selectedColors: JSON.parse(cartItem.selectedColors),
     crochet: {
       ...cartItem.crochet.get(),
       imageUrls: JSON.parse(cartItem.crochet.imageUrls),

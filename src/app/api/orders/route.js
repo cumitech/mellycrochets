@@ -27,23 +27,8 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  // const session = await getServerSession(authOptions); //get session info
-
-  // if (!session || !session.user) {
-  //   return NextResponse.json(
-  //     {
-  //       message: "Unauthorized: Please log in to access this resource.",
-  //       success: false,
-  //       data: null,
-  //       validationErrors: [],
-  //     },
-  //     { status: 401 }
-  //   );
-  // }
-
   try {
     const body = await request.json();
-    console.log("body", body);
     const dto = new OrderRequestDto(body);
 
     const validationErrors = await validate(dto);

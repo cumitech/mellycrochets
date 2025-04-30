@@ -86,6 +86,7 @@ const CheckoutCartBtn = ({ cartItems }) => {
           crochetId: item.crochetId,
           qtty: item.quantity,
           amount: item.price,
+          colors: item.selectedColors
         };
       }),
     };
@@ -97,7 +98,6 @@ const CheckoutCartBtn = ({ cartItems }) => {
         {
           onSuccess: (data) => {
             const { id } = data.data;
-            message.success("Your Order has been placed!");
             mutateMomo(
               {
                 values: {
@@ -114,7 +114,9 @@ const CheckoutCartBtn = ({ cartItems }) => {
                   const { paymentAuthUrl } = links;
                   navigation.push(paymentAuthUrl);
                 },
-                onError: () => {},
+                onError: (error) => {
+                  console.log("Error", error);
+                },
               }
             );
           },

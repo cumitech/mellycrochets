@@ -23,7 +23,6 @@ export async function POST(request) {
     const body = await request.json();
     body.mchTransactionRef = nanoid(20);
     const { amount, description, returnUrl } = body;
-
     const response = await initiateMomoPayment(amount, description, returnUrl);
 
     return NextResponse.json(

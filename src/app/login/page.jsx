@@ -6,11 +6,11 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ThemedTitleV2 } from "@refinedev/antd";
 import { Button, Space, Form, Input, Typography, message } from "antd";
-import { SiAuth0 } from "react-icons/si";
 import Link from "next/link";
 import "../../assets/css/globals.css";
 import { FaLock } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   const t = useTranslations("login");
@@ -26,9 +26,10 @@ export default function Login() {
     const response = await signIn("credentials", {
       email: values.email,
       password: values.password,
-      redirect: false,
+      redirect: true,
     });
 
+    console.log("response", response);
     setLoading(false);
     if (response?.ok) {
       router.push(redirect); // Redirect after successful login
@@ -108,7 +109,7 @@ export default function Login() {
 
           <Space className="flex flex-col items-center justify-center">
             <Button
-              icon={<SiAuth0 color="#d8452e" />}
+              icon={<FcGoogle />}
               className="w-xs sm:w-sm md:w-md lg:w-lg xl:w-xl"
               onClick={() => signIn("auth0", { callbackUrl: redirect })}
               size="large"

@@ -1,13 +1,13 @@
-import { UserRequestDto } from "../../../../data/dtos/user-request.dto";
-import { UserRepository } from "../../../../data/repositories/user.repository";
+import { ReviewRequestDto } from "../../../../data/dtos/review-request.dto";
+import { ReviewRepository } from "../../../../data/repositories/review.repository";
 import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../../lib/options";
-import bcrypt from "bcryptjs";
+import { emptyReview } from "../../../../data/models";
 
-const userRepository = new UserRepository();
+const reviewRepository = new ReviewRepository();
 
 export async function PATCH(req, { params }) {
   const session = await getServerSession(authOptions); //get session info
@@ -38,17 +38,7 @@ export async function PATCH(req, { params }) {
   const userId = session.user.id;
 
   try {
-    const body = await req.json();
-    const hashedPassword = await bcrypt.hash(body.password, 10);
-
-    const dto = new UserRequestDto(body);
-    const data = {
-      ...body,
-      password: hashedPassword,
-      provider: dto.provider,
-      verified: dto.verified,
-      role: dto.role,
-    };
+    const dto = new ReviewRequestDto(await req.json());
     const validationErrors = await validate(dto);
 
     if (validationErrors.length > 0) {
@@ -66,16 +56,17 @@ export async function PATCH(req, { params }) {
     const id = params.id;
 
     const obj = {
-      ...data,
+      ...emptyReview,
+      ...dto.toData(),
       id: id,
       userId,
     };
-    const updatedUser = await userRepository.update(obj);
+    const updatedReview = await reviewRepository.update(obj);
 
     return NextResponse.json(
       {
-        data: updatedUser,
-        message: "User Updated Successfully!",
+        data: updatedReview,
+        message: "Review Updated Successfully!",
         validationErrors: [],
         success: true,
       },
@@ -105,9 +96,9 @@ export async function GET(req, { params }) {
   try {
     const id = params.id;
 
-    const user = await userRepository.findById(id);
-    // const userDTO = userMapper.toDTO(user);
-    return NextResponse.json(user);
+    const review = await reviewRepository.findById(id);
+    // const reviewDTO = reviewMapper.toDTO(review);
+    return NextResponse.json(review);
   } catch (error) {
     return NextResponse.json(
       {
@@ -139,7 +130,7 @@ export async function DELETE(req, { params }) {
   try {
     const id = params.id;
 
-    await userRepository.deleteUser(id);
+    await reviewRepository.delete(id);
 
     return NextResponse.json({
       message: `Operation successfully completed!`,

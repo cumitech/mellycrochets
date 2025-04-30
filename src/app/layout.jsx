@@ -22,7 +22,14 @@ export const metadata = {
   },
   description:
     "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
-  keywords: keywords.join(", "),
+  keywords: [
+    "crochet fashion",
+    "handcrafted crochet",
+    "MellyCrochets",
+    "trendy crochet outfits",
+    "custom crochet clothing",
+    ...keywords,
+  ].join(", "),
   manifest: `${url}/site.webmanifest`,
   appleWebApp: {
     title: "MellyCrochets",
@@ -73,6 +80,7 @@ export default async function RootLayout({ children }) {
         {/* <meta name="theme-color" content="#ffffff" /> */}
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="canonical" href={url} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -130,7 +138,7 @@ export default async function RootLayout({ children }) {
               <Footer />
               {/* <EmailSubscriptionPopup /> */}
               <PrivacyConsent />
-            </RefineContext> 
+            </RefineContext>
           </NextIntlClientProvider>
         </Suspense>
       </body>

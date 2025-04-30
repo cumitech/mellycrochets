@@ -6,7 +6,7 @@ class CartItemRequestDto {
     if (!data || typeof data !== "object") {
       throw new Error("Invalid cart item data");
     }
-    const { crochetId, userId, sizeId, quantity, price } = data;
+    const { crochetId, userId, quantity, price } = data;
     if (!crochetId || typeof crochetId !== "string") {
       throw new Error("Valid crochetId is required.");
     }
@@ -15,9 +15,9 @@ class CartItemRequestDto {
       throw new Error("Valid userId is required.");
     }
 
-    if (!sizeId || typeof sizeId !== "string") {
-      throw new Error("Valid sizeId is required.");
-    }
+    // if (!sizeId || typeof sizeId !== "string") {
+    //   throw new Error("Valid sizeId is required.");
+    // }
     if (typeof quantity !== "number" || quantity <= 0) {
       throw new Error("Valid quantity is required.");
     }

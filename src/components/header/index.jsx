@@ -4,6 +4,7 @@ import { useGetIdentity } from "@refinedev/core";
 import {
   Layout as AntdLayout,
   Avatar,
+  Dropdown,
   Space,
   Switch,
   theme,
@@ -11,6 +12,7 @@ import {
 } from "antd";
 import React from "react";
 import { useColorMode } from "../../contexts/color-mode";
+import Link from "next/link";
 
 const { Text } = Typography;
 const { useToken } = theme;
@@ -35,6 +37,21 @@ export const Header = ({ sticky = true }) => {
     headerStyles.zIndex = 1;
   }
 
+  const items = [
+    {
+      key: "username",
+      label: user?.name && <Text strong>{user.name}</Text>,
+    },
+    {
+      key: "profile",
+      label: <Link href="/profile">Profile</Link>,
+    },
+    {
+      key: "logout",
+      label: <Link href="/logout">Logout</Link>,
+    },
+  ];
+
   return (
     <AntdLayout.Header style={headerStyles} title="EMS">
       <Space>
@@ -45,10 +62,17 @@ export const Header = ({ sticky = true }) => {
           defaultChecked={mode === "dark"}
         />
         {(user?.name || user?.avatar) && (
-          <Space style={{ marginLeft: "8px" }} size="middle">
-            {user?.name && <Text strong>{user.name}</Text>}
-            {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-          </Space>
+          <Dropdown
+            menu={{ items }}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <div className="cursor-pointer">
+              <Space style={{ marginLeft: "8px" }} size="middle">
+                {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
+              </Space>
+            </div>
+          </Dropdown>
         )}
       </Space>
     </AntdLayout.Header>

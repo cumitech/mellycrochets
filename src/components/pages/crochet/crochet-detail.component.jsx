@@ -22,6 +22,8 @@ import { API_URL_UPLOADS_CROCHETS } from "../../../constants/api-url";
 import { useCurrency } from "../../../hooks/currency.hook";
 import { sizeAPI } from "../../../store/api/size_api";
 import CrochetDetailSkeleton from "../../../components/crochet-detail.skeleton";
+import { ReviewCreate } from "../../../components/review/review-create.component";
+import { ReviewList } from "../../../components/review/review-list.component";
 
 const buttonStyles = { width: 35, padding: "0 10px", borderRadius: 0 };
 const inputStyles = {
@@ -35,7 +37,7 @@ const CrochetDetail = ({ crochet }) => {
   const [cartQty, setCartQty] = useState(1);
   const [loadingAddToCart, setLoadingAddToCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedColors, setSelectedColors] = useState([]);
 
   const { addToCart } = useCart();
   const { currency, getConvertedPrice } = useCurrency();
@@ -62,20 +64,29 @@ const CrochetDetail = ({ crochet }) => {
   }
 
   const selectedSizeObj = sizes.find((size) => size.label === selectedSize);
+  const isSizeDisabled = crochet.crochetType.id === "nW5bJt7YxPqKzMvURoEa";
 
   const handleAddToCart = async () => {
-    if (!selectedSize || !selectedColor) {
-      message.warning("Please select a size and color before adding to cart.");
+    const requiresSize = !isSizeDisabled;
+
+    // Validation
+    if ((requiresSize && !selectedSize) || !selectedColors) {
+      message.warning(
+        `Please select ${
+          requiresSize ? "a size and color" : "a color"
+        } before adding to cart.`
+      );
       setLoadingAddToCart(false);
+      return;
     } else {
       setLoadingAddToCart(true);
 
       const updatedCartItem = await addToCart(
         crochet.id,
-        selectedSizeObj.id,
+        requiresSize ? selectedSizeObj.id : null,
         cartQty,
         currency,
-        selectedColor
+        selectedColors
       );
 
       if (updatedCartItem?.length > 0) {
@@ -147,8 +158,16 @@ const CrochetDetail = ({ crochet }) => {
                 <Space wrap>
                   {allSizes.map((size) => {
                     const isActive = selectedSize === size.key;
+
                     return (
-                      <Tooltip title={size.description} key={size.key}>
+                      <Tooltip
+                        title={
+                          isSizeDisabled
+                            ? "Size selection not applicable for Accessories"
+                            : size.description
+                        }
+                        key={size.key}
+                      >
                         <Button
                           key={size.key}
                           style={{
@@ -158,7 +177,10 @@ const CrochetDetail = ({ crochet }) => {
                             border: "2px solid #cb384e",
                             color: isActive ? "white" : "black",
                           }}
-                          onClick={() => setSelectedSize(size.key)}
+                          // onClick={() => setSelectedSize(size.key)}
+                          onClick={() =>
+                            !isSizeDisabled && setSelectedSize(size.key)
+                          }
                         >
                           {size.key}
                         </Button>
@@ -173,7 +195,16 @@ const CrochetDetail = ({ crochet }) => {
                 </p>
                 <Space wrap>
                   {allColors.map((color) => {
-                    const isActive = selectedColor === color;
+                    const isActive = selectedColors.includes(color);
+
+                    const toggleColor = () => {
+                      setSelectedColors(
+                        (prev) =>
+                          isActive
+                            ? prev.filter((c) => c !== color) // remove if already selected
+                            : [...prev, color] // add if not selected
+                      );
+                    };
                     return (
                       <Tooltip title={color} key={color}>
                         <Button
@@ -185,7 +216,7 @@ const CrochetDetail = ({ crochet }) => {
                             border: "2px solid #cb384e",
                             color: isActive ? "white" : "black",
                           }}
-                          onClick={() => setSelectedColor(color)}
+                          onClick={toggleColor}
                         >
                           {color}
                         </Button>
@@ -289,6 +320,12 @@ const CrochetDetail = ({ crochet }) => {
           </Descriptions>
         </Card>
       </div>
+      <section className="bg-[#fdf3f3] py-10 px-4 sm:px-10">
+        <div className="max-w-5xl mx-auto">
+          <ReviewCreate crochetId={crochet.id} />
+          <ReviewList crochetId={crochet.id} />
+        </div>
+      </section>
     </>
   );
 };
