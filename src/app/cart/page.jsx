@@ -86,6 +86,7 @@ const CheckoutCartBtn = ({ cartItems }) => {
           crochetId: item.crochetId,
           qtty: item.quantity,
           amount: item.price,
+          colors: item.selectedColors
         };
       }),
     };
@@ -97,7 +98,6 @@ const CheckoutCartBtn = ({ cartItems }) => {
         {
           onSuccess: (data) => {
             const { id } = data.data;
-            message.success("Your Order has been placed!");
             mutateMomo(
               {
                 values: {
@@ -109,7 +109,6 @@ const CheckoutCartBtn = ({ cartItems }) => {
               },
               {
                 onSuccess: (data) => {
-                  console.log("Data", data);
                   clearCrochet();
                   const { links, ...rest } = data.data;
                   const { paymentAuthUrl } = links;

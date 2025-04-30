@@ -158,6 +158,23 @@ CartItem.belongsTo(User, { foreignKey: "userId", as: "user" });
 User.hasMany(Payment, { foreignKey: "userId", as: "payments" });
 Payment.belongsTo(User, { foreignKey: "userId", as: "user" });
 
+// review and crochet
+Crochet.hasMany(Review, {
+  foreignKey: "crochetId",
+  as: "reviews",
+  onDelete: "CASCADE",
+});
+Review.belongsTo(Crochet, {
+  foreignKey: "crochetId",
+  as: "crochet",
+});
+
+// review and user
+Review.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
+});
+
 module.exports = {
   User,
   Media,

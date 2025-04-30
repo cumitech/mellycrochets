@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
+      colors: {
+        type: DataTypes.JSON,
+        allowNull: true, // This will store an array like ["red", "blue"]
+        defaultValue: [],
+      },
     },
     {
       sequelize,

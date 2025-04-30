@@ -26,9 +26,10 @@ export default function Login() {
     const response = await signIn("credentials", {
       email: values.email,
       password: values.password,
-      redirect: false,
+      redirect: true,
     });
 
+    console.log("response", response);
     setLoading(false);
     if (response?.ok) {
       router.push(redirect); // Redirect after successful login

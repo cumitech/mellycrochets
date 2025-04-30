@@ -60,7 +60,21 @@ export default function IndexPage() {
 
     setIsEditing(false);
   };
-const { data: userData } = data;
+  if (isLoading || isFetching) {
+    return (
+      <div
+        style={{
+          minHeight: "65vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p className="text-lg text-center">loading...</p>
+      </div>
+    );
+  }
+  const { data: userData } = data;
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <Card className="shadow-lg">
@@ -229,9 +243,13 @@ const { data: userData } = data;
                 <p>
                   <strong>Verified: </strong>
                   {userData?.verified ? (
-                    <Tag color="green" size="large">Yes</Tag>
+                    <Tag color="green" size="large">
+                      Yes
+                    </Tag>
                   ) : (
-                    <Tag color="red" size="large">No</Tag>
+                    <Tag color="red" size="large">
+                      No
+                    </Tag>
                   )}
                 </p>
               </div>

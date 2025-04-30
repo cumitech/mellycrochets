@@ -1,5 +1,5 @@
 import { NotFoundException } from "../../exceptions/not-found.exception";
-import { Review } from "../entities";
+import { Review, User } from "../entities";
 
 export class ReviewRepository {
   constructor() {}
@@ -24,25 +24,18 @@ export class ReviewRepository {
    */
   async findById(id) {
     try {
-      const reviewItem = await Review.findByPk(id);
+      const reviewItem = await Review.findByPk(id, {
+        include: [
+          {
+            model: User,
+            as: "user",
+          },
+        ],
+      });
 
       if (!reviewItem) {
         throw new NotFoundException("Review", id);
       }
-      return reviewItem;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * Receives a String as parameter
-   * @title
-   * returns Review
-   */
-  async findByTitle(title) {
-    try {
-      const reviewItem = await Review.findOne({ where: { title } });
       return reviewItem;
     } catch (error) {
       throw error;
@@ -54,7 +47,14 @@ export class ReviewRepository {
    */
   async getAll() {
     try {
-      const reviews = await Review.findAll();
+      const reviews = await Review.findAll({
+        include: [
+          {
+            model: User,
+            as: "user",
+          },
+        ],
+      });
       return reviews;
     } catch (error) {
       throw error;

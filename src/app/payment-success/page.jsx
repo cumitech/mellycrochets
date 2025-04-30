@@ -5,22 +5,20 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ORDER_STATUS } from "../../constants/constant";
-// import ThankYouPage from "../../skeleton/thank-you.skeleton";
 import axios from "axios";
 import { OrderService } from "../../service/order.service";
 
 export default function IndexPage() {
-  // const { mutate: updateOrder } = useUpdate();
   const { mutate: createPayment } = useCreate();
   const searchParams = useSearchParams();
   const { data: user } = useGetIdentity({});
   const [telephone, setTelephone] = useState("");
 
-  // const [isLoading, setLoading] = useState(false);
-
   const orderId = searchParams.get("orderId");
   const transactionId = searchParams.get("transactionId");
   const requestId = searchParams.get("requestId");
+  const success = searchParams.get("success") === "true";
+
   const hasProcessed = useRef(false);
 
   useEffect(() => {
@@ -81,22 +79,26 @@ export default function IndexPage() {
     };
 
     processPayment();
-  }, [orderId, transactionId, requestId]);
-
-  // if (identityLoading) {
-  //   return <ThankYouPage />;
-  // }
+  }, [orderId, transactionId, requestId, success]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4 py-8">
       <Result
-        status="success"
+        status={success ? "success" : "error"}
         title={
-          <Typography.Title level={2}>
-            Thank You for Your Purchase!
-          </Typography.Title>
+          success ? (
+            <Typography.Title level={2}>
+              Thank You for Your Purchase!
+            </Typography.Title>
+          ) : (
+            <Typography.Title level={2}>Payment Failed</Typography.Title>
+          )
         }
-        subTitle="We've received your order and are processing it. A confirmation email has been sent to you."
+        subTitle={
+          success
+            ? "We've received your order and are processing it. A confirmation email has been sent to you."
+            : "We failed to receive your payments, please verify your payment status."
+        }
         extra={[
           <Link href="/" key="home">
             <Button

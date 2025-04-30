@@ -25,7 +25,7 @@ const authOptions = {
           type: "email",
           value: "ayeahchanser@gmail.com",
         },
-        password: { label: "Password", type: "password", value: "Admin@2024" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -37,7 +37,7 @@ const authOptions = {
           where: { email: credentials.email },
         });
         if (!currentUser) {
-          console.log("Login failed. Invalud Credentials.");
+          console.log("Login failed. Invalid Credentials.");
           return null;
         }
 
@@ -51,6 +51,7 @@ const authOptions = {
         }
 
         const { password, ...userWithoutPassword } = currentUser.toJSON();
+
         return userWithoutPassword;
       },
     }),

@@ -15,6 +15,8 @@ export class OrderRepository {
   async create(order) {
     const { items, ...orderDetails } = order;
     const transaction = await sequelize.transaction();
+    console.log("orderDetails", orderDetails);
+    console.log("items", items);
     try {
       const newOrder = await Order.create({ ...orderDetails }, { transaction });
       const { id, userId } = newOrder.toJSON();
@@ -24,6 +26,7 @@ export class OrderRepository {
         crochetId: item.crochetId,
         qtty: item.qtty,
         price: parseFloat(item.amount),
+        colors: item.colors,
       }));
 
       // 3. Bulk insert order items
