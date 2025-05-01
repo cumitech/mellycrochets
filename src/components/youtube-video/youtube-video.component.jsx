@@ -41,7 +41,7 @@ const YoutubeVideo = ({ videoUrl, title }) => {
             <div
               className="absolute inset-0 bg-black/40"
               style={{
-                background: "url('./mellycrochets/product-jpeg-1000x1000.jpg')",
+                background: "url('./mellycrochets/product-jpeg-1000x1000.jpeg')",
                 // backgroundPosition: "top",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
