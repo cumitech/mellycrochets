@@ -235,5 +235,33 @@
       "edit": "Modifier un utilisateur",
       "show": "Afficher un utilisateur"
     }
+  },
+  "payment_success": {
+    "titleSuccess": "Merci pour votre achat !",
+    "titleFailed": "Paiement échoué",
+    "subTitleSuccess": "Nous avons bien reçu votre commande et la traitons. Un email de confirmation vous a été envoyé.",
+    "subTitleFailed": "Nous n'avons pas reçu votre paiement, veuillez vérifier son statut.",
+    "messageTitle": "Bonjour *MellyCrochets*, je souhaite vérifier l'état de mon paiement.",
+    "transactionTitle": "*Détails de la transaction*",
+    "paymentMethod": "Méthode de paiement :",
+    "orderId": "Numéro de commande :",
+    "transactionId": "ID de transaction :",
+    "requestId": "ID de demande",
+    "contact": "Contactez-nous"
+  },
+  "customer_detail": {
+    "reviewTitle": "Donnez votre avis",
+    "btnMsg": "Envoyer l'avis",
+    "reviewListTitle": "Avis clients",
+    "noDataMsg": "Soyez le premier à commenter !",
+    "paymentInfo": "Achetez en toute sérénité",
+    "title1": "Paiement sécurisé",
+    "desc1": "Chiffrement SSL et protection anti-fraude",
+    "title2": "Garantie remboursement",
+    "desc2": "Retours faciles et politique de remboursement claire",
+    "title3": "Paiements de confiance",
+    "desc3": "Plusieurs méthodes de paiement sécurisées",
+    "weAccept": "Nous acceptons",
+    "warningMsg": "Merci de choisir une note et d'ajouter un commentaire."
   }
 }

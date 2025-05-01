@@ -77,10 +77,11 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {/* <meta name="theme-color" content="#ffffff" /> */}
+        <meta name="robots" content="index, follow" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="canonical" href={url} />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useCreate, useGetIdentity } from "@refinedev/core";
 import { Rate, Input, Button, message } from "antd";
+import { useTranslations } from "next-intl";
 
 export const ReviewCreate = ({ crochetId }) => {
   const { mutate, isLoading } = useCreate();
   const { data: user } = useGetIdentity({});
   const [rating, setRating] = useState(3);
   const [comment, setComment] = useState("");
+  const t = useTranslations("customer_detail");
 
   const handleSubmit = () => {
     if (!rating || !comment.trim()) {
-      return message.warning("Please provide a rating and review comment.");
+      return message.warning(t("warningMsg"));
     }
 
     mutate({
@@ -26,7 +28,7 @@ export const ReviewCreate = ({ crochetId }) => {
 
   return (
     <div className="mt-8 p-4 rounded-lg shadow-sm bg-white">
-      <h3 className="text-lg font-semibold mb-3">Write a Review</h3>
+      <h3 className="text-lg font-semibold mb-3">{t("reviewTitle")}</h3>
       <Rate value={rating} onChange={setRating} />
       <Input.TextArea
         rows={4}
@@ -43,7 +45,7 @@ export const ReviewCreate = ({ crochetId }) => {
         loading={isLoading}
         onClick={handleSubmit}
       >
-        Submit Review
+        {t("btnMsg")}
       </Button>
     </div>
   );

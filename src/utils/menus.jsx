@@ -7,16 +7,21 @@ import {
 } from "react-icons/md";
 import { FcDataConfiguration } from "react-icons/fc";
 import { GiShoppingCart } from "react-icons/gi";
-import { GrUserSettings } from "react-icons/gr";
+import { GrUserSettings, GrDashboard  } from "react-icons/gr";
 import { FaUserShield } from "react-icons/fa";
 import { FaUsersViewfinder } from "react-icons/fa6";
 import { BiCategory } from "react-icons/bi";
+import { RiFolderHistoryLine, RiSecurePaymentLine } from "react-icons/ri";
 
 export const useMenu = () => {
   const menus = [
     {
       name: "dashboard",
-      label: "Dashboard",
+      list: "/dashboard", // <-- This is needed
+      meta: {
+        canAccess: ["admin"],
+      },
+      icon: <GrDashboard />,
     },
     {
       name: "crochets",
@@ -26,7 +31,7 @@ export const useMenu = () => {
       show: "/dashboard/crochets/show/:id",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <MdOutlineAddShoppingCart />,
     },
@@ -38,7 +43,7 @@ export const useMenu = () => {
       show: "/dashboard/posts/show/:id",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <MdOutlinePermMedia />,
     },
@@ -50,10 +55,26 @@ export const useMenu = () => {
       show: "/dashboard/orders/show/:id",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <GiShoppingCart />,
     },
+    {
+      name: "verify-payments",
+      list: "/dashboard/verify-payments", // <-- This is needed
+      meta: {
+        canAccess: ["admin"],
+      },
+      icon: <RiSecurePaymentLine />,
+    },
+    // {
+    //   name: "payment-history",
+    //   list: "/dashboard/payment-history", // <-- This is needed
+    //   meta: {
+    //     canAccess: ["admin"],
+    //   },
+    //   icon: <RiFolderHistoryLine />,
+    // },
     {
       name: "payments",
       list: "/dashboard/payments",
@@ -62,7 +83,7 @@ export const useMenu = () => {
       show: "/dashboard/payments/show/:id",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <MdPayments />,
     },
@@ -73,14 +94,14 @@ export const useMenu = () => {
       edit: "/dashboard/subscribers/edit/:id",
       show: "/dashboard/subscribers/show/:id",
       meta: {
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <FaUsersViewfinder />,
     },
     {
       name: "configurations",
       meta: {
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
       },
       icon: <FcDataConfiguration />,
     },
@@ -93,7 +114,7 @@ export const useMenu = () => {
       parentName: "configurations",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
         parent: "configurations",
       },
       icon: <MdOutlinePermMedia />,
@@ -107,7 +128,7 @@ export const useMenu = () => {
       parentName: "configurations",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
         parent: "configurations",
       },
       icon: <BiCategory />,
@@ -121,7 +142,7 @@ export const useMenu = () => {
       parentName: "configurations",
       meta: {
         // canDelete: true,
-        canAccess: ["admin", "editor"],
+        canAccess: ["admin"],
         parent: "configurations",
       },
       icon: <MdOutlineTag />,

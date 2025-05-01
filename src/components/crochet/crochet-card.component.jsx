@@ -24,7 +24,7 @@ const CrochetCard = ({ crochet }) => {
                 <img
                   key={`preload-${i}`}
                   src={`${API_URL_UPLOADS_CROCHETS}/${item}`}
-                  alt="preload"
+                  alt={crochet.description}
                   style={{ display: "none" }}
                 />
               ))}
