@@ -1,5 +1,4 @@
 import { CartItemRequestDto } from "../../../../data/dtos/cart-item-request.dto";
-// import { CartItemMapper } from "../../../../data/presentation/mappers/mapper";
 import { CartItemRepository } from "../../../../data/repositories/cart-item.repository";
 import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
@@ -7,10 +6,8 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../../lib/options";
 import { emptyCartItem } from "../../../../data/models";
-import { initializeSocket } from "../../../../lib/socket";
 
 const cartItemRepository = new CartItemRepository();
-// const cartItemMapper = new CartItemMapper();
 
 export async function PATCH(req, { params }) {
   const session = await getServerSession(authOptions); //get session info
@@ -86,7 +83,6 @@ export async function PATCH(req, { params }) {
 }
 
 export async function GET(req, { params }) {
-  const io = initializeSocket(req);
   if (!params?.id) {
     return NextResponse.json(
       { message: "ID is required", success: false, data: null },
@@ -98,7 +94,6 @@ export async function GET(req, { params }) {
     const itemId = params.id;
 
     const cartItem = await cartItemRepository.findById(itemId);
-    io.emit("cart-updated", itemId);
     return NextResponse.json(cartItem);
   } catch (error) {
     return NextResponse.json(

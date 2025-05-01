@@ -14,7 +14,6 @@ import { crochetAPI } from "./api/crochet_api";
 import { crochetTypeAPI } from "./api/crochet_type_api";
 import { postAPI } from "./api/post_api";
 import { categoryAPI } from "./api/category_api";
-import { afterCareAPI } from "./api/after_care_api";
 import { sizeAPI } from "./api/size_api";
 import { cartItemAPI } from "./api/cart_item_api";
 import { currencyReducer } from "./slice/currency.slice";
@@ -46,7 +45,6 @@ export const store = configureStore({
     [crochetTypeAPI.reducerPath]: crochetTypeAPI.reducer,
     [categoryAPI.reducerPath]: categoryAPI.reducer,
     [postAPI.reducerPath]: postAPI.reducer,
-    [afterCareAPI.reducerPath]: afterCareAPI.reducer,
     [sizeAPI.reducerPath]: sizeAPI.reducer,
     [cartItemAPI.reducerPath]: cartItemAPI.reducer,
     [tagAPI.reducerPath]: tagAPI.reducer,
@@ -68,7 +66,6 @@ export const store = configureStore({
       crochetTypeAPI.middleware,
       crochetAPI.middleware,
       postAPI.middleware,
-      afterCareAPI.middleware,
       sizeAPI.middleware,
       cartItemAPI.middleware,
       tagAPI.middleware,

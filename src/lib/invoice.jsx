@@ -1,8 +1,7 @@
 "use client";
 
 import { FilePdfOutlined } from "@ant-design/icons";
-import { Button, Image } from "antd";
-import { getBase64FromUrl } from "./base64";
+import { Button } from "antd";
 import { format } from "./format";
 
 export default function InvoiceDownloader({ order, items }) {

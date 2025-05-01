@@ -5,7 +5,7 @@ export function generateOrderNumber() {
     .padStart(4, "0");
 
   // You can add more components as needed
-  const orderNumber = `MELLTCROCHETS-${timestamp}-${randomDigits}`;
+  const orderNumber = `MC${timestamp}`;
 
   return orderNumber;
 }

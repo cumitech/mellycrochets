@@ -33,7 +33,6 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
-  themeColor: "#f472b6", // Tailwind pink-400
   manifest: "/site.webmanifest",
   alternates: {
     canonical: `${url}/shop`,
