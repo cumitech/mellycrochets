@@ -220,6 +220,15 @@
   "configurations": {
     "configurations": "Configurations"
   },
+  "verify-payments": {
+    "verify-payments": "Verify Payments"
+  },
+  "dashboard": {
+    "dashboard": "Dashboard",
+    "titles": {
+      "list": "Dashboard"
+    }
+  },
   "users": {
     "users": "Users",
     "titles": {
@@ -228,5 +237,33 @@
       "edit": "Edit User",
       "show": "Show User"
     }
+  },
+  "payment_success": {
+    "titleSuccess": "Thank You for Your Purchase!",
+    "titleFailed": "Payment Failed",
+    "subTitleSuccess": "We've received your order and are processing it. A confirmation email has been sent to you.",
+    "subTitleFailed": "We failed to receive your payments, please verify your payment status.",
+    "messageTitle": "Hello *MellyCrochets*, I think I want to verify the status of my payment",
+    "transactionTitle": "*Transaction Details*",
+    "paymentMethod": "Payment Method:",
+    "orderId": "Order ID:",
+    "transactionId": "Transaction ID:",
+    "requestId": "Request ID",
+    "contact": "Contact Us"
+  },
+  "customer_detail": {
+    "reviewTitle": "Write a Review",
+    "btnMsg": "Submit Review",
+    "reviewListTitle": "Customer Reviews",
+    "noDataMsg": "Leave a feedback!",
+    "paymentInfo": "Shop with Confidence",
+    "title1": "Secure Checkout",
+    "desc1": "SSL encryption & fraud protection",
+    "title2": "Refund Guarantee",
+    "desc2": "Easy return & refund policy",
+    "title3": "Trusted Payment Options",
+    "desc3": "Multiple secure methods",
+    "weAccept": "We Accept",
+    "warningMsg": "Please provide a rating and review comment."
   }
 }

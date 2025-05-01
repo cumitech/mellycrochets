@@ -39,9 +39,9 @@ export const metadata = {
     images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
     creator: "@mellycrochets",
   },
-  alternates: {
-    canonical: `${url}`,
-  },
+  // alternates: {
+  //   canonical: `${url}`,
+  // },
   openGraph: {
     title: "MellyCrochets",
     description:
@@ -75,7 +75,7 @@ export default async function IndexPage() {
       />
 
       {/* Listings Section */}
-      <div className="w-full px-10 md:pt-10" data-aos="fade-up">
+      <section className="w-full px-10 md:pt-10" data-aos="fade-up">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-3/4">
             <h2 className="text-2xl text-gray-950 font-extrabold font-playfair">
@@ -87,12 +87,12 @@ export default async function IndexPage() {
             <ViewMoreButton text={t("view-more")} href="/shop" />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Crochet List */}
-      <div className="w-full px-10 pb-20" data-aos="fade-up">
+      <section className="w-full px-10 pb-20" data-aos="fade-up">
         <CrochetListWrapper />
-      </div>
+      </section>
 
       <GallerySection
         title={t("crochetaftercare")}

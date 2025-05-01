@@ -14,7 +14,10 @@ const PageBreadCrumbs = ({ items, style, className }) => {
         }}
         className={`mt-0 mb-md ${className}`}
       >
-        <Breadcrumb.Item key="default-key">
+        <Breadcrumb.Item
+          key="default-key"
+          className="flex justify-center items-center"
+        >
           <FiHome />
         </Breadcrumb.Item>
         {items.map((breadCrumb, index) => (
