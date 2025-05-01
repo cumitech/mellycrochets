@@ -81,6 +81,7 @@ export default async function RootLayout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="canonical" href={url} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         
         <script
           type="application/ld+json"

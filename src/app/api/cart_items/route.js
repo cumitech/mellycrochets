@@ -4,14 +4,13 @@ import { CartItemRequestDto } from "../../../data/dtos/cart-item-request.dto";
 import { displayValidationErrors } from "../../../lib/displayValidationErrors";
 import authOptions from "../../../lib/options";
 import { getServerSession } from "next-auth";
-import { initializeSocket } from "../../../lib/socket";
 import { Crochet } from "../../../data/entities";
 import { addToCart, getCartItems } from "../../../data/usecases/cart.usecase";
 import { CURRENCY } from "../../../constants/constant";
 
 export async function GET(request) {
   const session = await getServerSession(authOptions); //get session info
-  const io = initializeSocket(request);
+
 
   if (!session || !session.user) {
     return NextResponse.json(
@@ -28,8 +27,6 @@ export async function GET(request) {
   try {
     const userId = session?.user.id;
     const cartItems = await getCartItems(userId);
-
-    io.emit("cart-items", cartItems);
     return NextResponse.json(cartItems);
   } catch (error) {
     return NextResponse.json(
@@ -46,15 +43,6 @@ export async function GET(request) {
 
 export async function POST(request) {
   const session = await getServerSession(authOptions); //get session info
-  const io = initializeSocket(request);
-
-  if (!io) {
-    console.log("❌ Socket.io is not initialized yet!");
-    return NextResponse.json(
-      { message: "Socket.io not ready" },
-      { status: 500 }
-    );
-  }
 
   if (!session || !session.user) {
     return NextResponse.json(
@@ -122,8 +110,6 @@ export async function POST(request) {
       selectedColors
     );
     const cartItems = await getCartItems(userId);
-    // const mappedCartItems = cartItems.map((item) => item.get());
-    io.emit("cart-updated", cartItems); // Emit event
     return NextResponse.json(cartItems);
   } catch (error) {
     return NextResponse.json(

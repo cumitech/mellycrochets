@@ -13,7 +13,6 @@ const Review = require("./review")(sequelize, DataTypes);
 const CartItem = require("./cart-item")(sequelize, DataTypes);
 const Subscriber = require("./subscriber")(sequelize, DataTypes);
 const Post = require("./post")(sequelize, DataTypes);
-const AfterCare = require("./after-care")(sequelize, DataTypes);
 const Size = require("./size")(sequelize, DataTypes);
 const CrochetSize = require("./crochet_size")(sequelize, DataTypes);
 const Tag = require("./tag")(sequelize, DataTypes);
@@ -188,7 +187,6 @@ module.exports = {
   CartItem,
   Subscriber,
   Post,
-  AfterCare,
   Size,
   CrochetSize,
   Category,

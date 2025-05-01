@@ -1,6 +1,6 @@
 // sequelize.ts
 const { Sequelize } = require("sequelize");
-const mysql2 = require("mysql2");
+const mysql = require("mysql2");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -12,9 +12,12 @@ const sequelize = new Sequelize(
   {
     host: process.env.MYSQL_HOST,
     dialect: "mysql",
-    dialectModule: mysql2,
+    dialectModule: mysql,
     benchmark: true,
     port: parseInt(process.env.MYSQL_PORT, 10) || 3306,
+    dialectOptions: {
+      require: false, // Disable optional dependency resolution
+    },
   }
 );
 
