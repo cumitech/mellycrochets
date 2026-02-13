@@ -2,13 +2,15 @@
 
 import PageBreadCrumbs from "../../../components/page-breadcrumb/page-breadcrumb.component";
 import {
+  CreateButton,
   DeleteButton,
+  EditButton,
   List,
   ShowButton,
   useTable,
-} from "@refinedev/antd";
+} from "@/components/refine";
 import { format } from "../../../lib/format";
-import { Space, Table } from "antd";
+import { Space, Table } from "@/components/ui";
 
 export default function PaymentList() {
   const { tableProps } = useTable({
@@ -17,6 +19,9 @@ export default function PaymentList() {
   return (
     <>
       <PageBreadCrumbs items={["Orders", "Lists"]} />
+      <div className="mb-4 flex justify-end">
+        <CreateButton />
+      </div>
       <List>
         <Table {...tableProps} rowKey="id">
           <Table.Column
@@ -40,6 +45,7 @@ export default function PaymentList() {
             dataIndex="actions"
             render={(_, record) => (
               <Space>
+                <EditButton hideText size="small" recordItemId={record.id} />
                 <ShowButton hideText size="small" recordItemId={record.id} />
                 <DeleteButton hideText size="small" recordItemId={record.id} />
               </Space>

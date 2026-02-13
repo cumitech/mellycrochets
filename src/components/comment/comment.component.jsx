@@ -1,10 +1,9 @@
 "use client";
-import { Card, Input, Button, Tooltip, Typography, message } from "antd";
+import { Input, Button, Tooltip, Typography, message } from "@/components/ui";
 import { useEffect, useState } from "react";
 import { commentAPI } from "../../store/api/comment_api";
 import { useGetIdentity } from "@refinedev/core";
 import { useCreate } from "@refinedev/core";
-import  Comment  from "@ant-design/compatible/lib/comment";
 import dayjs from "dayjs";
 const { TextArea } = Input;
 const { Paragraph, Text } = Typography;
@@ -64,14 +63,15 @@ const PostComments = ({ postId }) => {
   };
 
   useEffect(() => {
-    if (justPosted && comments && comments.length > 0) {
-      const lastComment = document.getElementById(
-        `comment-${comments[comments.length - 1].id}`
-      );
-      lastComment?.scrollIntoView({ behavior: "smooth" });
-      setJustPosted(false); // reset after scrolling
+    if (justPosted && comments?.length > 0 && postId) {
+      const postComments = comments.filter((c) => c.postId === postId);
+      const last = postComments[postComments.length - 1];
+      if (last) {
+        document.getElementById(`comment-${last.id}`)?.scrollIntoView({ behavior: "smooth" });
+      }
+      setJustPosted(false);
     }
-  }, [comments, justPosted]);
+  }, [comments, justPosted, postId]);
 
   if (isLoadingComment || isFetchingComment) {
     return (
@@ -89,8 +89,11 @@ const PostComments = ({ postId }) => {
   }
 
   return (
-    <div className="mt-10">
-      <Card title="Comments" className="rounded-xl shadow-sm">
+    <div className="rounded-2xl border border-[#e5e5e5] bg-white shadow-sm overflow-hidden">
+      <div className="px-5 py-4 border-b border-[#e5e5e5] bg-[#fafaf9]">
+        <h2 className="text-base font-semibold text-[#1a1a1a]">Comments</h2>
+      </div>
+      <div className="p-5">
         {/* Comment Form or Prompt */}
         {user ? (
           <div className="mb-6">
@@ -124,42 +127,53 @@ const PostComments = ({ postId }) => {
           </Paragraph>
         )}
 
-        {/* Comment List */}
+        {/* Comment List (filtered by current post) */}
         <div className="space-y-6 mt-6">
-          {comments && comments.length > 0 ? (
-            comments.map((comment) => (
+          {(() => {
+            const postComments = comments?.filter((c) => c.postId === postId) ?? [];
+            return postComments.length > 0 ? (
+            postComments.map((comment) => (
               <div key={comment.id} id={`comment-${comment.id}`}>
-                <Comment
-                  author={<a>{comment.user.username}</a>}
-                  avatar={
+                <div className="flex gap-3">
+                  {comment.user?.image ? (
                     <img
                       src={comment.user.image}
-                      alt={comment.user.username}
-                      className="w-8 h-8 rounded-full"
+                      alt={comment.user.username ?? "User"}
+                      className="w-8 h-8 rounded-full object-cover"
                     />
-                  }
-                  content={<p>{comment.message}</p>}
-                  datetime={
-                    <Tooltip
-                      title={dayjs(comment.createdAt).format(
-                        "YYYY-MM-DD HH:mm"
-                      )}
-                    >
-                      <span>
-                        {dayjs(comment.createdAt).format("MMM D, YYYY hh:mm A")}
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#fef2f2] text-[#82181a] flex items-center justify-center text-sm font-medium shrink-0">
+                      {(comment.user?.username ?? "U").charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-2 text-sm">
+                      <span className="font-semibold text-gray-900">
+                        {comment.user?.username ?? "Anonymous"}
                       </span>
-                    </Tooltip>
-                  }
-                />
+                      <Tooltip
+                        title={dayjs(comment.createdAt).format(
+                          "YYYY-MM-DD HH:mm"
+                        )}
+                      >
+                        <span className="text-gray-500">
+                          {dayjs(comment.createdAt).format("MMM D, YYYY hh:mm A")}
+                        </span>
+                      </Tooltip>
+                    </div>
+                    <p className="mt-1 text-gray-700">{comment.message}</p>
+                  </div>
+                </div>
               </div>
             ))
           ) : (
             <Paragraph type="secondary" className="text-center">
               No comments yet. Be the first to comment!
             </Paragraph>
-          )}
+          );
+          })()}
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

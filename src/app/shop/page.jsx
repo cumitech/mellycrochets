@@ -1,10 +1,29 @@
-import ShopHero from "../../components/shared/shop-hero.component";
-import CrochetListWrapper from "../../components/pages/home/list-wrapper.component";
 import { keywords } from "../../constants/constant";
 import { getTranslations } from "next-intl/server";
+import ShopPage from "../../page-components/shop/page";
+import { BASE_URL } from "../../constants/api-url";
 
 const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
 
+async function fetchShopHeroImages() {
+  try {
+    const base = process.env.NEXTAUTH_URL || "http://localhost:3000";
+    const res = await fetch(`${base}${BASE_URL}/crochets`, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+    const crochets = await res.json();
+    const images = [];
+    const maxImages = 20;
+    for (const c of Array.isArray(crochets) ? crochets : []) {
+      const list = c?.imageUrls || [];
+      for (const u of list) {
+        if (u && images.length < maxImages) images.push(`${url}/uploads/crochets/${u}`);
+      }
+    }
+    return images;
+  } catch {
+    return [];
+  }
+}
 export const metadata = {
   metadataBase: new URL(`${url}`),
   title: {
@@ -77,17 +96,20 @@ export const metadata = {
   },
 };
 
-export default async function IndexPage() {
+export default async function IndexPage({ searchParams }) {
   const t = await getTranslations("shop");
+  const params = searchParams ? await searchParams : {};
+  const filters = {
+    name: params?.name ?? "",
+    crochetTypeId: params?.crochetTypeId ?? "",
+  };
+  const heroImages = await fetchShopHeroImages();
   return (
-    <>
-      <div className="">
-        <ShopHero title={t("heroTitle")} description={t("heroDescription")} />
-        <div className="w-full px-10 pb-10" data-aos="fade-up">
-          {/* listings */}
-          <CrochetListWrapper />
-        </div>
-      </div>
-    </>
+    <ShopPage
+      title={t("heroTitle")}
+      description={t("heroDescription")}
+      filterParams={filters}
+      heroImages={heroImages}
+    />
   );
 }

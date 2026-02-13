@@ -28,20 +28,24 @@ export const useCurrency = () => {
 
     return convertedPrice;
   }
+
+  function convertPrice(price) {
+    return currency === CURRENCY.cfa ? price : price * 600;
+  }
   useEffect(() => {
+    if (currency) return;
     const fetchCurrency = async () => {
       const countryCode = await getGeolocation();
-      if (!currency) {
-        if (countryCode === "CM") {
-          setCurrencyFun(CURRENCY.cfa);
-        } else {
-          setCurrencyFun(CURRENCY.usd);
-        }
-      }
+      setCurrencyFun(countryCode === "CM" ? CURRENCY.cfa : CURRENCY.usd);
     };
-
     fetchCurrency();
-  }, []);
+  }, [currency]);
 
-  return { currency, setCurrencyFun, getConvertedPrice, getPrice };
+  return {
+    currency,
+    setCurrencyFun,
+    getConvertedPrice,
+    getPrice,
+    convertPrice,
+  };
 };

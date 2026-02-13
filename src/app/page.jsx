@@ -1,13 +1,22 @@
-// app/page.js
 import { getTranslations } from "next-intl/server";
-import HeroSection from "../components/app-hero/text-hero.component";
-import GallerySection from "../components/pages/home/gallery.component";
-import CrochetListWrapper from "../components/pages/home/list-wrapper.component";
-import ViewMoreButton from "../components/pages/home/view-more-button.component";
-import SignupPrompt from "../components/signup/signup.component";
+import HomePage from "../page-components/home/page";
 import { keywords } from "../constants/constant";
+import { CrochetRepository } from "../data/repositories/crochet.repository";
 
 const url = process.env.NEXTAUTH_URL || "https://mellycrochets.shop";
+
+function buildHeroImages(crochets, baseUrl) {
+  if (!Array.isArray(crochets) || crochets.length === 0) return [];
+  const uploads = `${baseUrl}/uploads/crochets`;
+  return crochets.slice(0, 8).map((c) => {
+    const urls = c.imageUrls;
+    const arr = Array.isArray(urls) ? urls : (typeof urls === "string" ? [urls] : []);
+    const first = arr[0];
+    if (!first) return null;
+    const imgUrl = first.startsWith("http") ? first : `${uploads}/${first}`;
+    return { url: imgUrl, alt: c.name || "MellyCrochets product" };
+  }).filter(Boolean);
+}
 export const metadata = {
   metadataBase: new URL(`${url}`),
   title: {
@@ -25,6 +34,10 @@ export const metadata = {
     ...keywords,
   ].join(", "),
   manifest: `${url}/site.webmanifest`,
+  robots: {
+    index: true,
+    follow: true,
+  },
   appleWebApp: {
     title: "MellyCrochets",
     statusBarStyle: "default",
@@ -37,16 +50,24 @@ export const metadata = {
     description:
       "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
     images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    site: "@mellycrochets",
     creator: "@mellycrochets",
   },
-  // alternates: {
-  //   canonical: `${url}`,
-  // },
+  alternates: {
+    canonical: `${url}`,
+  },
   openGraph: {
     title: "MellyCrochets",
     description:
       "Explore a collection of handcrafted crochet outfits at MellyCrochets. Trendy, stylish, and comfortable crochet wear for every occasion.",
-    images: [`${url}/uploads/crochets/crochet-dress-main.jpg`],
+    images: [
+      {
+        url: `${url}/uploads/crochets/crochet-dress-main.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "MellyCrochets crochet dress",
+      },
+    ],
     siteName: "MellyCrochets",
     locale: "en_US",
     url: url,
@@ -64,44 +85,14 @@ export const metadata = {
 
 export default async function IndexPage() {
   const t = await getTranslations("social");
+  let heroImages = [];
+  try {
+    const crochetRepository = new CrochetRepository();
+    const crochets = await crochetRepository.getAll();
+    heroImages = buildHeroImages(crochets || [], url);
+  } catch (e) {
+    // Hero falls back to default image
+  }
 
-  return (
-    <>
-      <HeroSection
-        heroInit={t("heroInit")}
-        heroMiddle={t("heroMiddle")}
-        heroLast={t("heroLast")}
-        description={t("heroDescription")}
-      />
-
-      {/* Listings Section */}
-      <section className="w-full px-10 md:pt-10" data-aos="fade-up">
-        <div className="flex flex-col lg:flex-row items-center justify-between">
-          <div className="lg:w-3/4">
-            <h2 className="text-2xl text-gray-950 font-extrabold font-playfair">
-              {t("listing")}
-            </h2>
-            <p className="text-gray-800">{t("message")}</p>
-          </div>
-          <div className="lg:w-1/4 text-left lg:text-right mt-3 lg:mt-0">
-            <ViewMoreButton text={t("view-more")} href="/shop" />
-          </div>
-        </div>
-      </section>
-
-      {/* Crochet List */}
-      <section className="w-full px-10 pb-20" data-aos="fade-up">
-        <CrochetListWrapper />
-      </section>
-
-      <GallerySection
-        title={t("crochetaftercare")}
-        subSummary={t("subSummary")}
-        buttonText={t("btn")}
-        summary={t("summary")}
-      />
-
-      <SignupPrompt />
-    </>
-  );
+  return <HomePage t={t} heroImages={heroImages} />;
 }

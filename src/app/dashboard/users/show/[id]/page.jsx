@@ -1,9 +1,9 @@
 "use client";
 
 import PageBreadCrumbs from "../../../../../components/page-breadcrumb/page-breadcrumb.component";
-import { Show } from "@refinedev/antd";
+import { EditButton, Show } from '@/components/refine';
 import { useShow } from "@refinedev/core";
-import { Descriptions, Image } from "antd";
+import { Card, Descriptions, Image, Space } from '@/components/ui';
 
 export default function UserShow() {
   const { query } = useShow({});
@@ -14,8 +14,14 @@ export default function UserShow() {
   return (
     <>
       <PageBreadCrumbs items={["Users", "Lists", "Show"]} />
+      <div className="mb-4 flex justify-end">
+        <Space>
+          <EditButton recordItemId={record?.id} />
+        </Space>
+      </div>
       <Show isLoading={isLoading}>
-        <Descriptions bordered={false}>
+        <Card className="p-6 bg-white shadow-sm border-0">
+          <Descriptions bordered={false}>
           <Descriptions.Item label="Email">{record?.email}</Descriptions.Item>
           <Descriptions.Item label="Username">
             {record?.username}
@@ -28,9 +34,14 @@ export default function UserShow() {
             {record?.verified ? "Yes" : "No"}
           </Descriptions.Item>
           <Descriptions.Item label="Image">
-            <Image src={record?.image} alt="User" width={100} />
+            {record?.image && record.image.trim() !== "" ? (
+              <Image src={record.image} alt="User" width={100} />
+            ) : (
+              <span className="text-muted-foreground">No image</span>
+            )}
           </Descriptions.Item>
-        </Descriptions>
+          </Descriptions>
+        </Card>
       </Show>
     </>
   );

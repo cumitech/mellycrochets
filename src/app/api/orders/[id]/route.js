@@ -1,6 +1,6 @@
 import { OrderRequestDto } from "../../../../data/dtos/order-request.dto";
 import { OrderRepository } from "../../../../data/repositories/order.repository";
-import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
+import { displayValidationErrors, VALIDATION_OPTIONS } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -26,7 +26,7 @@ export async function PATCH(req, { params }) {
     body.totalQtty = parseFloat(Number(body.totalQtty));
 
     const dto = new OrderRequestDto(body);
-    const validationErrors = await validate(dto);
+    const validationErrors = await validate(dto, VALIDATION_OPTIONS);
 
     if (validationErrors.length > 0) {
       return NextResponse.json(
@@ -45,7 +45,6 @@ export async function PATCH(req, { params }) {
       telephone: body.telephone,
     };
 
-    console.log("obj: ", obj);
     const updatedOrder = await orderRepository.update(obj);
 
     return NextResponse.json(
@@ -124,7 +123,6 @@ export async function DELETE(req, { params }) {
       data: null,
     });
   } catch (error) {
-    console.log("error", error);
     return NextResponse.json(
       {
         message: error.message,

@@ -8,12 +8,10 @@ import {
   Select,
   Upload,
   message,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useCreate } from "@refinedev/core";
-import { emptyCrochet } from "../../data/models";
+} from "@/components/ui";
+import { Plus } from "lucide-react";
 import { BASE_URL } from "../../constants/api-url";
-import { useRouter } from "next/navigation";
+import { processImageBeforeUpload } from "../../lib/image-upload-processor";
 
 const { Step } = Steps;
 
@@ -21,10 +19,6 @@ export default function CrochetForm({ formProps, crochetTypes, selectProps }) {
   const { form } = formProps;
   const [current, setCurrent] = useState(0);
   const [fileList, setFileList] = useState([]);
-  const { mutate } = useCreate({
-    resource: "crochets",
-  });
-  const router = useRouter();
 
   const next = () => {
     form.validateFields().then(() => {
@@ -68,29 +62,9 @@ export default function CrochetForm({ formProps, crochetTypes, selectProps }) {
 
   const handleSubmit = async () => {
     try {
-      const imageUrls = fileList.map((file) => file.name); // Or file.response.url if uploaded
-
-      const payload = {
-        ...emptyCrochet,
-        name: form.getFieldValue("name"),
-        description: form.getFieldValue("description"),
-        crochetTypeId: form.getFieldValue("crochetTypeId"),
-        priceInCfa: form.getFieldValue("priceInCfa"), // Default price
-        priceInUsd: form.getFieldValue("priceInUsd"), // Default price
-        imageUrls,
-      };
-
-      mutate(
-        {
-          values: payload,
-        },
-        {
-          onSuccess: () => {
-            router.push("/dashboard/crochets");
-          },
-          onError: () => {},
-        }
-      );
+      const imageUrls = fileList.map((file) => file.name ?? file.response?.url ?? file.url).filter(Boolean);
+      form.setFieldsValue({ imageUrls });
+      form.submit();
     } catch (error) {
       message.error("Please check the form for errors.");
     }
@@ -126,14 +100,10 @@ export default function CrochetForm({ formProps, crochetTypes, selectProps }) {
               //   onSearch={selectProps.onSearch}
               //   filterOption={selectProps.filterOption}
               options={
-                crochetTypes
-                  ? crochetTypes.data.map((d) => {
-                      return {
-                        label: d.name,
-                        value: d.id,
-                      };
-                    })
-                  : []
+                (Array.isArray(crochetTypes) ? crochetTypes : crochetTypes?.data ?? []).map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))
               }
               placeholder="Select a related crochetType"
               size="large"
@@ -170,7 +140,7 @@ export default function CrochetForm({ formProps, crochetTypes, selectProps }) {
           <Upload
             listType="picture-card"
             fileList={fileList}
-            beforeUpload={() => true}
+            beforeUpload={processImageBeforeUpload}
             onChange={handleUploadChange}
             action={`${BASE_URL}/uploads/crochets`}
             multiple
@@ -178,7 +148,7 @@ export default function CrochetForm({ formProps, crochetTypes, selectProps }) {
           >
             {fileList.length < 5 && (
               <div>
-                <PlusOutlined />
+                <Plus size={16} />
                 <div style={{ marginTop: 8 }}>Upload</div>
               </div>
             )}

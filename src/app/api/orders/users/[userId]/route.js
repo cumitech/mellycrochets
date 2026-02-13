@@ -3,8 +3,8 @@ import { OrderRepository } from "../../../../../data/repositories/order.reposito
 
 const orderRepository = new OrderRepository();
 export async function GET(req, { params }) {
-  console.log("params", params);
-  if (!params?.userId) {
+  const resolved = await params;
+  if (!resolved?.userId) {
     return NextResponse.json(
       { message: "USERID is required", success: false, data: null },
       { status: 400 }
@@ -12,7 +12,7 @@ export async function GET(req, { params }) {
   }
 
   try {
-    const userId = params.userId;
+    const userId = resolved.userId;
 
     const order = await orderRepository.findByUser(userId);
     // const orderDTO = orderMapper.toDTO(order);

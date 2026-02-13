@@ -5,11 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "../assets/css/globals.css";
 import "../assets/css/main.css";
-import { Affix, Spin } from "antd";
-import AppNavigation from "../components/nav.component";
-import Footer from "../components/footer/footer.component";
-import { LoadingOutlined } from "@ant-design/icons";
-import PrivacyConsent from "../components/privacy-policy/privacy-policy.component";
+import AppShell from "../components/layout/app-shell";
 import "../lib/polyfils";
 import { keywords } from "../constants/constant";
 
@@ -66,7 +62,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const theme = cookieStore.get("theme");
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
@@ -78,11 +74,85 @@ export default async function RootLayout({ children }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#82181a" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="canonical" href={url} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        
+        <link rel="alternate" type="application/rss+xml" title="MellyCrochets Blog RSS" href={`${url}/feed.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="MellyCrochets Blog RSS" href={`${url}/rss.xml`} />
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+          rel="stylesheet"
+        />
+        <meta
+          name="google-site-verification"
+          content="ldebmFeO6kY68u7FbCml3aurSI0q3u4SflpJm11J458"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": `${url}/#organization`,
+              name: "MellyCrochets",
+              alternateName: "MellyCrochets ETS",
+              url: url,
+              logo: `${url}/logo.png`,
+              image: `${url}/uploads/crochets/crochet-dress-main.jpg`,
+              description: "Handcrafted crochet fashion and accessories. Sustainable, eco-friendly pieces for every style.",
+              telephone: "+237681077051",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Bamenda",
+                addressRegion: "North West",
+                postalCode: "237",
+                streetAddress: "Mile 4 Nkwen",
+                addressCountry: "Cameroon",
+              },
+              sameAs: [
+                "https://www.instagram.com/mellycrochets_",
+                "https://facebook.com/MellycrochetsETS",
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "MellyCrochets",
+              url: url,
+              description: "Handcrafted crochet fashion and accessories",
+              publisher: { "@id": `${url}/#organization` },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: `${url}/shop?name={search_term_string}`,
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -107,39 +177,29 @@ export default async function RootLayout({ children }) {
             }),
           }}
         />
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-KMES0JLGEB"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-KMES0JLGEB');
+            `,
+          }}
+        />
       </head>
+
       <body>
-        <Suspense
-          fallback={
-            <Spin
-              size="large"
-              indicator={
-                <LoadingOutlined
-                  style={{
-                    fontSize: 48,
-                  }}
-                  spin
-                />
-              }
-              style={{
-                minHeight: "65vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              fullscreen
-            />
-          }
-        >
+        <Suspense fallback={null}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <RefineContext defaultMode={defaultMode}>
-              <Affix offsetTop={0} className="sticky top-0 left-0 w-full z-100">
-                <AppNavigation />
-              </Affix>
-              {children}
-              <Footer />
-              {/* <EmailSubscriptionPopup /> */}
-              <PrivacyConsent />
+              <AppShell>{children}</AppShell>
             </RefineContext>
           </NextIntlClientProvider>
         </Suspense>

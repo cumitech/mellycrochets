@@ -1,107 +1,186 @@
-import CrochetTypeHero from "../../../components/shared/crochet-type-hero.component";
-import { TrustBadge } from "../../../components/shared/payment.component";
-import CrochetDetail from "../../../components/pages/crochet/crochet-detail.component";
+import CrochetDetailPage from "../../../page-components/crochets/crochet-detail-page";
 import { fetchCrochetBySlug } from "../../../utils/data";
-import axios from "axios";
-import { generatePageMetadata } from "../../../lib/metadata-generator";
 import { keywords } from "../../../constants/constant";
-import { API_URL_UPLOADS_CROCHETS } from "@/constants/api-url";
+import { JsonLd } from "../../../components/seo/json-ld";
 
-const fetchCrochetDetails = async (slug) => {
-  const response = await axios.get(
-    `${process.env.NEXTAUTH_URL}/api/crochets/slugs/${slug}`
-  );
-  if (response.status !== 200) {
-    throw new Error("Failed to fetch crochet details");
-  } else {
-    return await response.data;
-  }
-};
-
-// 🏷️ Generate Metadata for SEO
 export async function generateMetadata({ params }) {
-  const { slug } = params;
-  if (!params?.slug) {
-    console.warn("Slug is missing in params!");
-    return {}; // Avoid breaking the app
+  const { slug } = await params;
+  if (!slug) {
+    return {
+      title: "Crochet Product | MellyCrochets Shop",
+      description: "Beautiful handmade crochet designs from MellyCrochets",
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
   }
-  const crochet = await fetchCrochetDetails(slug);
+
+  let crochet;
+  try {
+    crochet = await fetchCrochetBySlug(slug);
+  } catch {
+    return {
+      title: "Crochet Product | MellyCrochets Shop",
+      description: "Beautiful handmade crochet designs from MellyCrochets",
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
+  }
+
   if (!crochet) {
-    return {}; // Handle the case where crochet data is not available
+    return {
+      title: "Crochet Product | MellyCrochets Shop",
+      description: "Beautiful handmade crochet designs from MellyCrochets",
+      alternates: {
+        canonical: `${process.env.NEXTAUTH_URL}/crochets/${slug}`
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
   }
-  return generatePageMetadata({
-    title: `${crochet.name} | MellyCrochets Shop`,
-    description:
-      crochet.description ||
-      `Beautiful handmade ${crochet.name} crochet design`,
+
+  const baseUrl = process.env.NEXTAUTH_URL || "";
+  const productUrl = `${baseUrl}/crochets/${slug}`;
+  const imageUrl = crochet.imageUrls?.[0]
+    ? `${baseUrl}/uploads/crochets/${crochet.imageUrls[0]}`
+    : `${baseUrl}/default-crochet-image.jpg`;
+  const title = `${crochet.name} | MellyCrochets Shop`;
+  const description = crochet.description || `Beautiful handmade ${crochet.name} crochet design`;
+
+  return {
+    metadataBase: baseUrl ? new URL(baseUrl) : undefined,
+    title,
+    description,
     alternates: {
-      canonical: `${process.env.NEXTAUTH_URL}/crochets/${slug}`,
+      canonical: productUrl
     },
     openGraph: {
-      title: `${crochet.name} | MellyCrochets Shop`,
-      description:
-        crochet.description || `Handmade ${crochet.name} crochet creation`,
-      url: `${process.env.NEXTAUTH_URL}/crochets/${slug}`,
-      type: "product",
+      title,
+      description,
+      url: productUrl,
+      type: "website",
       images: [
         {
-          url: `${API_URL_UPLOADS_CROCHETS}/${crochet.imageUrls[0]}`,
+          url: imageUrl,
           width: 1200,
           height: 630,
-          alt: `MellyCrochets ${crochet.name}`,
-        },
+          alt: `MellyCrochets ${crochet.name}`
+        }
       ],
+      siteName: "MellyCrochets",
+      locale: "en_US",
+      publishedTime: crochet.createdAt ? new Date(crochet.createdAt).toISOString() : undefined,
+      modifiedTime: crochet.updatedAt ? new Date(crochet.updatedAt).toISOString() : undefined
     },
-    slug,
-    image: `${process.env.NEXTAUTH_URL}/uploads/crochets/${crochet.imageUrls[0]}`,
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+      site: "@mellycrochets",
+      creator: "@mellycrochets",
+    },
     keywords: [
       crochet.name,
       `handmade ${crochet.name}`,
       `crochet ${crochet.name}`,
       `buy ${crochet.name}`,
       "MellyCrochets shop",
-      ...keywords,
-    ].join(", "),
-    twitter: {
-      card: "summary_large_image",
-      title: `${crochet.name} Products | MellyCrochets Shop`,
-      description:
-        crochet.description ||
-        `Explore our collection of ${crochet.name} crochet designs`,
+      ...(keywords || []) // Ensure keywords is defined
+    ].filter(Boolean).join(", "),
+    robots: {
+      index: true,
+      follow: true,
     },
     icons: {
       icon: [
         { url: "/favicon.ico" },
         { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" }
       ],
-      apple: "/apple-touch-icon.png",
+      apple: "/apple-touch-icon.png"
+    }
+  };
+}
+function buildProductSchema(crochet, baseUrl) {
+  const productUrl = `${baseUrl}/crochets/${crochet.slug}`;
+  const images = (crochet.imageUrls || []).map(
+    (img) => `${baseUrl}/uploads/crochets/${img}`
+  );
+  const mainImage = images[0] || `${baseUrl}/default-crochet-image.jpg`;
+  const price = crochet.priceInUsd ?? crochet.priceInCfa;
+  const priceCurrency = crochet.priceInUsd != null ? "USD" : "XAF";
+
+  const product = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: crochet.name,
+    description: crochet.description || `Handmade ${crochet.name} by MellyCrochets`,
+    image: images.length ? images : [mainImage],
+    url: productUrl,
+    sku: crochet.slug,
+    brand: {
+      "@type": "Brand",
+      name: "MellyCrochets",
     },
-    url: `${process.env.NEXTAUTH_URL}/crochets/${params.slug}`,
-    publishedTime: new Date(crochet.createdAt).toISOString(),
-    modifiedTime: new Date(crochet.updatedAt).toISOString(),
+    offers: {
+      "@type": "Offer",
+      url: productUrl,
+      priceCurrency,
+      price: price ?? undefined,
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
+  return product;
+}
+
+function buildBreadcrumbSchema(crochet, baseUrl) {
+  const typeName = crochet.crochetType?.name || "Shop";
+  const typeSlug = crochet.crochetType?.slug;
+  const items = [
+    { "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
+    { "@type": "ListItem", position: 2, name: "Shop", item: `${baseUrl}/shop` },
+  ];
+  if (typeSlug) {
+    items.push({
+      "@type": "ListItem",
+      position: items.length + 1,
+      name: typeName,
+      item: `${baseUrl}/shop?type=${encodeURIComponent(typeSlug)}`,
+    });
+  }
+  items.push({
+    "@type": "ListItem",
+    position: items.length + 1,
+    name: crochet.name,
+    item: `${baseUrl}/crochets/${crochet.slug}`,
   });
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  };
 }
 
 export default async function IndexPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const crochet = await fetchCrochetBySlug(slug);
+  const baseUrl = process.env.NEXTAUTH_URL || "";
+
+  const productSchema = crochet ? buildProductSchema(crochet, baseUrl) : null;
+  const breadcrumbSchema = crochet ? buildBreadcrumbSchema(crochet, baseUrl) : null;
 
   return (
     <>
-      <CrochetTypeHero
-        title={crochet.name}
-        description={crochet.description}
-        breadcrumbs={[
-          { title: "Shop", href: "/shop" },
-          { title: crochet.name, href: "#" },
-        ]}
-      />
-
-      {/* details */}
-      <CrochetDetail crochet={crochet} />
-
-      <TrustBadge />
+      {productSchema && <JsonLd data={productSchema} />}
+      {breadcrumbSchema && <JsonLd data={breadcrumbSchema} />}
+      <CrochetDetailPage crochet={crochet} />
     </>
   );
 }

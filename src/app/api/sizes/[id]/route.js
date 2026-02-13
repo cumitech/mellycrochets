@@ -1,6 +1,6 @@
 import { SizeRequestDto } from "../../../../data/dtos/size-request.dto";
 import { SizeRepository } from "../../../../data/repositories/size.repository";
-import { displayValidationErrors } from "../../../../lib/displayValidationErrors";
+import { displayValidationErrors, VALIDATION_OPTIONS } from "../../../../lib/displayValidationErrors";
 import { validate } from "class-validator";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -39,7 +39,7 @@ export async function PATCH(req, { params }) {
 
   try {
     const dto = new SizeRequestDto(await req.json());
-    const validationErrors = await validate(dto);
+    const validationErrors = await validate(dto, VALIDATION_OPTIONS);
 
     if (validationErrors.length > 0) {
       return NextResponse.json(
@@ -95,7 +95,6 @@ export async function GET(req, { params }) {
 
   try {
     const id = params.id;
-    console.log("id ", id);
     const size = await sizeRepository.findById(id);
     // const sizeDTO = sizeMapper.toDTO(size);
     return NextResponse.json(size);

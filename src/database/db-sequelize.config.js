@@ -15,9 +15,7 @@ const sequelize = new Sequelize(
     dialectModule: mysql,
     benchmark: true,
     port: parseInt(process.env.MYSQL_PORT, 10) || 3306,
-    dialectOptions: {
-      require: false, // Disable optional dependency resolution
-    },
+    logging: false,
   }
 );
 

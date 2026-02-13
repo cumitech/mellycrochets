@@ -3,11 +3,13 @@
 import { format } from "../../../lib/format";
 import PageBreadCrumbs from "../../../components/page-breadcrumb/page-breadcrumb.component";
 import {
+  CreateButton,
+  EditButton,
   List,
   ShowButton,
   useTable,
-} from "@refinedev/antd";
-import { Image, Space, Table } from "antd";
+} from '@/components/refine';
+import { Image, Space, Table } from '@/components/ui';
 
 export default function UserList() {
   const { tableProps } = useTable({
@@ -17,6 +19,9 @@ export default function UserList() {
   return (
     <>
       <PageBreadCrumbs items={["Users", "Lists"]} />
+      <div className="mb-4 flex justify-end">
+        <CreateButton />
+      </div>
       <List>
         <Table {...tableProps} rowKey="id">
           <Table.Column
@@ -31,15 +36,19 @@ export default function UserList() {
           <Table.Column
             title="Image"
             dataIndex="image"
-            render={(value) => (
-              <Image src={value} alt="User" preview={false} width={30} />
-            )}
+            render={(value) => {
+              if (!value || value.trim() === "") {
+                return <span className="text-muted-foreground text-sm">-</span>;
+              }
+              return <Image src={value} alt="User" preview={false} width={30} />;
+            }}
           />
           <Table.Column
             title={"Actions"}
             dataIndex="actions"
             render={(_, record) => (
               <Space>
+                <EditButton hideText size="small" recordItemId={record.id} />
                 <ShowButton hideText size="small" recordItemId={record.id} />
               </Space>
             )}
